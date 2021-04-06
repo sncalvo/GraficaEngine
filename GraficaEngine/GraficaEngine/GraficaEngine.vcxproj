@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\SDL2-2.0.14\include;$(ProjectDir)..\Freeimage;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\SDL2-2.0.14\lib\x86;$(ProjectDir)..\Freeimage;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\..\Libraries\SDL2\include;$(ProjectDir)..\..\Libraries\Freeimage;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\Libraries\SDL2\lib\x86;$(ProjectDir)..\..\Libraries\Freeimage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -81,8 +81,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\SDL2-2.0.14\include;$(ProjectDir)..\Freeimage;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\SDL2-2.0.14\lib\x86;$(ProjectDir)..\Freeimage;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\..\Libraries\SDL2\include;$(ProjectDir)..\..\Libraries\Freeimage;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\Libraries\SDL2\lib\x86;$(ProjectDir)..\..\Libraries\Freeimage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

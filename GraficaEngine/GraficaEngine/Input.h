@@ -1,6 +1,7 @@
 #pragma once
 
-#include "SDL.h"
+#include <SDL/SDL.h>
+
 #include "InputDefinition.h"
 
 class Input
@@ -13,8 +14,8 @@ private:
     int _mouseY;
     bool _keyDown[KEYBOARD_SIZE];
     bool _keyUp[KEYBOARD_SIZE];
-    bool _mouseDown[MouseButton::MOUSE_MAX];
-    bool _mouseUp[MouseButton::MOUSE_MAX];
+    bool _mouseDown[MOUSE_MAX];
+    bool _mouseUp[MOUSE_MAX];
     bool _will_quit;
     bool _isLocked;
 
@@ -28,7 +29,7 @@ public:
 
     void lock();
     void unlock();
-	void update(float cameraX, float cameraY);
+	void update();
     bool getKey(KeyboardKey key);
 	bool getKeyDown(KeyboardKey key);
     bool getKeyUp(KeyboardKey key);

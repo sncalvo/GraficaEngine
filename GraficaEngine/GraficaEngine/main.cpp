@@ -1,9 +1,9 @@
 #include <iostream>
 #include <tuple>
 
-#include "SDL.h"
-#include "SDL_opengl.h"
-
+#include <GL/glew.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
 #include <GL/GLU.h>
 
 #include "MediaLayer.h"
@@ -16,23 +16,30 @@ constexpr int WINDOW_HEIGTH = 600;
 
 int main(int argc, char* argv[])
 {
-	MediaLayer::init();
-	Window window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
+	if (!MediaLayer::init())
+	{
+		return 1;
+	}
 
-	Camera camera(window.getWith(), window.getHeight());
+	Window* window = new Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
+
+	Camera camera(window->getWidth(), window->getHeight());
+
 	Input& input = Input::getInstance();
 
 	while (true)
 	{
-		input.update(0.f, 0.f);
+		input.update();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (input.getKey(KEY_ESCAPE))
 			break;
 
-		window.swap();
+		window->swap();
 	}
 
-	window.destroy();
+	delete window;
 	MediaLayer::exit();
+	
 	return 0;
 }

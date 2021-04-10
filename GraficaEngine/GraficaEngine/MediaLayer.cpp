@@ -3,26 +3,18 @@
 
 bool MediaLayer::init()
 {
-	if (SDL_Init(0) < 0)
+	Uint32 flags = (SDL_INIT_EVENTS);
+	if (SDL_Init(flags) < 0)
 	{
 		DebugLog::error("SDL_Init: Couldn't start SDL");
 		DebugLog::error(std::string(SDL_GetError()));
 		throw "SDL Init Fail";
 	}
 
-	Uint32 flags = (SDL_INIT_VIDEO | SDL_INIT_EVENTS);
-	if (SDL_WasInit(flags) != 0)
-	{
-		DebugLog::error("SDL_WasInit: Tried to reinitailize Video");
-		DebugLog::error(std::string(SDL_GetError()));
-		throw "SDL_WasInit Fail";
-	}
-	if (SDL_InitSubSystem(flags) < 0)
-	{
-		DebugLog::error("SDL_Init: Couldn't start Video");
-		DebugLog::error(std::string(SDL_GetError()));
-		throw "SDL_Init Fail";
-	}
+	//Use OpenGL 3.1 core
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	return true;
 }

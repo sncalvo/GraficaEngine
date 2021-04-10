@@ -10,7 +10,7 @@ Window::Window(int width, int height, std::string title) :
 	_window = SDL_CreateWindow(title.c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+		width, height, SDL_WINDOW_OPENGL); // SDL_WINDOW_SHOWN?
 	_context = SDL_GL_CreateContext(_window);
 }
 
@@ -25,7 +25,7 @@ void Window::setTitle(std::string title)
 		SDL_SetWindowTitle(_window, title.c_str());
 }
 
-int Window::getWith()
+int Window::getWidth()
 {
 	return _width;
 }
@@ -48,4 +48,9 @@ void Window::destroy()
 		SDL_DestroyWindow(_window);
 		_window = nullptr;
 	}
+}
+
+Window::~Window()
+{
+	destroy();
 }

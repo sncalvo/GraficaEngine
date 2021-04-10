@@ -4,6 +4,10 @@
 
 class DebugLog
 {
+private:
+	static bool _isDebugMode;
+	static bool _isVerboseMode;
+
 public:
 	static void error(std::string msg);
 	static void warning(std::string msg);
@@ -14,8 +18,4 @@ public:
 	static void clearLine();
 
 	static std::string intToString(int num);
-
-private:
-	static bool _isDebugMode;
-	static bool _isVerboseMode;
 };

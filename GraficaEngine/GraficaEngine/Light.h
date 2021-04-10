@@ -1,20 +1,21 @@
 #pragma once
 
 #include <vector>
+#include <SDL/SDL_opengl.h>
 
-#include "SDL_openGL.h"
-#include "Math.h"
+#include <glm/vec4.hpp>
+
 #include "Drawable.h"
 
 class Light: public Drawable
 {
 private:
 	GLenum _light;
-	Point4 _position;
-	Color _color;
+	glm::vec4 _position;
+	glm::vec4 _color;
 public:
-	Light(GLenum light, Point4 _position, Color color);
+	Light(GLenum light, glm::vec4 _position, glm::vec4 color);
 	void draw() const;
-	void setPosition(Point4 position);
-	void setColor(Color color);
+	void setPosition(glm::vec4 position);
+	void setColor(glm::vec4 color);
 };

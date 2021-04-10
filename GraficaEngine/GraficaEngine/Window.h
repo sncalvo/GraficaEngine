@@ -2,9 +2,7 @@
 
 #include <string>
 
-#include "SDL.h"
-
-#include "Math.h"
+#include <SDL/SDL.h>
 
 class Window
 {
@@ -20,6 +18,7 @@ public:
 	void swap();
 	void setTitle(std::string title);
 	void destroy();
-	int getWith();
+	int getWidth();
 	int getHeight();
+	~Window();
 };

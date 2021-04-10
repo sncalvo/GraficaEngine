@@ -23,7 +23,7 @@ void Input::unlock()
 	_isLocked = false;
 }
 
-void Input::update(float cameraX, float cameraY)
+void Input::update()
 {
 	int i;
 	for (i = 0; i < KEYBOARD_SIZE; i++)
@@ -64,12 +64,11 @@ void Input::update(float cameraX, float cameraY)
 		}
 			break;
 		case SDL_MOUSEMOTION:
-			_mouseX = event.motion.x + cameraX;
-			_mouseY = event.motion.y + cameraY;
+			_mouseX = event.motion.x;
+			_mouseY = event.motion.y;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			_mouse = SDL_GetMouseState(&(_mouseX),
-				&(_mouseY));
+			_mouse = SDL_GetMouseState(&(_mouseX), &(_mouseY));
 
 			if (event.button.button == SDL_BUTTON_LEFT)
 				_mouseDown[MOUSE_LEFT] = true;

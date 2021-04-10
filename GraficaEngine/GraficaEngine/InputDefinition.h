@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SDL.h"
+#include <SDL/SDL_opengl.h>
 
 /// The number of keys on a keyboard.
 ///

@@ -1,38 +1,52 @@
 #include "Texture.h"
 
-#include "FreeImage.h"
+#include <iostream>
 
-Texture::Texture(std::string textureLocation)
+#include <Freeimage/FreeImage.h>
+
+Texture::Texture(const char* path, std::string type)
 {
-	FREE_IMAGE_FORMAT format = FreeImage_GetFIFFromFilename(textureLocation.c_str());
-	FIBITMAP* bitmap = FreeImage_Load(format, textureLocation.c_str());
+	_type = type;
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	// set the texture wrapping/filtering options (on currently bound texture)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// load and generate the texture
+	FREE_IMAGE_FORMAT format = FreeImage_GetFIFFromFilename(path);
+	FIBITMAP* bitmap = FreeImage_Load(format, path);
 	bitmap = FreeImage_ConvertTo24Bits(bitmap);
 	int width = FreeImage_GetWidth(bitmap);
 	int height = FreeImage_GetHeight(bitmap);
-	void* datos = FreeImage_GetBits(bitmap);
+	void* data = FreeImage_GetBits(bitmap);
 
-	glGenTextures(1, &_textureId);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+			GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	// We might have to free the image later
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, datos);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	// Unbind texture
 	glBindTexture(GL_TEXTURE_2D, 0);
+	ID = texture;
 }
 
-void Texture::enableTexture() const
+std::string Texture::getType() const
 {
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
+	return _type;
 }
 
-void Texture::disableTexture() const
+void Texture::activateTextureAs(GLenum textureUnit) const
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, ID);
 }

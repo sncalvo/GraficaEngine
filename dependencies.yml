@@ -1,7 +1,15 @@
 dependencies:
   SDL2:
     version: '2.0.14'
-    folderName: 'SDL2'
+    folderName: 'SDL'
     source: 'https://www.libsdl.org/download-2.0.php'
   Freeimage: 'vunknown'
     folderName: 'Freeimage'
+  glm:
+    version: '0.9.9.8'
+    folderName: 'glm'
+    source: 'https://github.com/g-truc/glm/releases/tag/0.9.9.8'
+  glew:
+    version: '2.1.0'
+    folderName: 'GL'
+    source: 'http://glew.sourceforge.net/'

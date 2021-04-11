@@ -1,15 +1,17 @@
 #pragma once
 
-#include <string>
+#include <GL/glew.h>
+#include <SDL/SDL_opengl.h>
 
-#include "SDL_opengl.h"
+#include <string>
 
 class Texture
 {
 private:
-	GLuint _textureId;
+	std::string _type;
 public:
-	Texture(std::string textureLocation);
-	void enableTexture() const;
-	void disableTexture() const;
+	unsigned int ID;
+	std::string getType() const;
+	Texture(const char* texturePath, std::string type);
+	void activateTextureAs(GLenum textureUnit) const;
 };

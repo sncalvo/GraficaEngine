@@ -1,5 +1,7 @@
 #include "Model.h"
 
+#include <iostream>
+
 Model::Model(char* path)
 {
     loadModel(path);

@@ -28,31 +28,44 @@ int main(int argc, char* argv[])
 	}
 
 	Window* window = new Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
-
 	Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
-
 	Input& input = Input::getInstance();
 
-	glewInit();
-	glewExperimental = GL_TRUE;
-
-	const char* path = "GroundProps.obj";
+	const char* path = "box.obj";
 	Model cube(_strdup(path));
 
 	Shader shader("testShader.vs", "testShader.fs");
+
+	glEnable(GL_DEPTH_TEST);
 
 	while (true)
 	{
 		Time::updateTime();
 		input.update();
-		int movementX, movementY;
-		std::tie(movementX, movementY) = input.getMouseMovement();
-
-		std::cout << float(movementX) * Time::getDeltaTime() << ", " << float(movementY) * Time::getDeltaTime() << std::endl;
-		// camera.processMouseMovement(float(movementX) * Time::getDeltaTime(), float(movementY) * Time::getDeltaTime());
 
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		int movementX, movementY;
+		std::tie(movementX, movementY) = input.getMouseMovement();
+
+		camera.processMouseMovement(float(movementX) * Time::getDeltaTime(), float(movementY) * Time::getDeltaTime());
+		if (input.getKey(KEY_W))
+		{
+			camera.processKeyboard(Camera_Movement::FORWARD, Time::getDeltaTime());
+		}
+		if (input.getKey(KEY_S))
+		{
+			camera.processKeyboard(Camera_Movement::BACKWARD, Time::getDeltaTime());
+		}
+		if (input.getKey(KEY_A))
+		{
+			camera.processKeyboard(Camera_Movement::LEFT, Time::getDeltaTime());
+		}
+		if (input.getKey(KEY_D))
+		{
+			camera.processKeyboard(Camera_Movement::RIGHT, Time::getDeltaTime());
+		}
 
 		if (input.getKey(KEY_ESCAPE))
 			break;

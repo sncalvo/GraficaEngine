@@ -1,12 +1,13 @@
 #pragma once
 
 #include <chrono>
+#include <SDL/SDL.h>
 
 class Time
 {
 private:
-	static std::chrono::steady_clock::time_point _previousTime;
-	static std::chrono::steady_clock::time_point _currentTime;
+	static Uint32 _previousTime;
+	static Uint32 _currentTime;
 
 	static float _fixedTime;
 	Time() {}

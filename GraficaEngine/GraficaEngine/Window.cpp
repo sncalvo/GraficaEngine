@@ -1,5 +1,6 @@
-#include "Window.h"
+#include <GL/glew.h>
 
+#include "Window.h"
 #include "DebugLog.h"
 
 Window::Window(int width, int height, std::string title) :
@@ -15,7 +16,7 @@ Window::Window(int width, int height, std::string title) :
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_ShowCursor(SDL_DISABLE);
-
+	glewInit();
 }
 
 void Window::swap()

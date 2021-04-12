@@ -38,6 +38,8 @@ void Input::update()
 		_mouseDown[i] = false;
 		_mouseUp[i] = false;
 	}
+	_movementX = 0;
+	_movementY = 0;
 
 	// Get key events from the OS
 	SDL_Event event;
@@ -66,6 +68,10 @@ void Input::update()
 		}
 			break;
 		case SDL_MOUSEMOTION:
+			_movementX = event.motion.xrel;
+			_movementY = -event.motion.yrel;
+			_mouseX = event.motion.x;
+			_mouseY = event.motion.y;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			_mouse = SDL_GetMouseState(&(_mouseX), &(_mouseY));
@@ -90,11 +96,6 @@ void Input::update()
 			break;
 		}
 	}
-
-	_movementX = event.motion.x - _mouseX;
-	_movementY = _mouseY - event.motion.y;
-	_mouseX = event.motion.x;
-	_mouseY = event.motion.y;
 }
 
 bool Input::getKeyDown(KeyboardKey key)

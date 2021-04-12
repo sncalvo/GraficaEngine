@@ -3,13 +3,12 @@
 #include <iostream>
 
 float Time::_fixedTime = 0.05;
-std::chrono::steady_clock::time_point Time::_previousTime;
-std::chrono::steady_clock::time_point Time::_currentTime;
+Uint32 Time::_previousTime;
+Uint32 Time::_currentTime;
 
 float Time::getDeltaTime()
 {
-	// Such a mouthfull
-	return std::chrono::duration_cast<std::chrono::microseconds>(_currentTime - _previousTime).count() / 1000000.0;
+	return float(_currentTime - _previousTime) / 1000.f;
 }
 
 float Time::getFixedTime()
@@ -20,5 +19,5 @@ float Time::getFixedTime()
 void Time::updateTime()
 {
 	_previousTime = _currentTime;
-	_currentTime = std::chrono::high_resolution_clock::now();
+	_currentTime = SDL_GetTicks();
 }

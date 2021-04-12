@@ -4,6 +4,8 @@
 
 #include <Freeimage/FreeImage.h>
 
+#include "DebugLog.h"
+
 Texture::Texture(const char* path, std::string type)
 {
 	_type = type;
@@ -32,7 +34,11 @@ Texture::Texture(const char* path, std::string type)
 	}
 	else
 	{
-		std::cout << "Failed to load texture" << std::endl;
+		if (path == nullptr)
+		{
+			DebugLog::error("No path");
+		}
+		DebugLog::error("Failed to load texture " + std::string(path));
 	}
 	// We might have to free the image later
 

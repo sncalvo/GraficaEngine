@@ -1,5 +1,10 @@
 #include "Model.h"
 
+Model::Model(char* path)
+{
+    loadModel(path);
+}
+
 void Model::loadModel(std::string path)
 {
     Assimp::Importer import;
@@ -73,9 +78,9 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         }
     }
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    
-    std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+
+    textures = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
     
     return Mesh(vertices, indices, textures);
 }
@@ -85,8 +90,13 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
     std::vector<Texture> textures;
     aiString str;
     mat->GetTexture(type, 0, &str);
-    Texture texture(str.C_Str(), typeName);
-    textures.push_back(texture);
+
+    if (str.length > 0)
+    {
+        Texture texture(str.C_Str(), typeName);
+        textures.push_back(texture);
+    }
+
     return textures;
 }
 

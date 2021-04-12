@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tuple>
+
 #include <SDL/SDL.h>
 
 #include "InputDefinition.h"
@@ -12,6 +14,8 @@ private:
     uint32_t _mouse;
     int _mouseX;
     int _mouseY;
+    int _movementX;
+    int _movementY;
     bool _keyDown[KEYBOARD_SIZE];
     bool _keyUp[KEYBOARD_SIZE];
     bool _mouseDown[MOUSE_MAX];
@@ -36,6 +40,7 @@ public:
     bool getMouseButton(MouseButton button);
     int getMouseX();
     int getMouseY();
+    std::tuple<int, int> getMouseMovement();
 
     // Deleted functions are disabled by the compiler
     Input(Input const&) = delete;

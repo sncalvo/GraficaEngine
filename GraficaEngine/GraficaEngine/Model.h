@@ -5,6 +5,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
 #include "Shader.h"
 #include "Mesh.h"
 #include "DebugLog.h"
@@ -13,10 +14,7 @@
 class Model
 {
 public:
-    Model(char* path)
-    {
-        loadModel(path);
-    }
+    Model(char* path);
     void draw(Shader& shader);
 private:
     std::vector<Mesh> _meshes;

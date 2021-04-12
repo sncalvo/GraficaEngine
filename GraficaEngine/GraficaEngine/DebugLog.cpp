@@ -23,7 +23,7 @@ std::string debugPrefix = "Debug:   ";
 
 void DebugLog::error(std::string msg)
 {
-	std::cerr << bold_red << errorPrefix << msg << reset_color << std::endl;
+	std::cerr << bold_red << errorPrefix << msg << std::endl;
 }
 
 void DebugLog::warning(std::string msg)

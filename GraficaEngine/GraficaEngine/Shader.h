@@ -19,5 +19,6 @@ public:
 	void setFloat4f(const std::string& name, float value0, float value1, float value2, float value3) const;
 	void setVec3(const std::string& name, const glm::vec3& value) const;
 	void setVec3(const std::string& name, float value0, float value1, float value2) const;
-	void setMatrix4f(const std::string& name, glm::f32* matrix);
+	void setMatrix4f(const std::string& name, glm::f32* matrix) const;
+	void setMat4(const std::string& name, const glm::mat4& mat) const;
 };

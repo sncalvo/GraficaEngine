@@ -4,6 +4,7 @@
 bool MediaLayer::init()
 {
 	Uint32 flags = (SDL_INIT_EVENTS);
+
 	if (SDL_Init(flags) < 0)
 	{
 		DebugLog::error("SDL_Init: Couldn't start SDL");

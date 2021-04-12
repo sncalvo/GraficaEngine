@@ -12,6 +12,10 @@ Window::Window(int width, int height, std::string title) :
 		SDL_WINDOWPOS_CENTERED,
 		width, height, SDL_WINDOW_OPENGL); // SDL_WINDOW_SHOWN?
 	_context = SDL_GL_CreateContext(_window);
+
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_ShowCursor(SDL_DISABLE);
+
 }
 
 void Window::swap()

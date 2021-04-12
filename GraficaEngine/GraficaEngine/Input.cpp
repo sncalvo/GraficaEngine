@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include <iostream>
+
 Input::Input():
 	_keyboard(nullptr),
 	_mouse(0),
@@ -64,8 +66,6 @@ void Input::update()
 		}
 			break;
 		case SDL_MOUSEMOTION:
-			_mouseX = event.motion.x;
-			_mouseY = event.motion.y;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			_mouse = SDL_GetMouseState(&(_mouseX), &(_mouseY));
@@ -90,6 +90,11 @@ void Input::update()
 			break;
 		}
 	}
+
+	_movementX = event.motion.x - _mouseX;
+	_movementY = _mouseY - event.motion.y;
+	_mouseX = event.motion.x;
+	_mouseY = event.motion.y;
 }
 
 bool Input::getKeyDown(KeyboardKey key)
@@ -148,6 +153,11 @@ bool Input::getMouseButton(MouseButton button)
 	}
 
 	return false;
+}
+
+std::tuple<int, int> Input::getMouseMovement()
+{
+	return std::tuple<int, int>{_movementX, _movementY};
 }
 
 int Input::getMouseX()

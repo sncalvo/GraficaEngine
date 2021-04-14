@@ -1,14 +1,21 @@
 #include <GL/glew.h>
 #include <SDL/SDL_opengl.h>
 
+#include <iostream>
+
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
+Mesh::Mesh(
+    std::vector<Vertex> vertices,
+    std::vector<unsigned int> indices,
+    std::vector<Texture> textures,
+    Material material
+):
+    _vertices(vertices),
+    _indices(indices),
+    _textures(textures),
+    _material(material)
 {
-    _vertices = vertices;
-    _indices = indices;
-    _textures = textures;
-
     setupMesh();
 }
 
@@ -59,6 +66,11 @@ void Mesh::draw(Shader &shader)
         glBindTexture(GL_TEXTURE_2D, _textures[i].ID);
     }
     glActiveTexture(GL_TEXTURE0);
+
+    shader.setVec3("material.ambient", _material.ambient);
+    shader.setVec3("material.diffuse", _material.diffuse);
+    shader.setVec3("material.specular", _material.specular);
+    shader.setFloat("material.shininess", _material.shininess);
 
     // draw mesh
     glBindVertexArray(VAO);

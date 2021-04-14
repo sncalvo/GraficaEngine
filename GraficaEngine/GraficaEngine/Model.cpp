@@ -4,10 +4,10 @@
 
 Model::Model(char* path)
 {
-    loadModel(path);
+    _loadModel(path);
 }
 
-void Model::loadModel(std::string path)
+void Model::_loadModel(std::string path)
 {
     Assimp::Importer import;
     const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -19,25 +19,25 @@ void Model::loadModel(std::string path)
     }
     _directory = path.substr(0, path.find_last_of('/'));
 
-    processNode(scene->mRootNode, scene);
+    _processNode(scene->mRootNode, scene);
 }
 
-void Model::processNode(aiNode* node, const aiScene* scene)
+void Model::_processNode(aiNode* node, const aiScene* scene)
 {
 
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        _meshes.push_back(processMesh(mesh, scene));
+        _meshes.push_back(_processMesh(mesh, scene));
     }
  
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
-        processNode(node->mChildren[i], scene);
+        _processNode(node->mChildren[i], scene);
     }
 }
 
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
+Mesh Model::_processMesh(aiMesh* mesh, const aiScene* scene)
 {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
@@ -79,18 +79,20 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
             indices.push_back(face.mIndices[j]);
         }
     }
-    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+    aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-    textures = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
+    Material material = _loadMaterial(meshMaterial);
     // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
     
-    return Mesh(vertices, indices, textures);
+    return Mesh(vertices, indices, textures, material);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<Texture> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
     std::vector<Texture> textures;
     aiString str;
+
     mat->GetTexture(type, 0, &str);
 
     if (str.length > 0)
@@ -101,6 +103,22 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 
     return textures;
 }
+
+Material Model::_loadMaterial(aiMaterial* material)
+{
+    aiColor3D color;
+    material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+    glm::vec3 diffuse{color.r, color.b, color.g};
+    material->Get(AI_MATKEY_COLOR_SPECULAR, color);
+    glm::vec3 specular{ color.r, color.b, color.g };
+    material->Get(AI_MATKEY_COLOR_AMBIENT, color);
+    glm::vec3 ambient{ color.r, color.b, color.g };
+    float shininess;
+    material->Get(AI_MATKEY_SHININESS, shininess);
+
+    return Material{ ambient, diffuse, specular, shininess };
+}
+
 
 void Model::draw(Shader& shader)
 {

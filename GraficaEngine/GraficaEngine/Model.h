@@ -20,9 +20,13 @@ private:
     std::vector<Mesh> _meshes;
     std::string _directory;
 
-    void loadModel(std::string path);
-    void processNode(aiNode* node, const aiScene* scene);
-    Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-    std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
+    void _loadModel(std::string path);
+    void _processNode(aiNode* node, const aiScene* scene);
+    Mesh _processMesh(aiMesh* mesh, const aiScene* scene);
+    std::vector<Texture> _loadMaterialTextures(
+        aiMaterial* mat,
+        aiTextureType type,
         std::string typeName);
+
+    Material _loadMaterial(aiMaterial* material);
 };

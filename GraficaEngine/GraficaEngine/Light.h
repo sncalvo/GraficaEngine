@@ -6,16 +6,23 @@
 #include <glm/vec4.hpp>
 
 #include "Drawable.h"
+#include "Transform.h"
 
 class Light: public Drawable
 {
 private:
-	GLenum _light;
-	glm::vec4 _position;
-	glm::vec4 _color;
+	Transform _transform;
+
+	glm::vec3 _ambient;
+	glm::vec3 _diffuse;
+	glm::vec3 _specular;
+	float _intensity;
 public:
-	Light(GLenum light, glm::vec4 _position, glm::vec4 color);
-	void draw() const;
+	Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
+	virtual void draw() const = 0;
+	void setIntensity(float intensity);
 	void setPosition(glm::vec4 position);
-	void setColor(glm::vec4 color);
+	void setAmbient(glm::vec4 color);
+	void setDiffuse(glm::vec4 color);
+	void setSpecular(glm::vec4 color);
 };

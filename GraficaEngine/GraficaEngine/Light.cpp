@@ -2,26 +2,35 @@
 
 #include "Light.h"
 
-Light::Light(GLenum light, glm::vec4 position, glm::vec4 color)
-{
-	_light = light;
-	_position = position;
-	_color = color;
-}
+Light::Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) :
+	_transform(transform),
+	_intensity(intensity),
+	_ambient(ambient),
+	_diffuse(diffuse),
+	_specular(specular)
+{}
 
-void Light::draw() const
+void Light::setIntensity(float intensity)
 {
-	glEnable(_light);
-	glLightfv(_light, GL_POSITION, glm::value_ptr(_position));
-	glLightfv(_light, GL_DIFFUSE, glm::value_ptr(_color));
-}
-
-void Light::setColor(glm::vec4 color)
-{
-	_color = color;
+	_intensity = intensity;
 }
 
 void Light::setPosition(glm::vec4 position)
 {
-	_position = position;
+	_transform.position = position;
+}
+
+void Light::setAmbient(glm::vec4 color)
+{
+	_ambient = color;
+}
+
+void Light::setDiffuse(glm::vec4 color)
+{
+	_diffuse = color;
+}
+
+void Light::setSpecular(glm::vec4 color)
+{
+	_specular = color;
 }

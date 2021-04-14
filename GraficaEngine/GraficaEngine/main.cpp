@@ -34,6 +34,9 @@ int main(int argc, char* argv[])
 	const char* path = "box.obj";
 	Model cube(_strdup(path));
 
+	path = "box3.obj";
+	Model cube2(_strdup(path));
+
 	Shader shader("testShader.vs", "testShader.fs");
 
 	glEnable(GL_DEPTH_TEST);
@@ -82,6 +85,12 @@ int main(int argc, char* argv[])
 		shader.setMat4("model", model);
 
 		cube.draw(shader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(3.0f, 1.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(.1f, .1f, .1f));
+		shader.setMat4("model", model);
+		cube2.draw(shader);
 
 		window->swap();
 	}

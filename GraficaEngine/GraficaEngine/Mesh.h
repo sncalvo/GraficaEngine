@@ -13,17 +13,25 @@ struct Vertex {
 	glm::vec2 textureCoordinates;
 };
 
+struct Material {
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
+	float shininess;
+};
+
 class Mesh
 {
 private:
 	std::vector<Vertex> _vertices;
 	std::vector<unsigned int> _indices;
 	std::vector<Texture> _textures;
+	Material _material;
 
 	unsigned int VAO, VBO, EBO;
 
 	void setupMesh();
 public:
-	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, std::vector<Texture> texture);
+	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, std::vector<Texture> texture, Material material);
 	void draw(Shader &shader);
 };

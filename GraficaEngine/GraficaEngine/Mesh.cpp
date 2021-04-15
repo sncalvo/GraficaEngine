@@ -47,7 +47,7 @@ void Mesh::setupMesh()
     glBindVertexArray(0);
 }
 
-void Mesh::draw(Shader &shader)
+void Mesh::draw(Shader &shader) const
 {
     unsigned int diffuseNr = 1;
     unsigned int specularNr = 1;

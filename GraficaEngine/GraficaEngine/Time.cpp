@@ -1,10 +1,8 @@
 #include "Time.h"
 
-#include <iostream>
-
 float Time::_fixedTime = 0.05;
-Uint32 Time::_previousTime;
-Uint32 Time::_currentTime;
+Uint32 Time::_previousTime = 0;
+Uint32 Time::_currentTime = 0;
 
 float Time::getDeltaTime()
 {

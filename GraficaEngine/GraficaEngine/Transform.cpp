@@ -18,7 +18,7 @@ glm::vec3 Transform::getForward()
 	return _forward;
 }
 
-glm::mat4 Transform::getTransformedModel()
+glm::mat4 Transform::_getTransformedModel() const
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, position);
@@ -30,4 +30,10 @@ glm::mat4 Transform::getTransformedModel()
 	model = glm::rotate(model, rotation.z, glm::vec3(0.0, 0.0, 1.0));
 
 	return model;
+}
+
+void Transform::apply(Shader& shader) const
+{
+	glm::mat4 model = _getTransformedModel();
+	shader.setMat4("model", model);
 }

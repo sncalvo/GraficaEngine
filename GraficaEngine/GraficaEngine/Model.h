@@ -13,9 +13,6 @@
 
 class Model
 {
-public:
-    Model(char* path);
-    void draw(Shader& shader);
 private:
     std::vector<Mesh> _meshes;
     std::string _directory;
@@ -29,4 +26,7 @@ private:
         std::string typeName);
 
     Material _loadMaterial(aiMaterial* material);
+public:
+    Model(char* path);
+    void draw(Shader& shader) const;
 };

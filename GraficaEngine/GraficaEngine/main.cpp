@@ -16,6 +16,7 @@
 #include "Input.h"
 #include "Model.h"
 #include "Time.h"
+#include "GameObject.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -31,13 +32,17 @@ int main(int argc, char* argv[])
 	Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
 	Input& input = Input::getInstance();
 
+	Shader* shader = new Shader("default.vs", "default.fs");
+
 	const char* path = "box.obj";
 	Model cube(_strdup(path));
+	MaterialObject material(shader);
+	GameObject* box = new GameObject(cube, material);
 
 	path = "box3.obj";
 	Model cube2(_strdup(path));
 
-	Shader shader("testShader.vs", "testShader.fs");
+	float speed = 10.f;
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -73,24 +78,30 @@ int main(int argc, char* argv[])
 		if (input.getKey(KEY_ESCAPE))
 			break;
 
-		shader.use();
+		shader->use();
 		glm::mat4 projection = glm::perspective(glm::radians(camera.getZoom()), 800.0f / 600.0f, 0.1f, 100.0f);
 		glm::mat4 view = camera.getViewMatrix();
-		shader.setMat4("projection", projection);
-		shader.setMat4("view", view);
+		shader->setMat4("projection", projection);
+		shader->setMat4("view", view);
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(.1f, .1f, .1f));
-		shader.setMat4("model", model);
+		if (input.getKey(KEY_UP))
+		{
+			box->transform.position += glm::vec3(0.f, 0.f, 1.f) * speed * Time::getDeltaTime();
+		}
+		else if (input.getKey(KEY_DOWN))
+		{
+			box->transform.position -= glm::vec3(0.f, 0.f, 1.f) * speed * Time::getDeltaTime();
+		}
+		else if (input.getKey(KEY_LEFT))
+		{
+			box->transform.position -= glm::vec3(1.f, 0.f, 0.f) * speed * Time::getDeltaTime();
+		}
+		else if (input.getKey(KEY_RIGHT))
+		{
+			box->transform.position += glm::vec3(1.f, 0.f, 0.f) * speed * Time::getDeltaTime();
+		}
 
-		cube.draw(shader);
-
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(3.0f, 1.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(.1f, .1f, .1f));
-		shader.setMat4("model", model);
-		cube2.draw(shader);
+		box->draw();
 
 		window->swap();
 	}

@@ -120,7 +120,7 @@ Material Model::_loadMaterial(aiMaterial* material)
 }
 
 
-void Model::draw(Shader& shader)
+void Model::draw(Shader& shader) const
 {
     for (unsigned int i = 0; i < _meshes.size(); i++)
     {

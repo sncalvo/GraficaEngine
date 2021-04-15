@@ -33,5 +33,5 @@ private:
 	void setupMesh();
 public:
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, std::vector<Texture> texture, Material material);
-	void draw(Shader &shader);
+	void draw(Shader &shader) const;
 };

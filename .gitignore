@@ -80,6 +80,7 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.obj
+!GraficaEngine/GraficaEngine/Assets/Models/*.obj
 *.iobj
 *.pch
 *.pdb

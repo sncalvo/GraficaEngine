@@ -31,7 +31,6 @@ int main(int argc, char* argv[])
 	Engine::Window* window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
 	Engine::Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
 	Engine::Input& input = Engine::Input::getInstance();
-
 	Engine::Shader* shader = new Engine::Shader();
 
 	const char* path = "Assets/Models/box.obj";

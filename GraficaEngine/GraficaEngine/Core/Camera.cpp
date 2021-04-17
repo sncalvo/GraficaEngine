@@ -23,13 +23,13 @@ namespace Engine
     void Camera::processKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = _movementSpeed * deltaTime;
-        if (direction == FORWARD)
+        if (direction == Camera_Movement::FORWARD)
             _position += _front * velocity;
-        if (direction == BACKWARD)
+        if (direction == Camera_Movement::BACKWARD)
             _position -= _front * velocity;
-        if (direction == LEFT)
+        if (direction == Camera_Movement::LEFT)
             _position -= _right * velocity;
-        if (direction == RIGHT)
+        if (direction == Camera_Movement::RIGHT)
             _position += _right * velocity;
     }
 

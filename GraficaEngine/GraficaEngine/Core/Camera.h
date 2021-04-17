@@ -8,7 +8,7 @@
 
 namespace Engine
 {
-    enum Camera_Movement {
+    enum class Camera_Movement {
         FORWARD,
         BACKWARD,
         LEFT,

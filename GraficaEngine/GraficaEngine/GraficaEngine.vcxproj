@@ -153,6 +153,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\Camera.cpp" />
+    <ClCompile Include="Core\GameLoop.cpp" />
+    <ClCompile Include="Scripts\PlayerController.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -169,7 +171,10 @@
     <ClCompile Include="Platform\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
+    <ClInclude Include="Core\GameLoop.h" />
+    <ClInclude Include="Scripts\PlayerController.h" />
     <ClInclude Include="Utils\DebugLog.h" />
     <ClInclude Include="Renderer\Drawable.h" />
     <ClInclude Include="Core\GameObject.h" />

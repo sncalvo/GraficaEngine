@@ -11,4 +11,25 @@ namespace Engine
 		transform.apply(*shader);
 		_model.draw(*shader);
 	}
+
+	void GameObject::update()
+	{
+		for (Behaviour* behaviour : _behaviours)
+		{
+			behaviour->update(this);
+		}
+	}
+
+	void GameObject::addBehaviour(Behaviour* behaviour)
+	{
+		_behaviours.push_back(behaviour);
+	}
+
+	GameObject::~GameObject()
+	{
+		for (Behaviour* behaviour : _behaviours)
+		{
+			delete behaviour;
+		}
+	}
 }

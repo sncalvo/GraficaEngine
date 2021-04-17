@@ -9,6 +9,8 @@
 
 namespace Engine
 {
+	Shader::Shader() : Shader::Shader("Assets/Shaders/default.vs", "Assets/Shaders/default.fs") {}
+
 	Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
 		std::string vertexCode;

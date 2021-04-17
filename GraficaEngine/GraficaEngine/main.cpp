@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 	Engine::Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
 	Engine::Input& input = Engine::Input::getInstance();
 
-	Engine::Shader* shader = new Engine::Shader("Assets/Shaders/default.vs", "Assets/Shaders/default.fs");
+	Engine::Shader* shader = new Engine::Shader();
 
 	const char* path = "Assets/Models/box.obj";
 	Engine::Model cube(_strdup(path));

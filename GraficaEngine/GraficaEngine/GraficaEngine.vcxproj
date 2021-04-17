@@ -152,39 +152,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DebugLog.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Core\Camera.cpp" />
+    <ClCompile Include="Utils\DebugLog.cpp" />
+    <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Core\Input.cpp" />
+    <ClCompile Include="Core\Light.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="MediaLayer.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Renderer\Material.cpp" />
+    <ClCompile Include="Platform\MediaLayer.cpp" />
+    <ClCompile Include="Renderer\Mesh.cpp" />
+    <ClCompile Include="Renderer\Model.cpp" />
+    <ClCompile Include="Renderer\Shader.cpp" />
+    <ClCompile Include="Renderer\Texture.cpp" />
+    <ClCompile Include="Core\Time.cpp" />
+    <ClCompile Include="Core\Transform.cpp" />
+    <ClCompile Include="Platform\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="DebugLog.h" />
-    <ClInclude Include="Drawable.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="InputDefinition.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MediaLayer.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Time.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="Core\Camera.h" />
+    <ClInclude Include="Utils\DebugLog.h" />
+    <ClInclude Include="Renderer\Drawable.h" />
+    <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\Input.h" />
+    <ClInclude Include="Core\InputDefinition.h" />
+    <ClInclude Include="Core\Light.h" />
+    <ClInclude Include="Renderer\Material.h" />
+    <ClInclude Include="Platform\MediaLayer.h" />
+    <ClInclude Include="Renderer\Mesh.h" />
+    <ClInclude Include="Renderer\Model.h" />
+    <ClInclude Include="Renderer\Shader.h" />
+    <ClInclude Include="Renderer\Texture.h" />
+    <ClInclude Include="Core\Time.h" />
+    <ClInclude Include="Core\Transform.h" />
+    <ClInclude Include="Platform\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.fs" />

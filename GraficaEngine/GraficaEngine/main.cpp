@@ -10,37 +10,37 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "MediaLayer.h"
-#include "Camera.h"
-#include "Window.h"
-#include "Input.h"
-#include "Model.h"
-#include "Time.h"
-#include "GameObject.h"
+#include "Platform/MediaLayer.h"
+#include "Platform/Window.h"
+#include "Renderer/Model.h"
+#include "Core/Camera.h"
+#include "Core/GameObject.h"
+#include "Core/Input.h"
+#include "Core/Time.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
 
 int main(int argc, char* argv[])
 {
-	if (!MediaLayer::init())
+	if (!Engine::MediaLayer::init())
 	{
 		return 1;
 	}
 
-	Window* window = new Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
-	Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
-	Input& input = Input::getInstance();
+	Engine::Window* window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
+	Engine::Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
+	Engine::Input& input = Engine::Input::getInstance();
 
-	Shader* shader = new Shader("default.vs", "default.fs");
+	Engine::Shader* shader = new Engine::Shader("Assets/Shaders/default.vs", "Assets/Shaders/default.fs");
 
-	const char* path = "box.obj";
-	Model cube(_strdup(path));
-	MaterialObject material(shader);
-	GameObject* box = new GameObject(cube, material);
+	const char* path = "Assets/Models/box.obj";
+	Engine::Model cube(_strdup(path));
+	Engine::MaterialObject material(shader);
+	Engine::GameObject* box = new Engine::GameObject(cube, material);
 
-	path = "box3.obj";
-	Model cube2(_strdup(path));
+	path = "Assets/Models/box3.obj";
+	Engine::Model cube2(_strdup(path));
 
 	float speed = 10.f;
 
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 
 	while (true)
 	{
-		Time::updateTime();
+		Engine::Time::updateTime();
 		input.update();
 
 		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -57,25 +57,25 @@ int main(int argc, char* argv[])
 		int movementX, movementY;
 		std::tie(movementX, movementY) = input.getMouseMovement();
 
-		camera.processMouseMovement(float(movementX) * Time::getDeltaTime(), float(movementY) * Time::getDeltaTime());
-		if (input.getKey(KEY_W))
+		camera.processMouseMovement(float(movementX) * Engine::Time::getDeltaTime(), float(movementY) * Engine::Time::getDeltaTime());
+		if (input.getKey(Engine::KEY_W))
 		{
-			camera.processKeyboard(Camera_Movement::FORWARD, Time::getDeltaTime());
+			camera.processKeyboard(Engine::Camera_Movement::FORWARD, Engine::Time::getDeltaTime());
 		}
-		if (input.getKey(KEY_S))
+		if (input.getKey(Engine::KEY_S))
 		{
-			camera.processKeyboard(Camera_Movement::BACKWARD, Time::getDeltaTime());
+			camera.processKeyboard(Engine::Camera_Movement::BACKWARD, Engine::Time::getDeltaTime());
 		}
-		if (input.getKey(KEY_A))
+		if (input.getKey(Engine::KEY_A))
 		{
-			camera.processKeyboard(Camera_Movement::LEFT, Time::getDeltaTime());
+			camera.processKeyboard(Engine::Camera_Movement::LEFT, Engine::Time::getDeltaTime());
 		}
-		if (input.getKey(KEY_D))
+		if (input.getKey(Engine::KEY_D))
 		{
-			camera.processKeyboard(Camera_Movement::RIGHT, Time::getDeltaTime());
+			camera.processKeyboard(Engine::Camera_Movement::RIGHT, Engine::Time::getDeltaTime());
 		}
 
-		if (input.getKey(KEY_ESCAPE))
+		if (input.getKey(Engine::KEY_ESCAPE))
 			break;
 
 		shader->use();
@@ -84,21 +84,21 @@ int main(int argc, char* argv[])
 		shader->setMat4("projection", projection);
 		shader->setMat4("view", view);
 
-		if (input.getKey(KEY_UP))
+		if (input.getKey(Engine::KEY_UP))
 		{
-			box->transform.position += glm::vec3(0.f, 0.f, 1.f) * speed * Time::getDeltaTime();
+			box->transform.position += glm::vec3(0.f, 0.f, 1.f) * speed * Engine::Time::getDeltaTime();
 		}
-		else if (input.getKey(KEY_DOWN))
+		else if (input.getKey(Engine::KEY_DOWN))
 		{
-			box->transform.position -= glm::vec3(0.f, 0.f, 1.f) * speed * Time::getDeltaTime();
+			box->transform.position -= glm::vec3(0.f, 0.f, 1.f) * speed * Engine::Time::getDeltaTime();
 		}
-		else if (input.getKey(KEY_LEFT))
+		else if (input.getKey(Engine::KEY_LEFT))
 		{
-			box->transform.position -= glm::vec3(1.f, 0.f, 0.f) * speed * Time::getDeltaTime();
+			box->transform.position -= glm::vec3(1.f, 0.f, 0.f) * speed * Engine::Time::getDeltaTime();
 		}
-		else if (input.getKey(KEY_RIGHT))
+		else if (input.getKey(Engine::KEY_RIGHT))
 		{
-			box->transform.position += glm::vec3(1.f, 0.f, 0.f) * speed * Time::getDeltaTime();
+			box->transform.position += glm::vec3(1.f, 0.f, 0.f) * speed * Engine::Time::getDeltaTime();
 		}
 
 		box->draw();
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 	}
 
 	delete window;
-	MediaLayer::exit();
+	Engine::MediaLayer::exit();
 	
 	return 0;
 }

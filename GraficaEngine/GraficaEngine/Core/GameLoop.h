@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Scene.h"
 #include "GameObject.h"
 #include "Input.h"
 #include "Time.h"
@@ -23,9 +24,9 @@ namespace Engine
 	{
 	private:
 		GameLoop();
-		Camera* _camera;
 		Window* _window;
 		Shader* _shader;
+		Scene* _activeScene;
 		std::vector<GameObject*> _gameObjects;
 	public:
 		static GameLoop getInstance()
@@ -34,9 +35,8 @@ namespace Engine
 			return _instance;
 		}
 		void start();
-		void addCamera(Camera*);
+		void setActiveScene(Scene*);
 		void addWindow(Window*);
 		void addShader(Shader*);
-		void addGameObject(GameObject*);
 	};
 }

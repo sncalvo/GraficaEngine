@@ -11,5 +11,5 @@ private:
 	float _speed = 10.f;
 public:
 	PlayerController();
-	void update(Engine::GameObject* gameObject);
+	void update();
 };

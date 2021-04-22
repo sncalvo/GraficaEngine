@@ -4,7 +4,7 @@
 
 PlayerController::PlayerController() {}
 
-void PlayerController::update(Engine::GameObject *gameObject)
+void PlayerController::update()
 {
 	Engine::Input& input = Engine::Input::getInstance();
 	if (input.getKey(Engine::KEY_UP))

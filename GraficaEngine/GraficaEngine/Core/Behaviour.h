@@ -6,7 +6,13 @@ namespace Engine
 	
 	class Behaviour
 	{
+	protected:
+		GameObject* gameObject;
 	public:
-		virtual void update(GameObject*) = 0;
+		virtual void update() = 0;
+		void setGameObject(GameObject* parentGameObject)
+		{
+			gameObject = parentGameObject;
+		}
 	};
 }

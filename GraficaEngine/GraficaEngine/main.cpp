@@ -20,6 +20,7 @@
 #include "Core/Behaviour.h"
 
 #include "Scripts/PlayerController.h"
+#include "Scripts/CameraController.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -35,8 +36,7 @@ int main(int argc, char* argv[])
 
 	Engine::Window* window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
 	gameLoop.addWindow(window);
-	Engine::Camera* camera = new Engine::Camera(glm::vec3(0.0f, 0.0f, 1.0f));
-	gameLoop.addCamera(camera);
+	Engine::Scene* scene = new Engine::Scene();
 	Engine::Shader* shader = new Engine::Shader();
 	gameLoop.addShader(shader);
 
@@ -45,8 +45,10 @@ int main(int argc, char* argv[])
 	Engine::MaterialObject material(shader);
 	Engine::GameObject* box = new Engine::GameObject(cube, material);
 	box->addBehaviour(new PlayerController());
+	box->addBehaviour(new CameraController());
 
-	gameLoop.addGameObject(box);
+	scene->addGameObject(box);
+	gameLoop.setActiveScene(scene);
 	gameLoop.start();
 
 	return 0;

@@ -110,11 +110,12 @@ namespace Engine
     {
         aiColor3D color;
         material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-        glm::vec3 diffuse{color.r, color.b, color.g};
+        glm::vec3 diffuse{color.r, color.g, color.b};
+        glm::vec3 ambient{color.r, color.g, color.b};
         material->Get(AI_MATKEY_COLOR_SPECULAR, color);
-        glm::vec3 specular{ color.r, color.b, color.g };
-        material->Get(AI_MATKEY_COLOR_AMBIENT, color);
-        glm::vec3 ambient{ color.r, color.b, color.g };
+        glm::vec3 specular{color.r, color.g, color.b};
+        // Currently ignoring ambient and reasigning diffuse since looks better
+        // material->Get(AI_MATKEY_COLOR_AMBIENT, color);
         float shininess;
         material->Get(AI_MATKEY_SHININESS, shininess);
 

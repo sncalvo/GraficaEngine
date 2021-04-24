@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <SDL/SDL_opengl.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
 
@@ -69,9 +70,9 @@ namespace Engine
         }
         glActiveTexture(GL_TEXTURE0);
 
-        shader.setVec3("material.ambient", _material.ambient);
-        shader.setVec3("material.diffuse", _material.diffuse);
-        shader.setVec3("material.specular", _material.specular);
+        shader.setVec3f("material.ambient", glm::value_ptr(_material.ambient));
+        shader.setVec3f("material.diffuse", glm::value_ptr(_material.diffuse));
+        shader.setVec3f("material.specular", glm::value_ptr(_material.specular));
         shader.setFloat("material.shininess", _material.shininess);
 
         // draw mesh

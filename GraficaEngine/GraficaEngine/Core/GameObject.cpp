@@ -10,6 +10,16 @@ namespace Engine
 		Shader* shader = _material.getShader();
 		shader->use();
 		transform.apply(*shader);
+		std::vector<Light*> lights = _scene->getLights();
+
+		for (Light* light : lights)
+		{
+			light->apply(*shader);
+		}
+
+		Camera* camera = _scene->getCamera();
+		camera->apply(*shader);
+
 		_model.draw(*shader);
 	}
 

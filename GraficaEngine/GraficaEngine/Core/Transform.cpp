@@ -1,3 +1,5 @@
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Transform.h"
 
 namespace Engine
@@ -37,6 +39,6 @@ namespace Engine
 	void Transform::apply(Shader& shader) const
 	{
 		glm::mat4 model = _getTransformedModel();
-		shader.setMat4("model", model);
+		shader.setMatrix4f("model", glm::value_ptr(model));
 	}
 }

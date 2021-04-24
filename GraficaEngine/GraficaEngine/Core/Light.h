@@ -5,12 +5,12 @@
 
 #include <glm/vec4.hpp>
 
-#include "../Renderer/Drawable.h"
 #include "Transform.h"
+#include "../Renderer/Shader.h"
 
 namespace Engine
 {
-	class Light: public Drawable
+	class Light
 	{
 	private:
 		Transform _transform;
@@ -18,10 +18,13 @@ namespace Engine
 		glm::vec3 _ambient;
 		glm::vec3 _diffuse;
 		glm::vec3 _specular;
+
+		glm::vec3 _direction;
 		float _intensity;
 	public:
-		Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular);
-		virtual void draw() const = 0;
+		Light(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction);
+		Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction);
+		void apply(Shader&) const;
 		void setIntensity(float intensity);
 		void setPosition(glm::vec4 position);
 		void setAmbient(glm::vec4 color);

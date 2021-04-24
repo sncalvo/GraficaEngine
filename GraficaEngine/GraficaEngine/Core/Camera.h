@@ -6,6 +6,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "../Renderer/Shader.h"
+
 namespace Engine
 {
     enum class Camera_Movement {
@@ -29,11 +31,12 @@ namespace Engine
             glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
             float yaw = YAW, float pitch = PITCH
         );
-        glm::mat4 getViewMatrix();
+        glm::mat4 getViewMatrix() const;
+        void apply(Shader& shader) const;
         void processKeyboard(Camera_Movement direction, float deltaTime);
         void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
         void processMouseScroll(float yoffset);
-        float getZoom();
+        float getZoom() const;
 
     private:
         glm::vec3 _position;

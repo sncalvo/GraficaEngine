@@ -18,6 +18,21 @@ namespace Engine
 		std::remove(_gameObjects.begin(), _gameObjects.end(), gameObject);
 	}
 
+	void Scene::addLight(Light* light)
+	{
+		_lights.push_back(light);
+	}
+
+	void Scene::removeLight(Light* light)
+	{
+		std::remove(_lights.begin(), _lights.end(), light);
+	}
+
+	std::vector<Light*> Scene::getLights()
+	{
+		return _lights;
+	}
+
 	Camera* Scene::getCamera()
 	{
 		return _activeCamera;
@@ -27,7 +42,7 @@ namespace Engine
 	{
 		for (GameObject* gameObject : _gameObjects)
 		{
-			gameObject->update();
+			gameObject->draw();
 		}
 	}
 
@@ -35,7 +50,7 @@ namespace Engine
 	{
 		for (GameObject* gameObject : _gameObjects)
 		{
-			gameObject->draw();
+			gameObject->update();
 		}
 	}
 
@@ -47,5 +62,11 @@ namespace Engine
 		{
 			delete gameObject;
 		}
+
+		for (Light* light : _lights)
+		{
+			delete light;
+		}
+
 	}
 }

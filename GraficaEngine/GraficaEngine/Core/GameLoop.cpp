@@ -10,7 +10,7 @@ namespace Engine
 		Input& input = Input::getInstance();
 
 		glEnable(GL_DEPTH_TEST);
-		glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
 		while (true)
 		{

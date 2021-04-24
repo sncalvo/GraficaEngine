@@ -15,6 +15,7 @@
 #include "Renderer/Model.h"
 #include "Core/GameLoop.h"
 #include "Core/Camera.h"
+#include "Core/Light.h"
 #include "Core/GameObject.h"
 #include "Core/Time.h"
 #include "Core/Behaviour.h"
@@ -40,14 +41,35 @@ int main(int argc, char* argv[])
 	Engine::Shader* shader = new Engine::Shader();
 	gameLoop.addShader(shader);
 
-	const char* path = "Assets/Models/box.obj";
-	Engine::Model cube(_strdup(path));
-	Engine::MaterialObject material(shader);
-	Engine::GameObject* box = new Engine::GameObject(cube, material);
-	box->addBehaviour(new PlayerController());
-	box->addBehaviour(new CameraController());
+	Engine::Model duckModel(_strdup("Assets/Models/duck.obj"));
+	Engine::MaterialObject duckMaterial(shader);
+	Engine::GameObject* duck = new Engine::GameObject(duckModel, duckMaterial);
+	duck->addBehaviour(new PlayerController());
+	duck->addBehaviour(new CameraController());
+	scene->addGameObject(duck);
+	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
 
-	scene->addGameObject(box);
+	Engine::Model logModel(_strdup("Assets/Models/log.obj"));
+	Engine::MaterialObject logMaterial(shader);
+	Engine::GameObject* log = new Engine::GameObject(logModel, logMaterial);
+	scene->addGameObject(log);
+	log->transform.position += glm::vec3(4.0f, 0.f, -5.f);
+
+	Engine::Model carModel(_strdup("Assets/Models/lowpolycar.obj"));
+	Engine::MaterialObject carMaterial(shader);
+	Engine::GameObject* car = new Engine::GameObject(carModel, carMaterial);
+	scene->addGameObject(car);
+	car->transform.position += glm::vec3(-3.0f, 0.f, 3.f);
+
+	Engine::Model treeModel(_strdup("Assets/Models/tree.obj"));
+	Engine::MaterialObject treeMaterial(shader);
+	Engine::GameObject* tree = new Engine::GameObject(treeModel, treeMaterial);
+	scene->addGameObject(tree);
+	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
+
+	Engine::Light* light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, 1.f, 1.f));
+	scene->addLight(light);
+
 	gameLoop.setActiveScene(scene);
 	gameLoop.start();
 

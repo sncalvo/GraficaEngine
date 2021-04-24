@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace Engine
 {
     Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch):
@@ -15,9 +17,14 @@ namespace Engine
         _updateCameraVectors();
     }
 
-    glm::mat4 Camera::getViewMatrix()
+    glm::mat4 Camera::getViewMatrix() const
     {
         return glm::lookAt(_position, _position + _front, _up);
+    }
+
+    void Camera::apply(Shader& shader) const
+    {
+        shader.setVec3f("viewPos", glm::value_ptr(_position));
     }
 
     void Camera::processKeyboard(Camera_Movement direction, float deltaTime)
@@ -61,7 +68,7 @@ namespace Engine
             _zoom = 45.0f;
     }
 
-    float Camera::getZoom()
+    float Camera::getZoom() const
     {
         return _zoom;
     }

@@ -4,13 +4,38 @@
 
 namespace Engine
 {
-	Light::Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular) :
+	Light::Light(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction) :
+		_transform(),
+		_intensity(1.0f),
+		_ambient(ambient),
+		_diffuse(diffuse),
+		_specular(specular),
+		_direction(direction)
+	{}
+
+	Light::Light(
+		Transform transform,
+		float intensity,
+		glm::vec3 ambient,
+		glm::vec3 diffuse,
+		glm::vec3 specular,
+		glm::vec3 direction
+	) :
 		_transform(transform),
 		_intensity(intensity),
 		_ambient(ambient),
 		_diffuse(diffuse),
-		_specular(specular)
+		_specular(specular),
+		_direction(direction)
 	{}
+
+	void Light::apply(Shader& shader) const
+	{
+		shader.setVec3f("light.diffuse", glm::value_ptr(_diffuse));
+		shader.setVec3f("light.ambient", glm::value_ptr(_ambient));
+		shader.setVec3f("light.specular", glm::value_ptr(_specular));
+		shader.setVec3f("light.direction", glm::value_ptr(_direction));
+	}
 
 	void Light::setIntensity(float intensity)
 	{

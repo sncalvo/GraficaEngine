@@ -16,13 +16,14 @@ namespace Engine
 	class GameObject
 	{
 	private:
-		Model _model;
+		Model* _model;
 		MaterialObject _material;
 		std::vector<Behaviour*> _behaviours;
 		Scene* _scene;
 		// GameObject[] _children;
 	public:
-		GameObject(Model model, MaterialObject material);
+		GameObject();
+		GameObject(Model* model, MaterialObject material);
 		~GameObject();
 		Transform transform;
 		void setScene(Scene*);

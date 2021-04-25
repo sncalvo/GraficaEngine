@@ -2,11 +2,18 @@
 
 namespace Engine
 {
-	GameObject::GameObject(Model model, MaterialObject material) : _model(model), _material(material)
+	GameObject::GameObject() : _model(nullptr), _material(nullptr), _scene(nullptr)
+	{}
+
+	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material), _scene(nullptr)
 	{}
 
 	void GameObject::draw() const
 	{
+		if (_model == nullptr)
+		{
+			return;
+		}
 		Shader* shader = _material.getShader();
 		shader->use();
 		transform.apply(*shader);
@@ -20,7 +27,7 @@ namespace Engine
 		Camera* camera = _scene->getCamera();
 		camera->apply(*shader);
 
-		_model.draw(*shader);
+		_model->draw(*shader);
 	}
 
 	void GameObject::update()
@@ -49,6 +56,8 @@ namespace Engine
 
 	GameObject::~GameObject()
 	{
+		delete _model;
+
 		_scene->removeGameObject(this);
 		_scene = nullptr;
 

@@ -20,7 +20,6 @@
 #include "Core/Time.h"
 #include "Core/Behaviour.h"
 
-#include "TestEmpty.h"
 #include "Scripts/PlayerController.h"
 #include "Scripts/CameraController.h"
 

@@ -65,10 +65,16 @@ namespace Engine
             else if (name == "texture_specular")
                 number = std::to_string(specularNr++);
 
-            shader.setFloat(("material." + name + number).c_str(), i);
+            shader.setBool("has_texture", true);
+            shader.setFloat((name + number).c_str(), i);
             glBindTexture(GL_TEXTURE_2D, _textures[i].ID);
         }
         glActiveTexture(GL_TEXTURE0);
+        if (_textures.size() == 0)
+        {
+            shader.setBool("has_texture", false);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
 
         shader.setVec3f("material.ambient", glm::value_ptr(_material.ambient));
         shader.setVec3f("material.diffuse", glm::value_ptr(_material.diffuse));

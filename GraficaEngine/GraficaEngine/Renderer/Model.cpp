@@ -93,13 +93,13 @@ namespace Engine
     std::vector<Texture> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
     {
         std::vector<Texture> textures;
-        aiString str;
+        aiString texturePath;
 
-        mat->GetTexture(type, 0, &str);
+        mat->GetTexture(type, 0, &texturePath);
 
-        if (str.length > 0)
+        if (texturePath.length > 0)
         {
-            Texture texture(str.C_Str(), typeName);
+            Texture texture(texturePath.C_Str(), typeName);
             textures.push_back(texture);
         }
 

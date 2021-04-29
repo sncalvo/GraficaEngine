@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	GameLoop::GameLoop()
+	GameLoop::GameLoop(): _activeScene(nullptr), _shader(nullptr), _window(nullptr)
 	{}
 
 	void GameLoop::start()
@@ -26,7 +26,7 @@ namespace Engine
 
 			Camera* camera = _activeScene->getCamera();
 
-			if (input.getKey(KEY_ESCAPE))
+			if (input.getKeyDown(KEY_ESCAPE) || input.getKeyDown(KEY_Q))
 				break;
 
 			_shader->use();

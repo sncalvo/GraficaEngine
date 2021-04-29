@@ -1,15 +1,13 @@
-#include <vector>
+#include "FlyingCameraController.h"
 
-#include "CameraController.h"
-
-void CameraController::update()
+void FlyingCameraController::update()
 {
 	Engine::Input& input = Engine::Input::getInstance();
 
 	int movementX, movementY;
 	std::tie(movementX, movementY) = input.getMouseMovement();
 
-	Engine::Camera* camera = gameObject->getScene()->getCamera();
+	Engine::Camera* camera = static_cast<Engine::Camera*>(gameObject);
 
 	camera->processMouseMovement(float(movementX) * Engine::Time::getDeltaTime(), float(movementY) * Engine::Time::getDeltaTime());
 	if (input.getKey(Engine::KEY_W))

@@ -14,14 +14,17 @@
 #include "Platform/Window.h"
 #include "Renderer/Model.h"
 #include "Core/GameLoop.h"
-#include "Core/Camera.h"
 #include "Core/Light.h"
 #include "Core/GameObject.h"
+#include "Core/PerspectiveCamera.h"
+#include "Core/OrthographicCamera.h"
 #include "Core/Time.h"
 #include "Core/Behaviour.h"
 
 #include "Scripts/PlayerController.h"
-#include "Scripts/CameraController.h"
+#include "Scripts/SwapCameras.h"
+#include "Scripts/FlyingCameraController.h"
+#include "Scripts/OffsetPlayer.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -37,16 +40,59 @@ int main(int argc, char* argv[])
 
 	Engine::Window* window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
 	gameLoop.addWindow(window);
-	Engine::Scene* scene = new Engine::Scene();
+
+	Engine::OrthographicCamera* isometricCamera = new Engine::OrthographicCamera(
+		glm::vec3(0.f, 4.f, 0.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		-35.264f - 90.f,
+		-45.f
+	);
+	isometricCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.f, 0.f)));
+	Engine::PerspectiveCamera* centeredFixedCamera = new Engine::PerspectiveCamera(
+		glm::vec3(1.f, 4.f, 3.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		Engine::YAW,
+		-30.f
+	);
+	centeredFixedCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.5f, 5.f)));
+	Engine::PerspectiveCamera* firstPersonCamera = new Engine::PerspectiveCamera(
+		glm::vec3(1.f, 2.f, -0.5f)
+	);
+	firstPersonCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 1.f, -0.5f))); // TODO: Find out how to rotate with mouse
+	Engine::PerspectiveCamera* thirdPersonCamera = new Engine::PerspectiveCamera(
+		glm::vec3(0.f, 0.f, 0.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		Engine::YAW,
+		-30.f
+	);
+	thirdPersonCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 8.5f, 10.f))); // TODO: Find out how to rotate with mouse
+	Engine::PerspectiveCamera* flyingCamera = new Engine::PerspectiveCamera(
+		glm::vec3(0.f, 5.f, 5.f),
+		glm::vec3(0.f, 1.f, 0.f),
+		Engine::YAW,
+		-45.f
+	);
+	flyingCamera->addBehaviour(new FlyingCameraController());
+
+	Engine::Scene* scene = new Engine::Scene(flyingCamera);
+	scene->addCamera("isometric", isometricCamera);
+	scene->addCamera("centeredFixed", centeredFixedCamera);
+	scene->addCamera("firstPerson", firstPersonCamera);
+	scene->addCamera("thirdPerson", thirdPersonCamera);
+	
 	Engine::Shader* shader = new Engine::Shader();
 	gameLoop.addShader(shader);
+
+	Engine::BaseGameObject* cameraManager = new Engine::BaseGameObject();
+	cameraManager->addBehaviour(new SwapCameras());
+	scene->addGameObject(cameraManager);
 
 	Engine::Model* duckModel = new Engine::Model(_strdup("Assets/Models/duck.obj"));
 	Engine::MaterialObject duckMaterial(shader);
 	Engine::GameObject* duck = new Engine::GameObject(duckModel, duckMaterial);
 	duck->addBehaviour(new PlayerController());
-	duck->addBehaviour(new CameraController());
 	scene->addGameObject(duck);
+	duck->addTag("player");
 	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
@@ -68,7 +114,7 @@ int main(int argc, char* argv[])
 	scene->addGameObject(tree);
 	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
 
-	Engine::Light* light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, 1.f, 1.f));
+	Engine::Light* light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
 	scene->addLight(light);
 
 	gameLoop.setActiveScene(scene);

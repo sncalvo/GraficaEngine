@@ -24,13 +24,13 @@ namespace Engine
 				continue;
 			}
 
-			Camera* camera = _activeScene->getCamera();
+			Camera* camera = _activeScene->getActiveCamera();
 
 			if (input.getKeyDown(KEY_ESCAPE) || input.getKeyDown(KEY_Q))
 				break;
 
 			_shader->use();
-			glm::mat4 projection = glm::perspective(glm::radians(camera->getZoom()), 800.0f / 600.0f, 0.1f, 100.0f);
+			glm::mat4 projection = camera->getProjectionMatrix();
 			glm::mat4 view = camera->getViewMatrix();
 			_shader->setMat4("projection", projection);
 			_shader->setMat4("view", view);
@@ -46,6 +46,7 @@ namespace Engine
 			delete gameObject;
 		}
 
+		delete _activeScene;
 		delete _shader;
 		delete _window;
 		MediaLayer::exit();

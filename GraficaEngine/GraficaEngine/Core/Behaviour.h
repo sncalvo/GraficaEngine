@@ -2,15 +2,15 @@
 
 namespace Engine
 {
-	class GameObject;
+	class BaseGameObject;
 	
 	class Behaviour
 	{
 	protected:
-		GameObject* gameObject;
+		BaseGameObject* gameObject;
 	public:
 		virtual void update() = 0;
-		void setGameObject(GameObject* parentGameObject)
+		void setGameObject(BaseGameObject* parentGameObject)
 		{
 			gameObject = parentGameObject;
 		}

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <SDL/SDL_opengl.h>
 
 namespace Engine

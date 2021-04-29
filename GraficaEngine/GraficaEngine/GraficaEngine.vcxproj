@@ -152,11 +152,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\CameraController.cpp" />
+    <ClCompile Include="Core\BaseGameObject.cpp" />
+    <ClCompile Include="Core\OrthographicCamera.cpp" />
+    <ClCompile Include="Core\PerspectiveCamera.cpp" />
+    <ClCompile Include="Scripts\FlyingCameraController.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\GameLoop.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Scripts\OffsetPlayer.cpp" />
     <ClCompile Include="Scripts\PlayerController.cpp" />
+    <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -173,12 +178,17 @@
     <ClCompile Include="Platform\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\CameraController.h" />
+    <ClInclude Include="Core\BaseGameObject.h" />
+    <ClInclude Include="Core\OrthographicCamera.h" />
+    <ClInclude Include="Core\PerspectiveCamera.h" />
+    <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\GameLoop.h" />
     <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Scripts\OffsetPlayer.h" />
     <ClInclude Include="Scripts\PlayerController.h" />
+    <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Utils\DebugLog.h" />
     <ClInclude Include="Renderer\Drawable.h" />
     <ClInclude Include="Core\GameObject.h" />

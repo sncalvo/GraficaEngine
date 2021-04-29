@@ -2,18 +2,32 @@
 
 namespace Engine
 {
-	Scene::Scene()
+	Scene::Scene(Camera* defaultCamera)
 	{
-		_activeCamera = new Camera();
+		_cameraNames.push_back("default");
+		_cameras["default"] = defaultCamera;
+		_activeCamera = defaultCamera;
 	}
 
-	void Scene::addGameObject(GameObject* gameObject)
+	void Scene::addGameObject(BaseGameObject* gameObject)
 	{
 		gameObject->setScene(this);
 		_gameObjects.push_back(gameObject);
 	}
 
-	void Scene::removeGameObject(GameObject* gameObject)
+	BaseGameObject* Scene::getGameObjectWithTag(std::string tag)
+	{
+		for (BaseGameObject* gameObject: _gameObjects)
+		{
+			if (gameObject->hasTag(tag))
+			{
+				return gameObject;
+			}
+		}
+		return nullptr;
+	}
+
+	void Scene::removeGameObject(BaseGameObject* gameObject)
 	{
 		std::remove(_gameObjects.begin(), _gameObjects.end(), gameObject);
 	}
@@ -33,22 +47,50 @@ namespace Engine
 		return _lights;
 	}
 
-	Camera* Scene::getCamera()
+	Camera* Scene::getActiveCamera()
 	{
 		return _activeCamera;
 	}
 
+	Camera* Scene::getCamera(std::string cameraName)
+	{
+		return _cameras[cameraName];
+	}
+
+	void Scene::addCamera(std::string cameraName, Camera* camera)
+	{
+		camera->setScene(this);
+		_cameraNames.push_back(cameraName);
+		_cameras[cameraName] = camera;
+	}
+
+	void Scene::setActiveCamera(std::string cameraName)
+	{
+		_activeCamera = getCamera(cameraName);
+	}
+
+	std::vector<std::string> Scene::getCameraNames() const
+	{
+		return _cameraNames;
+	}
+
 	void Scene::draw()
 	{
-		for (GameObject* gameObject : _gameObjects)
+		for (BaseGameObject* baseGameObject : _gameObjects)
 		{
-			gameObject->draw();
+			if (baseGameObject->isDrawable())
+			{
+				GameObject* gameObject = dynamic_cast<GameObject*>(baseGameObject);
+				gameObject->draw();
+			}
 		}
 	}
 
 	void Scene::update()
 	{
-		for (GameObject* gameObject : _gameObjects)
+		_activeCamera->update();
+
+		for (BaseGameObject* gameObject : _gameObjects)
 		{
 			gameObject->update();
 		}
@@ -56,9 +98,12 @@ namespace Engine
 
 	Scene::~Scene()
 	{
-		delete _activeCamera;
+		for (std::pair<std::string, Camera*> entry : _cameras)
+		{
+			delete entry.second;
+		}
 
-		for (GameObject* gameObject : _gameObjects)
+		for (BaseGameObject* gameObject : _gameObjects)
 		{
 			delete gameObject;
 		}
@@ -67,6 +112,5 @@ namespace Engine
 		{
 			delete light;
 		}
-
 	}
 }

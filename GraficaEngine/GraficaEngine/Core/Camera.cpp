@@ -9,35 +9,35 @@ namespace Engine
         _movementSpeed(SPEED),
         _mouseSensitivity(SENSITIVITY),
         _zoom(ZOOM),
-        _position(position),
         _worldUp(up),
         _yaw(yaw),
         _pitch(pitch)
     {
+        transform.position = position;
         _updateCameraVectors();
     }
 
     glm::mat4 Camera::getViewMatrix() const
     {
-        return glm::lookAt(_position, _position + _front, _up);
+        return glm::lookAt(transform.position, transform.position + _front, _up);
     }
 
     void Camera::apply(Shader& shader) const
     {
-        shader.setVec3f("viewPos", glm::value_ptr(_position));
+        shader.setVec3f("viewPos", glm::value_ptr(transform.position));
     }
 
     void Camera::processKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = _movementSpeed * deltaTime;
         if (direction == Camera_Movement::FORWARD)
-            _position += _front * velocity;
+            transform.position += _front * velocity;
         if (direction == Camera_Movement::BACKWARD)
-            _position -= _front * velocity;
+            transform.position -= _front * velocity;
         if (direction == Camera_Movement::LEFT)
-            _position -= _right * velocity;
+            transform.position -= _right * velocity;
         if (direction == Camera_Movement::RIGHT)
-            _position += _right * velocity;
+            transform.position += _right * velocity;
     }
 
     void Camera::processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
@@ -83,5 +83,10 @@ namespace Engine
 
         _right = glm::normalize(glm::cross(_front, _worldUp));
         _up = glm::normalize(glm::cross(_right, _front));
+    }
+
+    glm::mat4 Camera::getProjectionMatrix() const
+    {
+        return glm::mat4(0.f);
     }
 }

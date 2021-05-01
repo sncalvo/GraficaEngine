@@ -5,7 +5,7 @@
 
 namespace Engine
 {
-	bool DebugLog::_isDebugMode = false;
+	bool DebugLog::_isDebugMode = true;
 
 	std::string bold_red = "\e[1;31m";
 	std::string red = "\e[0;31m";

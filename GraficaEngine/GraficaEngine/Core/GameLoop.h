@@ -20,14 +20,18 @@
 
 namespace Engine
 {
+	constexpr auto PAUSE_KEY = KEY_P;
+
 	class GameLoop
 	{
 	private:
 		GameLoop();
-		Window* _window;
-		Shader* _shader;
-		Scene* _activeScene;
-		std::vector<GameObject*> _gameObjects;
+		Window *_window;
+		Shader *_shader;
+		Scene *_activeScene;
+		std::vector<GameObject *> _gameObjects;
+		bool _gamePaused;
+
 	public:
 		static GameLoop getInstance()
 		{
@@ -35,8 +39,8 @@ namespace Engine
 			return _instance;
 		}
 		void start();
-		void setActiveScene(Scene*);
-		void addWindow(Window*);
-		void addShader(Shader*);
+		void setActiveScene(Scene *);
+		void addWindow(Window *);
+		void addShader(Shader *);
 	};
 }

@@ -2,12 +2,13 @@
 
 namespace Engine
 {
-	GameLoop::GameLoop(): _activeScene(nullptr), _shader(nullptr), _window(nullptr)
-	{}
+	GameLoop::GameLoop() : _activeScene(nullptr), _shader(nullptr), _window(nullptr)
+	{
+	}
 
 	void GameLoop::start()
 	{
-		Input& input = Input::getInstance();
+		Input &input = Input::getInstance();
 
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
@@ -19,12 +20,18 @@ namespace Engine
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			if (!_activeScene)
+			if (input.getKeyDown(PAUSE_KEY))
+			{
+				_gamePaused = !_gamePaused;
+			}
+
+			// TODO: Pause bullet physics. Ref: https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=6487
+			if (_gamePaused || !_activeScene)
 			{
 				continue;
 			}
 
-			Camera* camera = _activeScene->getActiveCamera();
+			Camera *camera = _activeScene->getActiveCamera();
 
 			if (input.getKeyDown(KEY_ESCAPE) || input.getKeyDown(KEY_Q))
 				break;
@@ -41,7 +48,7 @@ namespace Engine
 			_window->swap();
 		}
 
-		for (GameObject* gameObject : _gameObjects)
+		for (GameObject *gameObject : _gameObjects)
 		{
 			delete gameObject;
 		}
@@ -52,7 +59,7 @@ namespace Engine
 		MediaLayer::exit();
 	}
 
-	void GameLoop::setActiveScene(Scene* scene)
+	void GameLoop::setActiveScene(Scene *scene)
 	{
 		if (_activeScene)
 		{
@@ -62,11 +69,10 @@ namespace Engine
 		_activeScene = scene;
 	}
 
-	void GameLoop::addWindow(Window* window)
+	void GameLoop::addWindow(Window *window)
 	{
 		_window = window;
 	}
-
 	void GameLoop::addShader(Shader *shader)
 	{
 		_shader = shader;

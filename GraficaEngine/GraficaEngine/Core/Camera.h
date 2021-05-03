@@ -12,7 +12,8 @@
 
 namespace Engine
 {
-    enum class Camera_Movement {
+    enum class Camera_Movement
+    {
         FORWARD,
         BACKWARD,
         LEFT,
@@ -31,11 +32,12 @@ namespace Engine
         Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch);
         glm::mat4 getViewMatrix() const;
         virtual glm::mat4 getProjectionMatrix() const;
-        void apply(Shader& shader) const;
+        void apply(Shader &shader) const;
         void processKeyboard(Camera_Movement direction, float deltaTime);
         void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
         void processMouseScroll(float yoffset);
         float getZoom() const;
+
     private:
         glm::vec3 _front;
         glm::vec3 _up;
@@ -47,7 +49,5 @@ namespace Engine
         float _movementSpeed;
         float _mouseSensitivity;
         float _zoom;
-
-        void _updateCameraVectors();
     };
 }

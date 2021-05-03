@@ -25,11 +25,13 @@
 #include "Scripts/SwapCameras.h"
 #include "Scripts/FlyingCameraController.h"
 #include "Scripts/OffsetPlayer.h"
+#include "Scripts/FirstPersonCameraController.h"
+#include "Scripts/ThirdPersonCameraController.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	if (!Engine::MediaLayer::init())
 	{
@@ -38,83 +40,81 @@ int main(int argc, char* argv[])
 
 	Engine::GameLoop gameLoop = Engine::GameLoop::getInstance();
 
-	Engine::Window* window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
+	Engine::Window *window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
 	gameLoop.addWindow(window);
 
-	Engine::OrthographicCamera* isometricCamera = new Engine::OrthographicCamera(
+	Engine::OrthographicCamera *isometricCamera = new Engine::OrthographicCamera(
 		glm::vec3(0.f, 4.f, 0.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		-35.264f - 90.f,
-		-45.f
-	);
+		-45.f);
 	isometricCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.f, 0.f)));
-	Engine::PerspectiveCamera* centeredFixedCamera = new Engine::PerspectiveCamera(
+	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		Engine::YAW,
-		-30.f
-	);
+		-30.f);
 	centeredFixedCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.5f, 5.f)));
-	Engine::PerspectiveCamera* firstPersonCamera = new Engine::PerspectiveCamera(
-		glm::vec3(1.f, 2.f, -0.5f)
-	);
-	firstPersonCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 1.f, -0.5f))); // TODO: Find out how to rotate with mouse
-	Engine::PerspectiveCamera* thirdPersonCamera = new Engine::PerspectiveCamera(
+
+	Engine::PerspectiveCamera *firstPersonCamera = new Engine::PerspectiveCamera(
+		glm::vec3(1.f, 2.f, -0.5f));
+	firstPersonCamera->addBehaviour(new FirstPersonCameraController(glm::vec3(0.5f, 1.f, 0.f)));
+
+	Engine::PerspectiveCamera *thirdPersonCamera = new Engine::PerspectiveCamera(
 		glm::vec3(0.f, 0.f, 0.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		Engine::YAW,
-		-30.f
-	);
-	thirdPersonCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 8.5f, 10.f))); // TODO: Find out how to rotate with mouse
-	Engine::PerspectiveCamera* flyingCamera = new Engine::PerspectiveCamera(
+		-30.f);
+	thirdPersonCamera->addBehaviour(new ThirdPersonCameraController(10.f, glm::vec3(0.f, 1.f, 0.f)));
+
+	Engine::PerspectiveCamera *flyingCamera = new Engine::PerspectiveCamera(
 		glm::vec3(0.f, 5.f, 5.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		Engine::YAW,
-		-45.f
-	);
+		-45.f);
 	flyingCamera->addBehaviour(new FlyingCameraController());
 
-	Engine::Scene* scene = new Engine::Scene(flyingCamera);
+	Engine::Scene *scene = new Engine::Scene(flyingCamera);
 	scene->addCamera("isometric", isometricCamera);
 	scene->addCamera("centeredFixed", centeredFixedCamera);
 	scene->addCamera("firstPerson", firstPersonCamera);
 	scene->addCamera("thirdPerson", thirdPersonCamera);
-	
-	Engine::Shader* shader = new Engine::Shader();
+
+	Engine::Shader *shader = new Engine::Shader();
 	gameLoop.addShader(shader);
 
-	Engine::BaseGameObject* cameraManager = new Engine::BaseGameObject();
+	Engine::BaseGameObject *cameraManager = new Engine::BaseGameObject();
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-	Engine::Model* duckModel = new Engine::Model(_strdup("Assets/Models/duck.obj"));
+	Engine::Model *duckModel = new Engine::Model(_strdup("Assets/Models/duck.obj"));
 	Engine::MaterialObject duckMaterial(shader);
-	Engine::GameObject* duck = new Engine::GameObject(duckModel, duckMaterial);
+	Engine::GameObject *duck = new Engine::GameObject(duckModel, duckMaterial);
 	duck->addBehaviour(new PlayerController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
 	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
-	Engine::Model* logModel = new Engine::Model(_strdup("Assets/Models/log.obj"));
+	Engine::Model *logModel = new Engine::Model(_strdup("Assets/Models/log.obj"));
 	Engine::MaterialObject logMaterial(shader);
-	Engine::GameObject* log = new Engine::GameObject(logModel, logMaterial);
+	Engine::GameObject *log = new Engine::GameObject(logModel, logMaterial);
 	scene->addGameObject(log);
 	log->transform.position += glm::vec3(4.0f, 0.f, -5.f);
 
-	Engine::Model* carModel = new Engine::Model(_strdup("Assets/Models/lowpolycar.obj"));
+	Engine::Model *carModel = new Engine::Model(_strdup("Assets/Models/lowpolycar.obj"));
 	Engine::MaterialObject carMaterial(shader);
-	Engine::GameObject* car = new Engine::GameObject(carModel, carMaterial);
+	Engine::GameObject *car = new Engine::GameObject(carModel, carMaterial);
 	scene->addGameObject(car);
 	car->transform.position += glm::vec3(-3.0f, 0.f, 3.f);
 
-	Engine::Model* treeModel = new Engine::Model(_strdup("Assets/Models/tree.obj"));
+	Engine::Model *treeModel = new Engine::Model(_strdup("Assets/Models/tree.obj"));
 	Engine::MaterialObject treeMaterial(shader);
-	Engine::GameObject* tree = new Engine::GameObject(treeModel, treeMaterial);
+	Engine::GameObject *tree = new Engine::GameObject(treeModel, treeMaterial);
 	scene->addGameObject(tree);
 	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
 
-	Engine::Light* light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
+	Engine::Light *light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
 	scene->addLight(light);
 
 	gameLoop.setActiveScene(scene);

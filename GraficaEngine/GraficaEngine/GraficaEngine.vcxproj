@@ -155,6 +155,7 @@
     <ClCompile Include="Core\BaseGameObject.cpp" />
     <ClCompile Include="Core\OrthographicCamera.cpp" />
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
+    <ClCompile Include="Scripts\FirstPersonCameraController.cpp" />
     <ClCompile Include="Scripts\FlyingCameraController.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\GameLoop.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Scripts\OffsetPlayer.cpp" />
     <ClCompile Include="Scripts\PlayerController.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
+    <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -181,6 +183,7 @@
     <ClInclude Include="Core\BaseGameObject.h" />
     <ClInclude Include="Core\OrthographicCamera.h" />
     <ClInclude Include="Core\PerspectiveCamera.h" />
+    <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="Scripts\OffsetPlayer.h" />
     <ClInclude Include="Scripts\PlayerController.h" />
     <ClInclude Include="Scripts\SwapCameras.h" />
+    <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Utils\DebugLog.h" />
     <ClInclude Include="Renderer\Drawable.h" />
     <ClInclude Include="Core\GameObject.h" />

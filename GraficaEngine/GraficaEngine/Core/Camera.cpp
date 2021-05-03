@@ -1,28 +1,32 @@
 #include "Camera.h"
+#include "../Utils/DebugLog.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Engine
 {
-    Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch):
-        _front(glm::vec3(0.0f, 0.0f, -1.0f)),
-        _movementSpeed(SPEED),
-        _mouseSensitivity(SENSITIVITY),
-        _zoom(ZOOM),
-        _worldUp(up),
-        _yaw(yaw),
-        _pitch(pitch)
+    Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : _front(glm::vec3(0.0f, 0.0f, -1.0f)),
+                                                                               _movementSpeed(SPEED),
+                                                                               _mouseSensitivity(SENSITIVITY),
+                                                                               _zoom(ZOOM),
+                                                                               _worldUp(up),
+                                                                               _yaw(yaw),
+                                                                               _pitch(pitch)
     {
+        transform.setRotationX(pitch);
+        transform.setRotationY(yaw);
         transform.position = position;
-        _updateCameraVectors();
     }
 
     glm::mat4 Camera::getViewMatrix() const
     {
-        return glm::lookAt(transform.position, transform.position + _front, _up);
+        return glm::lookAt(
+            transform.position,
+            transform.position + transform.getForward(),
+            transform.getUp());
     }
 
-    void Camera::apply(Shader& shader) const
+    void Camera::apply(Shader &shader) const
     {
         shader.setVec3f("viewPos", glm::value_ptr(transform.position));
     }
@@ -31,13 +35,13 @@ namespace Engine
     {
         float velocity = _movementSpeed * deltaTime;
         if (direction == Camera_Movement::FORWARD)
-            transform.position += _front * velocity;
+            transform.position += transform.getForward() * velocity;
         if (direction == Camera_Movement::BACKWARD)
-            transform.position -= _front * velocity;
+            transform.position -= transform.getForward() * velocity;
         if (direction == Camera_Movement::LEFT)
-            transform.position -= _right * velocity;
+            transform.position -= transform.getRight() * velocity;
         if (direction == Camera_Movement::RIGHT)
-            transform.position += _right * velocity;
+            transform.position += transform.getRight() * velocity;
     }
 
     void Camera::processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
@@ -45,18 +49,16 @@ namespace Engine
         xoffset *= _mouseSensitivity;
         yoffset *= _mouseSensitivity;
 
-        _yaw += xoffset;
-        _pitch += yoffset;
+        transform.rotateY(xoffset);
+        transform.rotateX(yoffset);
 
         if (constrainPitch)
         {
-            if (_pitch > 89.0f)
-                _pitch = 89.0f;
-            if (_pitch < -89.0f)
-                _pitch = -89.0f;
+            if (transform.getRotation().x > 89.0f)
+                transform.setRotationX(89.0f);
+            if (transform.getRotation().x < -89.0f)
+                transform.setRotationX(-89.0f);
         }
-
-        _updateCameraVectors();
     }
 
     void Camera::processMouseScroll(float yoffset)
@@ -71,18 +73,6 @@ namespace Engine
     float Camera::getZoom() const
     {
         return _zoom;
-    }
-
-    void Camera::_updateCameraVectors()
-    {
-        glm::vec3 front;
-        front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
-        front.y = sin(glm::radians(_pitch));
-        front.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
-        _front = glm::normalize(front);
-
-        _right = glm::normalize(glm::cross(_front, _worldUp));
-        _up = glm::normalize(glm::cross(_right, _front));
     }
 
     glm::mat4 Camera::getProjectionMatrix() const

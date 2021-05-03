@@ -9,6 +9,7 @@ class OffsetPlayer : public Engine::Behaviour
 {
 private:
 	glm::vec3 _offset;
+
 public:
 	OffsetPlayer(glm::vec3 offset);
 	void update();

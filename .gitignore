@@ -9,6 +9,7 @@ Libraries/includes/*/*
 !.gitkeep
 
 # User-specific files
+.vscode
 *.rsuser
 *.suo
 *.user

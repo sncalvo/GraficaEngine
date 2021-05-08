@@ -100,7 +100,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>assimp-vc141-mtd.lib;FreeImage.lib;opengl32.lib;glu32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;assimp-vc141-mtd.lib;FreeImage.lib;opengl32.lib;glu32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,11 +153,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\BaseGameObject.cpp" />
+    <ClCompile Include="Core\FontManager.cpp" />
     <ClCompile Include="Core\OrthographicCamera.cpp" />
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Scripts\Boundary.cpp" />
     <ClCompile Include="Scripts\FirstPersonCameraController.cpp" />
     <ClCompile Include="Scripts\FlyingCameraController.cpp" />
+    <ClCompile Include="Core\TextObject.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\GameLoop.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="Scripts\EndlessSpawner.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
+    <ClCompile Include="Scripts\TextController.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -185,11 +188,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
+    <ClInclude Include="Core\FontManager.h" />
     <ClInclude Include="Core\OrthographicCamera.h" />
     <ClInclude Include="Core\PerspectiveCamera.h" />
     <ClInclude Include="Scripts\Boundary.h" />
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
+    <ClInclude Include="Core\TextObject.h" />
+    <ClInclude Include="Scripts\CameraController.h" />
     <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\GameLoop.h" />
@@ -202,8 +208,8 @@
     <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Utils\CircularBuffer.h" />
+    <ClInclude Include="Scripts\TextController.h" />
     <ClInclude Include="Utils\DebugLog.h" />
-    <ClInclude Include="Renderer\Drawable.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Core\InputDefinition.h" />

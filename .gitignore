@@ -5,7 +5,7 @@
 
 # ignore libraries
 Libraries/libs/*
-Libraries/includes/*/*
+Libraries/includes/*
 !.gitkeep
 
 # User-specific files

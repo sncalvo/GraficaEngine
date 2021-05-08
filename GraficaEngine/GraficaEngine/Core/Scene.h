@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "Light.h"
+#include "TextObject.h"
 
 namespace Engine
 {

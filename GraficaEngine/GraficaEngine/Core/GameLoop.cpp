@@ -57,6 +57,8 @@ namespace Engine
 		delete _activeScene;
 		delete _shader;
 		delete _window;
+		FontManager* fm = FontManager::getInstance();
+		delete fm;
 		MediaLayer::exit();
 	}
 

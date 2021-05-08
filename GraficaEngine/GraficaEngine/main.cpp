@@ -29,6 +29,7 @@
 #include "Scripts/ThirdPersonCameraController.h"
 #include "Scripts/Mover.h"
 #include "Scripts/EndlessSpawner.h"
+#include "Scripts/TextController.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -141,6 +142,11 @@ int main(int argc, char *argv[])
 
 	Engine::Light *light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
 	scene->addLight(light);
+
+	Engine::TextObject* text = new Engine::TextObject("Quieto");
+	text->transform.position += glm::vec3(25.0f, 25.0f, 0.0f);
+	text->addBehaviour(new TextController());
+	scene->addGameObject(text);
 
 	gameLoop.setActiveScene(scene);
 	gameLoop.start();

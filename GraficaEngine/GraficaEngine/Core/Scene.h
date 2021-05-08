@@ -17,14 +17,17 @@ namespace Engine
 		std::map<std::string, Camera*> _cameras;
 		std::vector<std::string> _cameraNames;
 		std::vector<BaseGameObject*> _gameObjects;
+		std::vector<BaseGameObject*> _queuedGameObjects;
+		std::vector<BaseGameObject*> _gameObjectsToDelete;
 		std::vector<Light*> _lights;
 	public:
 		Scene(Camera*);
 		void addLight(Light*);
 		void removeLight(Light*);
 		void addGameObject(BaseGameObject*);
+		void deleteGameObject(BaseGameObject*);
+		void flushQueuedGameObjects();
 		BaseGameObject* getGameObjectWithTag(std::string);
-		void removeGameObject(BaseGameObject*);
 		void addCamera(std::string, Camera*);
 		void setActiveCamera(std::string);
 		Camera* getActiveCamera();

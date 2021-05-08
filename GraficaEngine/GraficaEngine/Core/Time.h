@@ -17,5 +17,6 @@ namespace Engine
 		static void updateTime();
 		static float getDeltaTime();
 		static float getFixedTime();
+		static float getTime();
 	};
 }

@@ -17,15 +17,22 @@ namespace Engine
 		std::vector<Behaviour*> _behaviours;
 	protected:
 		Scene* _scene;
+		BaseGameObject* _parent;
+		std::vector<BaseGameObject*> _children; // TODO: Create local transform
 	public:
 		BaseGameObject();
-		~BaseGameObject();
+		virtual ~BaseGameObject();
 		Transform transform;
 		void update();
 		void addBehaviour(Behaviour*);
+		void addChild(BaseGameObject*);
+		BaseGameObject* getParent() const;
+		bool hasParent() const;
+		void setParent(BaseGameObject*);
+		void deleteChild(BaseGameObject*);
 		void setScene(Scene*);
 		Scene* getScene() const;
-		virtual bool isDrawable() const;
+		virtual void draw() const;
 		void addTag(std::string tag);
 		bool hasTag(std::string tag) const;
 	};

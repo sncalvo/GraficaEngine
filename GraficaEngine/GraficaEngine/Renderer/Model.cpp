@@ -9,6 +9,11 @@ namespace Engine
         _loadModel(path);
     }
 
+    Model::Model(Model* otherModel)
+    {
+        _meshes = otherModel->getMeshes();
+    }
+
     void Model::_loadModel(std::string path)
     {
         Assimp::Importer import;
@@ -19,7 +24,6 @@ namespace Engine
             DebugLog::error("ERROR::ASSIMP::" + std::string(import.GetErrorString()));
             return;
         }
-        _directory = path.substr(0, path.find_last_of('/'));
 
         _processNode(scene->mRootNode, scene);
     }
@@ -129,5 +133,10 @@ namespace Engine
         {
             _meshes[i].draw(shader);
         }
+    }
+
+    std::vector<Mesh> Model::getMeshes() const
+    {
+        return _meshes;
     }
 }

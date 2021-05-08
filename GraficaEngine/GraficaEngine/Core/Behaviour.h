@@ -10,6 +10,7 @@ namespace Engine
 		BaseGameObject* gameObject;
 	public:
 		virtual void update() = 0;
+		virtual ~Behaviour() {};
 		void setGameObject(BaseGameObject* parentGameObject)
 		{
 			gameObject = parentGameObject;

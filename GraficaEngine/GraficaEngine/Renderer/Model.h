@@ -17,7 +17,6 @@ namespace Engine
     {
     private:
         std::vector<Mesh> _meshes;
-        std::string _directory;
 
         void _loadModel(std::string path);
         void _processNode(aiNode* node, const aiScene* scene);
@@ -30,6 +29,8 @@ namespace Engine
         Material _loadMaterial(aiMaterial* material);
     public:
         Model(char* path);
+        Model(Model*);
         void draw(Shader& shader) const;
+        std::vector<Mesh> getMeshes() const;
     };
 }

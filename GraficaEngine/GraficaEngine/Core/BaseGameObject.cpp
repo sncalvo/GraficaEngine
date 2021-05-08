@@ -1,12 +1,19 @@
 #include "BaseGameObject.h"
 
+#include <algorithm>
+
 namespace Engine
 {
-	BaseGameObject::BaseGameObject() : _scene(nullptr)
+	BaseGameObject::BaseGameObject() : _scene(nullptr), _parent(nullptr)
 	{}
 
 	BaseGameObject::~BaseGameObject()
 	{
+		for (BaseGameObject* child : _children)
+		{
+			delete child;
+		}
+
 		for (Behaviour* behaviour : _behaviours)
 		{
 			delete behaviour;
@@ -19,11 +26,52 @@ namespace Engine
 		_behaviours.push_back(behaviour);
 	}
 
+	void BaseGameObject::addChild(BaseGameObject* child)
+	{
+		child->setScene(_scene);
+		child->setParent(this);
+		_children.push_back(child);
+	}
+
+	BaseGameObject* BaseGameObject::getParent() const
+	{
+		return _parent;
+	}
+
+	void BaseGameObject::setParent(BaseGameObject* parent)
+	{
+		_parent = parent;
+	}
+
+	bool BaseGameObject::hasParent() const
+	{
+		return _parent != nullptr;
+	}
+
+	void BaseGameObject::deleteChild(BaseGameObject* child)
+	{
+		_children.erase(
+			std::remove(
+				_children.begin(),
+				_children.end(),
+				child
+			),
+			_children.end()
+		);
+
+		delete child;
+	}
+
 	void BaseGameObject::update()
 	{
 		for (Behaviour* behaviour : _behaviours)
 		{
 			behaviour->update();
+		}
+
+		for (BaseGameObject* child : _children)
+		{
+			child->update();
 		}
 	}
 
@@ -37,9 +85,12 @@ namespace Engine
 		return _scene;
 	}
 
-	bool BaseGameObject::isDrawable() const
+	void BaseGameObject::draw() const
 	{
-		return false;
+		for (BaseGameObject* child : _children)
+		{
+			child->draw();
+		}
 	}
 
 	void BaseGameObject::addTag(std::string tag)

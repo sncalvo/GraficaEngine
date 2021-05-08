@@ -21,4 +21,9 @@ namespace Engine
 		_previousTime = _currentTime;
 		_currentTime = SDL_GetTicks();
 	}
+
+	float Time::getTime()
+	{
+		return SDL_GetTicks() / 1000.f;
+	}
 }

@@ -15,11 +15,12 @@ namespace Engine
 	private:
 		Model* _model;
 		MaterialObject _material;
-		// GameObject[] _children;
 	public:
 		GameObject(Model* model, MaterialObject material);
+		GameObject(GameObject*);
 		~GameObject();
 		void draw() const;
-		virtual bool isDrawable() const;
+		Model* getModel() const;
+		MaterialObject getMaterial() const;
 	};
 }

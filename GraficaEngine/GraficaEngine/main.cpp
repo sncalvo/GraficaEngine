@@ -27,6 +27,8 @@
 #include "Scripts/OffsetPlayer.h"
 #include "Scripts/FirstPersonCameraController.h"
 #include "Scripts/ThirdPersonCameraController.h"
+#include "Scripts/Mover.h"
+#include "Scripts/EndlessSpawner.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -96,17 +98,40 @@ int main(int argc, char *argv[])
 	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
-	Engine::Model *logModel = new Engine::Model(_strdup("Assets/Models/log.obj"));
-	Engine::MaterialObject logMaterial(shader);
-	Engine::GameObject *log = new Engine::GameObject(logModel, logMaterial);
-	scene->addGameObject(log);
-	log->transform.position += glm::vec3(4.0f, 0.f, -5.f);
+	Engine::Model* floorModel = new Engine::Model(_strdup("Assets/Models/floor.obj"));
+	Engine::MaterialObject floorMaterial(shader);
+	Engine::GameObject* floor = new Engine::GameObject(floorModel, floorMaterial);
 
-	Engine::Model *carModel = new Engine::Model(_strdup("Assets/Models/lowpolycar.obj"));
+	for (int index = -5; index < 5; index++)
+	{
+		Engine::GameObject* newFloor = new Engine::GameObject(floor);
+		newFloor->transform.scale = glm::vec3(.5f);
+		newFloor->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
+		scene->addGameObject(newFloor);
+	}
+
+	Engine::Model* riverModel = new Engine::Model(_strdup("Assets/Models/river.obj"));
+	Engine::MaterialObject riverMaterial(shader);
+	Engine::GameObject* river = new Engine::GameObject(riverModel, riverMaterial);
+
+	Engine::Model* logModel = new Engine::Model(_strdup("Assets/Models/log.obj"));
+	Engine::MaterialObject logMaterial(shader);
+	Engine::GameObject* log = new Engine::GameObject(logModel, logMaterial);
+
+	Engine::Model* carModel = new Engine::Model(_strdup("Assets/Models/lowpolycar.obj"));
 	Engine::MaterialObject carMaterial(shader);
-	Engine::GameObject *car = new Engine::GameObject(carModel, carMaterial);
-	scene->addGameObject(car);
-	car->transform.position += glm::vec3(-3.0f, 0.f, 3.f);
+	Engine::GameObject* car = new Engine::GameObject(carModel, carMaterial);
+
+	Engine::BaseGameObject* spawner = new Engine::BaseGameObject();
+	std::map<std::string, EnvironmentWithObstacles> environments;
+	environments["grass"] = EnvironmentWithObstacles(
+		floor, Obstacles { car }
+	);
+	environments["river"] = EnvironmentWithObstacles(
+		river, Obstacles { log }
+	);
+	spawner->addBehaviour(new EndlessSpawner(environments));
+	scene->addGameObject(spawner);
 
 	Engine::Model *treeModel = new Engine::Model(_strdup("Assets/Models/tree.obj"));
 	Engine::MaterialObject treeMaterial(shader);

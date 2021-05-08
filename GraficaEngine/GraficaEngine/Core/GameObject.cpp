@@ -5,6 +5,13 @@ namespace Engine
 	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material)
 	{}
 
+	GameObject::GameObject(GameObject* otherGameObject)
+	{
+		Model* modelCopy = new Model(otherGameObject->getModel());
+		_model = modelCopy;
+		_material = MaterialObject(otherGameObject->getMaterial().getShader());
+	}
+
 	void GameObject::draw() const
 	{
 		if (_model == nullptr)
@@ -25,20 +32,24 @@ namespace Engine
 		camera->apply(*shader);
 
 		_model->draw(*shader);
+
+		BaseGameObject::draw();
 	}
 
 	GameObject::~GameObject()
 	{
-		delete _model;
-
-		_scene->removeGameObject(this);
-		_scene = nullptr;
-
 		BaseGameObject::~BaseGameObject();
+
+		delete _model;
 	}
 
-	bool GameObject::isDrawable() const
+	Model* GameObject::getModel() const
 	{
-		return true;
+		return _model;
+	}
+	
+	MaterialObject GameObject::getMaterial() const
+	{
+		return _material;
 	}
 }

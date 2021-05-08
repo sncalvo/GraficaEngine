@@ -9,6 +9,7 @@ namespace Engine
 	private:
 		Shader* _shader;
 	public:
+		MaterialObject();
 		MaterialObject(Shader*);
 		Shader* getShader() const;
 	};

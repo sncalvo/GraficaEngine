@@ -2,10 +2,11 @@
 
 namespace Engine
 {
-	MaterialObject::MaterialObject(Shader* shader)
-	{
-		_shader = shader;
-	}
+	MaterialObject::MaterialObject(): _shader(nullptr)
+	{}
+
+	MaterialObject::MaterialObject(Shader* shader): _shader(shader)
+	{}
 
 	Shader* MaterialObject::getShader() const
 	{

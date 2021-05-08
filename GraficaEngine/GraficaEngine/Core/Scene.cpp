@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+#include <algorithm>
+
 namespace Engine
 {
 	Scene::Scene(Camera *defaultCamera)
@@ -12,7 +14,12 @@ namespace Engine
 	void Scene::addGameObject(BaseGameObject *gameObject)
 	{
 		gameObject->setScene(this);
-		_gameObjects.push_back(gameObject);
+		_queuedGameObjects.push_back(gameObject);
+	}
+
+	void Scene::deleteGameObject(BaseGameObject* gameObject)
+	{
+		_gameObjectsToDelete.push_back(gameObject);
 	}
 
 	BaseGameObject *Scene::getGameObjectWithTag(std::string tag)
@@ -25,11 +32,6 @@ namespace Engine
 			}
 		}
 		return nullptr;
-	}
-
-	void Scene::removeGameObject(BaseGameObject *gameObject)
-	{
-		std::remove(_gameObjects.begin(), _gameObjects.end(), gameObject);
 	}
 
 	void Scene::addLight(Light *light)
@@ -76,13 +78,9 @@ namespace Engine
 
 	void Scene::draw()
 	{
-		for (BaseGameObject *baseGameObject : _gameObjects)
+		for (BaseGameObject *gameObject : _gameObjects)
 		{
-			if (baseGameObject->isDrawable())
-			{
-				GameObject *gameObject = dynamic_cast<GameObject *>(baseGameObject);
-				gameObject->draw();
-			}
+			gameObject->draw();
 		}
 	}
 
@@ -94,6 +92,42 @@ namespace Engine
 		{
 			gameObject->update();
 		}
+
+		flushQueuedGameObjects();
+	}
+
+	void Scene::flushQueuedGameObjects()
+	{
+		_gameObjects.insert(
+			_gameObjects.end(),
+			_queuedGameObjects.begin(),
+			_queuedGameObjects.end()
+		);
+
+		_queuedGameObjects.clear();
+
+		for (BaseGameObject* gameObjectToDelete : _gameObjectsToDelete)
+		{
+			if (gameObjectToDelete->hasParent())
+			{
+				gameObjectToDelete->getParent()->deleteChild(gameObjectToDelete);
+			}
+			else
+			{
+				_gameObjects.erase(
+					std::remove(
+						_gameObjects.begin(),
+						_gameObjects.end(),
+						gameObjectToDelete
+					),
+					_gameObjects.end()
+				);
+
+				delete gameObjectToDelete;
+			}
+		}
+
+		_gameObjectsToDelete.clear();
 	}
 
 	Scene::~Scene()

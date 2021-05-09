@@ -2,12 +2,24 @@
 
 namespace Engine
 {
-	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material)
-	{}
-
-	GameObject::GameObject(GameObject* otherGameObject)
+	GameObject::GameObject(Model *model, MaterialObject material) : _model(model), _material(material), _collider(nullptr)
 	{
-		Model* modelCopy = new Model(otherGameObject->getModel());
+	}
+
+	void GameObject::setCollider(Collider *collider)
+	{
+		collider->setGameObject(this);
+		_collider = collider;
+	}
+
+	Collider *GameObject::getCollider() const
+	{
+		return _collider;
+	}
+
+	GameObject::GameObject(GameObject *otherGameObject)
+	{
+		Model *modelCopy = new Model(otherGameObject->getModel());
 		_model = modelCopy;
 		_material = MaterialObject(otherGameObject->getMaterial().getShader());
 	}
@@ -18,17 +30,17 @@ namespace Engine
 		{
 			return;
 		}
-		Shader* shader = _material.getShader();
+		Shader *shader = _material.getShader();
 		shader->use();
 		transform.apply(*shader);
-		std::vector<Light*> lights = _scene->getLights();
+		std::vector<Light *> lights = _scene->getLights();
 
-		for (Light* light : lights)
+		for (Light *light : lights)
 		{
 			light->apply(*shader);
 		}
 
-		Camera* camera = _scene->getActiveCamera();
+		Camera *camera = _scene->getActiveCamera();
 		camera->apply(*shader);
 
 		_model->draw(*shader);
@@ -38,16 +50,23 @@ namespace Engine
 
 	GameObject::~GameObject()
 	{
+
 		BaseGameObject::~BaseGameObject();
 
+		if (_collider != nullptr)
+		{
+			_scene->removeCollider(_collider);
+			delete _collider;
+		}
+		
 		delete _model;
 	}
 
-	Model* GameObject::getModel() const
+	Model *GameObject::getModel() const
 	{
 		return _model;
 	}
-	
+
 	MaterialObject GameObject::getMaterial() const
 	{
 		return _material;

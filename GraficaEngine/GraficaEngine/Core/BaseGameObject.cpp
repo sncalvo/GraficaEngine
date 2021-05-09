@@ -1,44 +1,51 @@
 #include "BaseGameObject.h"
 
+#include "Scene.h"
+
 #include <algorithm>
 
 namespace Engine
 {
-	BaseGameObject::BaseGameObject() : _scene(nullptr), _parent(nullptr)
-	{}
+	BaseGameObject::BaseGameObject() : _scene(nullptr)
+	{
+	}
 
 	BaseGameObject::~BaseGameObject()
 	{
-		for (BaseGameObject* child : _children)
+		for (BaseGameObject *child : _children)
 		{
 			delete child;
 		}
 
-		for (Behaviour* behaviour : _behaviours)
+		for (Behaviour *behaviour : _behaviours)
 		{
 			delete behaviour;
 		}
 	}
 
-	void BaseGameObject::addBehaviour(Behaviour* behaviour)
+	void BaseGameObject::addBehaviour(Behaviour *behaviour)
 	{
 		behaviour->setGameObject(this);
 		_behaviours.push_back(behaviour);
 	}
 
-	void BaseGameObject::addChild(BaseGameObject* child)
+	void BaseGameObject::addChild(BaseGameObject *child)
 	{
 		child->setScene(_scene);
+		if (child->getCollider() != nullptr)
+		{
+			_scene->addCollider(child->getCollider());
+		}
 		child->setParent(this);
 		_children.push_back(child);
 	}
 
-	BaseGameObject* BaseGameObject::getParent() const
+	BaseGameObject *BaseGameObject::getParent() const
 	{
 		return _parent;
 	}
 
-	void BaseGameObject::setParent(BaseGameObject* parent)
+	void BaseGameObject::setParent(BaseGameObject *parent)
 	{
 		_parent = parent;
 	}
@@ -48,46 +55,49 @@ namespace Engine
 		return _parent != nullptr;
 	}
 
-	void BaseGameObject::deleteChild(BaseGameObject* child)
+	void BaseGameObject::deleteChild(BaseGameObject *child)
 	{
 		_children.erase(
 			std::remove(
 				_children.begin(),
 				_children.end(),
-				child
-			),
-			_children.end()
-		);
+				child),
+			_children.end());
 
 		delete child;
 	}
 
 	void BaseGameObject::update()
 	{
-		for (Behaviour* behaviour : _behaviours)
+		for (Behaviour *behaviour : _behaviours)
 		{
 			behaviour->update();
 		}
 
-		for (BaseGameObject* child : _children)
+		for (BaseGameObject *child : _children)
 		{
 			child->update();
 		}
 	}
 
-	void BaseGameObject::setScene(Scene* scene)
+	void BaseGameObject::setScene(Scene *scene)
 	{
 		_scene = scene;
 	}
 
-	Scene* BaseGameObject::getScene() const
+	Collider *BaseGameObject::getCollider() const
+	{
+		return nullptr;
+	}
+
+	Scene *BaseGameObject::getScene() const
 	{
 		return _scene;
 	}
 
 	void BaseGameObject::draw() const
 	{
-		for (BaseGameObject* child : _children)
+		for (BaseGameObject *child : _children)
 		{
 			child->draw();
 		}

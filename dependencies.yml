@@ -13,3 +13,7 @@ dependencies:
     version: '2.1.0'
     folderName: 'GL'
     source: 'http://glew.sourceforge.net/'
+  freeType:
+    version: '2.10.4'
+    folderName: ''
+    sourde: 'https://github.com/ubawurinna/freetype-windows-binaries/releases/tag/v2.10.4'

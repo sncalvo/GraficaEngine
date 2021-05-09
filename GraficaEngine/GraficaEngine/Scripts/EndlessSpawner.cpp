@@ -42,24 +42,26 @@ void EndlessSpawner::update()
 	_scene = gameObject->getScene();
 	_player = _scene->getGameObjectWithTag("player");
 	
-	if (_nearPlayer())
+	if (_player == nullptr || !_nearPlayer())
 	{
-		srand(time(nullptr));
-		int randomEnvironmentIndex = rand() % _environmentNames.size();
-		std::string randomEnvironmentString = _environmentNames[randomEnvironmentIndex];
-
-		EnvironmentWithObstacles referenceEnvironment = _environments[randomEnvironmentString];
-		Engine::GameObject* environmentToSpawn = new Engine::GameObject(referenceEnvironment.first);
-		environmentToSpawn->transform.position = glm::vec3(0.f, 0.f, _getZCoordinateRow());
-		environmentToSpawn->transform.scale = glm::vec3(.5f);
-		_scene->addGameObject(environmentToSpawn);
-		environmentToSpawn->addBehaviour(new ObstacleSpawner(referenceEnvironment.second));
-
-		_rows->put(environmentToSpawn);
-		if (_rows->full())
-		{
-			_scene->deleteGameObject(_rows->get());
-		}
-		_currentRow++;
+		return;
 	}
+
+	srand(time(nullptr));
+	int randomEnvironmentIndex = rand() % _environmentNames.size();
+	std::string randomEnvironmentString = _environmentNames[randomEnvironmentIndex];
+
+	EnvironmentWithObstacles referenceEnvironment = _environments[randomEnvironmentString];
+	Engine::GameObject* environmentToSpawn = new Engine::GameObject(referenceEnvironment.first);
+	environmentToSpawn->transform.position = glm::vec3(0.f, 0.f, _getZCoordinateRow());
+	environmentToSpawn->transform.scale = glm::vec3(.5f);
+	_scene->addGameObject(environmentToSpawn);
+	environmentToSpawn->addBehaviour(new ObstacleSpawner(referenceEnvironment.second));
+
+	_rows->put(environmentToSpawn);
+	if (_rows->full())
+	{
+		_scene->deleteGameObject(_rows->get());
+	}
+	_currentRow++;
 }

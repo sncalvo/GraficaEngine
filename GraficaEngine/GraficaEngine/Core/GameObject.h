@@ -13,14 +13,18 @@ namespace Engine
 	class GameObject : public BaseGameObject
 	{
 	private:
-		Model* _model;
+		Model *_model;
 		MaterialObject _material;
+		Collider *_collider;
+
 	public:
-		GameObject(Model* model, MaterialObject material);
-		GameObject(GameObject*);
+		GameObject(Model *model, MaterialObject material);
+		GameObject(GameObject *);
 		~GameObject();
+		void setCollider(Collider *collider);
+		Collider *getCollider() const;
 		void draw() const;
-		Model* getModel() const;
+		Model *getModel() const;
 		MaterialObject getMaterial() const;
 	};
 }

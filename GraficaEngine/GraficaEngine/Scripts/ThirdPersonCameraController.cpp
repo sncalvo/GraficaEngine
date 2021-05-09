@@ -14,10 +14,15 @@ ThirdPersonCameraController::ThirdPersonCameraController(float distance, glm::ve
 
 void ThirdPersonCameraController::update()
 {
-    Engine::Transform& transform = gameObject->transform;
-    Engine::BaseGameObject* player = gameObject->getScene()->getGameObjectWithTag("player");
-    Engine::Transform& playerTransform = player->transform;
-    Engine::Input& input = Engine::Input::getInstance();
+    Engine::Transform &transform = gameObject->transform;
+    Engine::BaseGameObject *player = gameObject->getScene()->getGameObjectWithTag("player");
+
+    if (player == nullptr) {
+        return;
+    }
+
+    Engine::Transform &playerTransform = player->transform;
+    Engine::Input &input = Engine::Input::getInstance();
 
     float threshold = 0.1f;
 
@@ -32,8 +37,6 @@ void ThirdPersonCameraController::update()
     float y = glm::cos(_xyMovement.y);
     float z = glm::sin(_xyMovement.y) * glm::sin(_xyMovement.x);
     glm::vec3 coordinates(x, y, z);
-
-    Engine::DebugLog::debug(_xyMovement.y);
 
     glm::vec3 target = playerTransform.position;
     transform.position = target + coordinates * _distance;

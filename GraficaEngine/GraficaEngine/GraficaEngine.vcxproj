@@ -157,12 +157,14 @@
     <ClCompile Include="Core\OrthographicCamera.cpp" />
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Scripts\Boundary.cpp" />
+    <ClCompile Include="Physics\Collider.cpp" />
     <ClCompile Include="Scripts\FirstPersonCameraController.cpp" />
     <ClCompile Include="Scripts\FlyingCameraController.cpp" />
     <ClCompile Include="Core\TextObject.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\GameLoop.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Scripts\Hazard.cpp" />
     <ClCompile Include="Scripts\Mover.cpp" />
     <ClCompile Include="Scripts\ObstacleSpawner.cpp" />
     <ClCompile Include="Scripts\OffsetPlayer.cpp" />
@@ -192,6 +194,7 @@
     <ClInclude Include="Core\OrthographicCamera.h" />
     <ClInclude Include="Core\PerspectiveCamera.h" />
     <ClInclude Include="Scripts\Boundary.h" />
+    <ClInclude Include="Physics\Collider.h" />
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\TextObject.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\GameLoop.h" />
     <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Scripts\Hazard.h" />
     <ClInclude Include="Scripts\Mover.h" />
     <ClInclude Include="Scripts\ObstacleSpawner.h" />
     <ClInclude Include="Scripts\OffsetPlayer.h" />

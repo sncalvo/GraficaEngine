@@ -43,6 +43,7 @@ namespace Engine
 			_shader->setMat4("projection", projection);
 			_shader->setMat4("view", view);
 
+			_activeScene->physicsUpdate();
 			_activeScene->update();
 			_activeScene->draw();
 

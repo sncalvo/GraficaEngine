@@ -4,6 +4,8 @@
 #include "../Core/Time.h"
 #include "../Core/GameObject.h"
 
+#include "../Utils/DebugLog.h"
+
 PlayerController::PlayerController()
 {
 }
@@ -14,19 +16,19 @@ void PlayerController::update()
 	Engine::Transform &transform = gameObject->transform;
 
 	glm::vec3 movement(0.f);
-	if (input.getKey(Engine::KEY_UP))
+	if (input.getKey(Engine::KEY_UP) || input.getKey(Engine::KEY_W))
 	{
 		movement += transform.getForward();
 	}
-	if (input.getKey(Engine::KEY_DOWN))
+	if (input.getKey(Engine::KEY_DOWN) || input.getKey(Engine::KEY_S))
 	{
 		movement -= transform.getForward();
 	}
-	if (input.getKey(Engine::KEY_LEFT))
+	if (input.getKey(Engine::KEY_LEFT) || input.getKey(Engine::KEY_A))
 	{
 		movement -= transform.getRight();
 	}
-	if (input.getKey(Engine::KEY_RIGHT))
+	if (input.getKey(Engine::KEY_RIGHT) || input.getKey(Engine::KEY_D))
 	{
 		movement += transform.getRight();
 	}
@@ -37,4 +39,9 @@ void PlayerController::update()
 	{
 		transform.position += movementDirection * _speed * Engine::Time::getDeltaTime();
 	}
+}
+
+void PlayerController::die()
+{
+	gameObject->getScene()->deleteGameObject(gameObject);
 }

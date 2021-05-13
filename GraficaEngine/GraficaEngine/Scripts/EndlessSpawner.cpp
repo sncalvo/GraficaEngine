@@ -6,17 +6,9 @@
 #include "../Core/Scene.h"
 #include "ObstacleSpawner.h"
 
-EndlessSpawner::EndlessSpawner(std::map<std::string, EnvironmentWithObstacles> environments) :
+EndlessSpawner::EndlessSpawner(std::vector<Environment> environments) :
 	_environments(environments), _rows(new CircularBuffer<Engine::GameObject*>(10)), _currentRow(0)
 {
-	for (
-		auto it = _environments.begin();
-		it != _environments.end();
-		it++
-	)
-	{
-		_environmentNames.push_back(it->first);
-	}
 }
 
 EndlessSpawner::~EndlessSpawner()
@@ -48,15 +40,13 @@ void EndlessSpawner::update()
 	}
 
 	srand(time(nullptr));
-	int randomEnvironmentIndex = rand() % _environmentNames.size();
-	std::string randomEnvironmentString = _environmentNames[randomEnvironmentIndex];
+	int randomEnvironmentIndex = rand() % _environments.size();
 
-	EnvironmentWithObstacles referenceEnvironment = _environments[randomEnvironmentString];
-	Engine::GameObject* environmentToSpawn = new Engine::GameObject(referenceEnvironment.first);
+	Environment referenceEnvironment = _environments[randomEnvironmentIndex];
+	Environment environmentToSpawn = new Engine::GameObject(referenceEnvironment);
 	environmentToSpawn->transform.position = glm::vec3(0.f, 0.f, _getZCoordinateRow());
 	environmentToSpawn->transform.scale = glm::vec3(.5f);
 	_scene->addGameObject(environmentToSpawn);
-	environmentToSpawn->addBehaviour(new ObstacleSpawner(referenceEnvironment.second));
 
 	_rows->put(environmentToSpawn);
 	if (_rows->full())

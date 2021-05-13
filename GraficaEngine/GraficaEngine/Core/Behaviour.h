@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Exceptions/NotSupposedToCopyException.h"
+
 namespace Engine
 {
 	class BaseGameObject;
@@ -10,6 +12,9 @@ namespace Engine
 		BaseGameObject* gameObject;
 	public:
 		virtual void update() = 0;
+		virtual Behaviour* clone() const {
+			throw new NotSupposedToCopyException();
+		};
 		virtual ~Behaviour() {};
 		void setGameObject(BaseGameObject* parentGameObject)
 		{

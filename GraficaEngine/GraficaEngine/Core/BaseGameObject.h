@@ -23,10 +23,12 @@ namespace Engine
 		std::vector<BaseGameObject *> _children; // TODO: Create local transform
 	public:
 		BaseGameObject();
+		BaseGameObject(BaseGameObject *);
 		virtual ~BaseGameObject();
 		Transform transform;
 		void update();
 		void addBehaviour(Behaviour *);
+		std::vector<Behaviour *> getBehaviours() const;
 		void addChild(BaseGameObject *);
 		BaseGameObject *getParent() const;
 		bool hasParent() const;

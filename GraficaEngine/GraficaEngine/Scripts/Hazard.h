@@ -9,4 +9,5 @@ private:
 
 public:
 	void update();
+	Hazard *clone() const;
 };

@@ -17,11 +17,17 @@ namespace Engine
 		return _collider;
 	}
 
-	GameObject::GameObject(GameObject *otherGameObject)
+	GameObject::GameObject(GameObject *otherGameObject):
+		BaseGameObject::BaseGameObject(otherGameObject)
 	{
 		Model *modelCopy = new Model(otherGameObject->getModel());
 		_model = modelCopy;
 		_material = MaterialObject(otherGameObject->getMaterial().getShader());
+		Collider* otherCollider = otherGameObject->getCollider();
+		if (otherCollider != nullptr)
+		{
+			setCollider(new Collider(otherGameObject->getCollider()));
+		}
 	}
 
 	void GameObject::draw() const

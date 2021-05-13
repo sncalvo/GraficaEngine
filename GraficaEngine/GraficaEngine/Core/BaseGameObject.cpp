@@ -6,8 +6,24 @@
 
 namespace Engine
 {
-	BaseGameObject::BaseGameObject() : _scene(nullptr)
+	BaseGameObject::BaseGameObject() : _scene(nullptr), _parent(nullptr)
 	{
+	}
+
+	BaseGameObject::BaseGameObject(BaseGameObject *otherBaseGameObject)
+	{
+		for (Behaviour *otherBehaviour : otherBaseGameObject->getBehaviours())
+		{
+			addBehaviour(otherBehaviour->clone());
+		}
+
+		for (std::string tag : _tags)
+		{
+			addTag(tag);
+		}
+
+		setScene(otherBaseGameObject->getScene());
+		setParent(otherBaseGameObject->getParent());
 	}
 
 	BaseGameObject::~BaseGameObject()
@@ -27,6 +43,11 @@ namespace Engine
 	{
 		behaviour->setGameObject(this);
 		_behaviours.push_back(behaviour);
+	}
+
+	std::vector<Behaviour *> BaseGameObject::getBehaviours() const
+	{
+		return _behaviours;
 	}
 
 	void BaseGameObject::addChild(BaseGameObject *child)

@@ -6,6 +6,15 @@ Boundary::Boundary(float minX, float maxX) : _minX(minX), _maxX(maxX)
 {
 }
 
+Boundary::Boundary(Boundary* otherBoundary) : _minX(otherBoundary->_minX), _maxX(otherBoundary->_maxX)
+{
+}
+
+Boundary* Boundary::clone() const
+{
+	return new Boundary(*this);
+}
+
 void Boundary::update()
 {
 	Engine::Transform transform = gameObject->transform;

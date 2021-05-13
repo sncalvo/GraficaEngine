@@ -17,10 +17,13 @@ namespace Engine
 
     public:
         Collider(glm::vec3 min, glm::vec3 max);
+        Collider(Collider *);
         void resetCollisions();
         void collide(Collider *other);
         void setGameObject(GameObject *gameObject);
-        std::vector<Collider* > getCollisions() const;
+        glm::vec3 getMin() const;
+        glm::vec3 getMax() const;
+        std::vector<Collider *> getCollisions() const;
         GameObject *getGameObject() const;
         static bool intersect(Collider *, Collider *);
         ~Collider();

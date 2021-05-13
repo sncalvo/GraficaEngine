@@ -10,6 +10,13 @@ namespace Engine
     {
     }
 
+    Collider::Collider(Collider* otherCollider)
+    {
+        _min = otherCollider->getMin();
+        _max = otherCollider->getMax();
+        _gameObject = otherCollider->getGameObject();
+    }
+
     void Collider::resetCollisions()
     {
         _collidingWith.clear();
@@ -23,6 +30,16 @@ namespace Engine
     void Collider::setGameObject(GameObject *gameObject)
     {
         _gameObject = gameObject;
+    }
+
+    glm::vec3 Collider::getMin() const
+    {
+        return _min;
+    }
+
+    glm::vec3 Collider::getMax() const
+    {
+        return _max;
     }
 
     GameObject *Collider::getGameObject() const

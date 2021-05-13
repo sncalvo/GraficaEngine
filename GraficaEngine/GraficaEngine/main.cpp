@@ -29,7 +29,10 @@
 #include "Scripts/FirstPersonCameraController.h"
 #include "Scripts/ThirdPersonCameraController.h"
 #include "Scripts/Mover.h"
+#include "Scripts/Hazard.h"
+#include "Scripts/Boundary.h"
 #include "Scripts/EndlessSpawner.h"
+#include "Scripts/ObstacleSpawner.h"
 #include "Scripts/TextController.h"
 
 constexpr int WINDOW_WIDTH = 800;
@@ -91,20 +94,21 @@ int main(int argc, char *argv[])
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-	Engine::Model *duckModel = new Engine::Model(_strdup("Assets/Models/duck.obj"));
-	Engine::MaterialObject duckMaterial(shader);
-	Engine::GameObject *duck = new Engine::GameObject(duckModel, duckMaterial);
-	Engine::Collider *duckCollider = new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f));
+	Engine::GameObject *duck = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/duck.obj")),
+		Engine::MaterialObject(shader)
+	);
+	duck->setCollider(new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f)));
 	duck->addBehaviour(new PlayerController());
-	duck->setCollider(duckCollider);
 	scene->addGameObject(duck);
 	duck->addTag("player");
 	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
-	Engine::Model *floorModel = new Engine::Model(_strdup("Assets/Models/floor.obj"));
-	Engine::MaterialObject floorMaterial(shader);
-	Engine::GameObject *floor = new Engine::GameObject(floorModel, floorMaterial);
+	Engine::GameObject *floor = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/floor.obj")),
+		Engine::MaterialObject(shader)
+	);
 
 	for (int index = -5; index < 5; index++)
 	{
@@ -114,31 +118,42 @@ int main(int argc, char *argv[])
 		scene->addGameObject(newFloor);
 	}
 
-	Engine::Model *riverModel = new Engine::Model(_strdup("Assets/Models/river.obj"));
-	Engine::MaterialObject riverMaterial(shader);
-	Engine::GameObject *river = new Engine::GameObject(riverModel, riverMaterial);
+	Engine::GameObject *river = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/river.obj")),
+		Engine::MaterialObject(shader)
+	);
+	river->setCollider(new Engine::Collider(glm::vec3(-12.f, 0.f, -1.5f), glm::vec3(12.f, 0.f, 1.5f)));
+	river->addBehaviour(new Hazard());
 
-	Engine::Model *logModel = new Engine::Model(_strdup("Assets/Models/log.obj"));
-	Engine::MaterialObject logMaterial(shader);
-	Engine::GameObject *log = new Engine::GameObject(logModel, logMaterial);
+	Engine::GameObject *log = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/log.obj")),
+		Engine::MaterialObject(shader)
+	);
+	log->setCollider(new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f)));
+	log->addBehaviour(new Boundary(-30.f, 10.f));
 
-	Engine::Model *carModel = new Engine::Model(_strdup("Assets/Models/lowpolycar.obj"));
-	Engine::MaterialObject carMaterial(shader);
-	Engine::GameObject *car = new Engine::GameObject(carModel, carMaterial);
-	Engine::Collider *carCollider = new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f));
-	car->setCollider(carCollider);
+	river->addBehaviour(new ObstacleSpawner(Obstacles { log }));
+
+	Engine::GameObject *car = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
+		Engine::MaterialObject(shader)
+	);
+	car->setCollider(new Engine::Collider(glm::vec3(-1.5f, 0, -1.f), glm::vec3(1.5f, 0.f, 1.f)));
+	car->addBehaviour(new Hazard());
+	car->addBehaviour(new Boundary(-30.f, 10.f));
+	car->addTag("hazard");
+
+	floor->addBehaviour(new ObstacleSpawner(Obstacles{ car }));
+
 	Engine::BaseGameObject *spawner = new Engine::BaseGameObject();
-	std::map<std::string, EnvironmentWithObstacles> environments;
-	environments["grass"] = EnvironmentWithObstacles(
-		floor, Obstacles{car});
-	environments["river"] = EnvironmentWithObstacles(
-		river, Obstacles{log});
+	std::vector<Environment> environments { floor, river };
 	spawner->addBehaviour(new EndlessSpawner(environments));
 	scene->addGameObject(spawner);
 
-	Engine::Model *treeModel = new Engine::Model(_strdup("Assets/Models/tree.obj"));
-	Engine::MaterialObject treeMaterial(shader);
-	Engine::GameObject *tree = new Engine::GameObject(treeModel, treeMaterial);
+	Engine::GameObject *tree = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/tree.obj")),
+		Engine::MaterialObject(shader)
+	);
 	scene->addGameObject(tree);
 	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
 

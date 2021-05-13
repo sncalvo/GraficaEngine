@@ -10,6 +10,11 @@ void Hazard::update()
 	_checkCollision();
 }
 
+Hazard *Hazard::clone() const
+{
+	return new Hazard();
+}
+
 void Hazard::_checkCollision()
 {
 	for (Engine::Collider *collision : gameObject->getCollider()->getCollisions())

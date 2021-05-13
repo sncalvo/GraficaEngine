@@ -1,14 +1,17 @@
 #include "TextObject.h";
 #include "Scene.h"
+#include "Canvas.h"
 
 namespace Engine {
 
-	TextObject::TextObject(std::string text) {
+	TextObject::TextObject(std::string text) 
+    {
         _text = text;
         _font = FontManager::getInstance()->getFont("arial_rounded.TTF"); //TODO add optional parameter with default font
 	}
 
-	void TextObject::draw() const {
+	void TextObject::draw() const
+    {
         Shader* shader = FontManager::getInstance()->getFontsShader();
         shader->use();
         shader->setVec3f("textColor", glm::value_ptr(_color));
@@ -18,6 +21,9 @@ namespace Engine {
 
         // Acumulate position in X axis so we display each char next to the previous one
         float positionX = transform.position.x;
+
+        _parent->transform.apply(*shader, "parentModel");
+        transform.apply(*shader);
 
         std::string::const_iterator c;
         for (char const& c : _text)
@@ -52,5 +58,10 @@ namespace Engine {
     void TextObject::setFont(std::string font)
     {
         _font = FontManager::getInstance()->getFont(font);
+    }
+
+    void TextObject::setColor(glm::vec3 color)
+    {
+        _color = color;
     }
 }

@@ -21,6 +21,7 @@
 #include "Core/Time.h"
 #include "Core/Behaviour.h"
 #include "Physics/Collider.h"
+#include "Core/Canvas.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/SwapCameras.h"
@@ -161,9 +162,14 @@ int main(int argc, char *argv[])
 	scene->addLight(light);
 
 	Engine::TextObject* text = new Engine::TextObject("Quieto");
-	text->transform.position += glm::vec3(25.0f, 25.0f, 0.0f);
+	text->transform.position = glm::vec3(10.0f, 10.0f, 1.0f);
 	text->addBehaviour(new TextController());
-	scene->addGameObject(text);
+	text->setColor(glm::vec3(0.0f, 0.0f, 0.0f));
+
+	Engine::Canvas* hud = new Engine::Canvas(glm::vec2(800.0f, 50.0f));
+	hud->transform.position = glm::vec3(0.0f, 550.f, 3.0f);
+	scene->addGameObject(hud);
+	hud->addChild(text);
 
 	gameLoop.setActiveScene(scene);
 	gameLoop.start();

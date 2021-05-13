@@ -167,7 +167,7 @@ namespace Engine
         _fontsShader = new Shader("Assets/Shaders/font_shader.vs", "Assets/Shaders/font_shader.fs");
 
         // 2D projection
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600)); //TODO Configure with viewport's size
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600), -5.0f, 5.0f); //TODO Configure with viewport's size
         _fontsShader->use();
         _fontsShader->setMatrix4f("projection", glm::value_ptr(projection));
     }

@@ -117,10 +117,10 @@ namespace Engine
 		return model;
 	}
 
-	void Transform::apply(Shader &shader) const
+	void Transform::apply(Shader &shader, std::string uniform) const
 	{
 		glm::mat4 model = _getTransformedModel();
-		shader.setMatrix4f("model", glm::value_ptr(model));
+		shader.setMatrix4f(uniform, glm::value_ptr(model));
 	}
 
 	glm::vec3 Transform::_quaternionToEuler(glm::quat q)

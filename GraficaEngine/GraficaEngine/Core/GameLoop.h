@@ -31,6 +31,7 @@ namespace Engine
 		Scene *_activeScene;
 		std::vector<GameObject *> _gameObjects;
 		bool _gamePaused;
+		void _handleGameSpeed() const;
 
 	public:
 		static GameLoop getInstance()

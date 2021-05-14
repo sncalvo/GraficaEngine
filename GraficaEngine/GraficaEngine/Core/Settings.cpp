@@ -39,9 +39,20 @@ namespace Engine
 		_useInterpolation = useInterpolation;
 	}
 
-	GameSpeed Settings::getGameSpeed() const
+	float Settings::getGameSpeed() const
 	{
-		return _gameSpeed;
+		switch (_gameSpeed)
+		{
+		case GameSpeed::SLOW:
+			return .5f;
+			break;
+		case GameSpeed::NORMAL:
+			return 1.f;
+			break;
+		case GameSpeed::FAST:
+			return 2.f;
+			break;
+		}
 	}
 
 	void Settings::setGameSpeed(GameSpeed gameSpeed)

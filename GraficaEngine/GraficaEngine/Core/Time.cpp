@@ -1,5 +1,7 @@
 #include "Time.h"
 
+#include "Settings.h"
+
 namespace Engine
 {
 	float Time::_fixedTime = 0.05;
@@ -8,7 +10,8 @@ namespace Engine
 
 	float Time::getDeltaTime()
 	{
-		return float(_currentTime - _previousTime) / 1000.f;
+		Settings& settings = Settings::getInstance();
+		return (float(_currentTime - _previousTime) / 1000.f) * settings.getGameSpeed();
 	}
 
 	float Time::getFixedTime()

@@ -1,9 +1,30 @@
 #include "GameLoop.h"
 
+#include "Settings.h"
+
 namespace Engine
 {
-	GameLoop::GameLoop() : _activeScene(nullptr), _shader(nullptr), _window(nullptr)
+	GameLoop::GameLoop() : _activeScene(nullptr), _shader(nullptr), _window(nullptr), _gamePaused(false)
 	{
+	}
+
+	void GameLoop::_handleGameSpeed() const
+	{
+		Input &input = Input::getInstance();
+		Settings &settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_1))
+		{
+			settings.setGameSpeed(GameSpeed::SLOW);
+		}
+		else if (input.getKeyDown(KEY_2))
+		{
+			settings.setGameSpeed(GameSpeed::NORMAL);
+		}
+		else if (input.getKeyDown(KEY_3))
+		{
+			settings.setGameSpeed(GameSpeed::FAST);
+		}
 	}
 
 	void GameLoop::start()
@@ -26,7 +47,8 @@ namespace Engine
 				_gamePaused = !_gamePaused;
 			}
 
-			// TODO: Pause bullet physics. Ref: https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=6487
+			_handleGameSpeed();
+
 			if (_gamePaused || !_activeScene)
 			{
 				continue;
@@ -34,7 +56,7 @@ namespace Engine
 
 			Camera *camera = _activeScene->getActiveCamera();
 
-			if (input.getKeyDown(KEY_ESCAPE) || input.getKeyDown(KEY_Q))
+			if (input.getKeyDown(KEY_Q))
 				break;
 
 			_shader->use();

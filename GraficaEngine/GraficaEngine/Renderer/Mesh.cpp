@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+#include "../Core/Settings.h"
 #include "Mesh.h"
 
 namespace Engine
@@ -70,7 +71,10 @@ namespace Engine
             glBindTexture(GL_TEXTURE_2D, _textures[i].ID);
         }
         glActiveTexture(GL_TEXTURE0);
-        if (_textures.size() == 0)
+
+        Settings &settings = Settings::getInstance();
+
+        if (_textures.size() == 0 || !settings.getShowTextures())
         {
             shader.setBool("has_texture", false);
             glBindTexture(GL_TEXTURE_2D, 0);

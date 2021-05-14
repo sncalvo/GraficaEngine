@@ -27,6 +27,18 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleTexturesToggle() const
+	{
+		Input &input = Input::getInstance();
+		Settings &settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_T))
+		{
+			bool showingTextures = settings.getShowTextures();
+			settings.setShowTextures(!showingTextures);
+		}
+	}
+
 	void GameLoop::start()
 	{
 		Input &input = Input::getInstance();
@@ -48,6 +60,7 @@ namespace Engine
 			}
 
 			_handleGameSpeed();
+			_handleTexturesToggle();
 
 			if (_gamePaused || !_activeScene)
 			{

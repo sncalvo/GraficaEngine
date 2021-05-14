@@ -12,7 +12,7 @@ namespace Engine
 
 	BaseGameObject::BaseGameObject(BaseGameObject *otherBaseGameObject)
 	{
-		for (Behaviour *otherBehaviour : otherBaseGameObject->getBehaviours())
+		for (Behaviour *otherBehaviour : otherBaseGameObject->_behaviours)
 		{
 			addBehaviour(otherBehaviour->clone());
 		}

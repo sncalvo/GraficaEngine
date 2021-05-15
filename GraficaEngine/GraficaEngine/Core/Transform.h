@@ -34,6 +34,6 @@ namespace Engine
 		glm::vec3 getRight() const;
 		glm::vec3 getUp() const;
 		glm::vec3 getForward() const;
-		void apply(Shader &) const;
+		void apply(Shader &, std::string uniform = "model") const;
 	};
 }

@@ -33,5 +33,6 @@ namespace Engine
         void draw() const;
         bool isDrawable() const;
 		void setFont(std::string font);
+        void setColor(glm::vec3 color);
 	};
 }

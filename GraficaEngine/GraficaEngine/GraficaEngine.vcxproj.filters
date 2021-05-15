@@ -120,7 +120,11 @@
     <ClCompile Include="Scripts\Hazard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Core\Settings.cpp">
+=======
+    <ClCompile Include="Core\Canvas.cpp">
+>>>>>>> Add canvas
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -243,6 +247,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Canvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

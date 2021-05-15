@@ -193,6 +193,7 @@
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
     <ClInclude Include="Core\Canvas.h" />
+    <ClInclude Include="Core\Colors.h" />
     <ClInclude Include="Core\FontManager.h" />
     <ClInclude Include="Core\OrthographicCamera.h" />
     <ClInclude Include="Core\PerspectiveCamera.h" />

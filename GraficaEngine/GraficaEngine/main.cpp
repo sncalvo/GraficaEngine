@@ -22,6 +22,7 @@
 #include "Core/Behaviour.h"
 #include "Physics/Collider.h"
 #include "Core/Canvas.h"
+#include "Core/Colors.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/SwapCameras.h"
@@ -34,10 +35,11 @@
 #include "Scripts/Boundary.h"
 #include "Scripts/EndlessSpawner.h"
 #include "Scripts/ObstacleSpawner.h"
-#include "Scripts/TextController.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
+
+void loadHUD(Engine::Scene*);
 
 int main(int argc, char *argv[])
 {
@@ -161,18 +163,104 @@ int main(int argc, char *argv[])
 	Engine::Light *light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
 	scene->addLight(light);
 
-	Engine::TextObject* text = new Engine::TextObject("Quieto");
-	text->transform.position = glm::vec3(10.0f, 10.0f, 1.0f);
-	text->addBehaviour(new TextController());
-	text->setColor(glm::vec3(0.0f, 0.0f, 0.0f));
-
-	Engine::Canvas* hud = new Engine::Canvas(glm::vec2(800.0f, 50.0f));
-	hud->transform.position = glm::vec3(0.0f, 550.f, 3.0f);
-	scene->addGameObject(hud);
-	hud->addChild(text);
+	loadHUD(scene);
 
 	gameLoop.setActiveScene(scene);
 	gameLoop.start();
 
 	return 0;
+}
+
+void loadHUD(Engine::Scene *scene)
+{
+	Engine::TextObject* settingsTitle = new Engine::TextObject("Game Settings");
+	settingsTitle->transform.position = glm::vec3(100.0f, 25.0f, 1.0f);
+	settingsTitle->setColor(Engine::BLACK);
+	
+	Engine::TextObject* wireframeTitle = new Engine::TextObject("Wireframe(4):");
+	wireframeTitle->transform.position = glm::vec3(10.0f, 5.0f, 1.0f);
+	wireframeTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* wireframeValue = new Engine::TextObject("OFF");
+	wireframeValue->transform.position = glm::vec3(73.0f, 5.0f, 1.0f);
+	wireframeValue->setColor(Engine::RED);
+	wireframeValue->addTag("wireframe_value");
+
+	Engine::TextObject* texturesTitle = new Engine::TextObject("Textures(5):");
+	texturesTitle->transform.position = glm::vec3(90.0f, 15.0f, 1.0f);
+	texturesTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* textureValue = new Engine::TextObject("ON");
+	textureValue->transform.position = glm::vec3(145.0f, 15.0f, 1.0f);
+	textureValue->setColor(Engine::GREEN);
+	textureValue->addTag("texture_value");
+
+	Engine::TextObject* speedTitle = new Engine::TextObject("Speed(1, 2, 3):");
+	speedTitle->transform.position = glm::vec3(10.0f, 15.0f, 1.0f);
+	speedTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* speedValue = new Engine::TextObject("1");
+	speedValue->transform.position = glm::vec3(77.0f, 15.0f, 1.0f);
+	speedValue->setColor(Engine::BLACK);
+	speedValue->addTag("speed_value");
+
+	Engine::TextObject* interpolateTitle = new Engine::TextObject("Interpolate(6):");
+	interpolateTitle->transform.position = glm::vec3(100.0f, 5.0f, 1.0f);
+	interpolateTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* interpolateValue = new Engine::TextObject("ON");
+	interpolateValue->transform.position = glm::vec3(167.0f, 5.0f, 1.0f);
+	interpolateValue->setColor(Engine::GREEN);
+	interpolateValue->addTag("interpolate_value");
+
+	Engine::Canvas* hudDivider = new Engine::Canvas(glm::vec2(2.0f, 70.0f));
+	hudDivider->transform.position = glm::vec3(555.0f, 530.f, 4.0f);
+	hudDivider->setColor(Engine::BLACK);
+	
+	Engine::TextObject* gameplayTitle = new Engine::TextObject("Gameplay");
+	gameplayTitle->transform.position = glm::vec3(320.0f, 25.0f, 1.0f);
+	gameplayTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* scoreTitle = new Engine::TextObject("Puntos:");
+	scoreTitle->transform.position = glm::vec3(300.0f, 5.0f, 1.0f);
+	scoreTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* scoreValue = new Engine::TextObject("175");
+	scoreValue->transform.position = glm::vec3(337.0f, 5.0f, 1.0f);
+	scoreValue->setColor(Engine::ORANGE);
+	scoreValue->addTag("score_value");
+
+	Engine::TextObject* timeTitle = new Engine::TextObject("Tiempo:");
+	timeTitle->transform.position = glm::vec3(300.0f, 15.0f, 1.0f);
+	timeTitle->setColor(Engine::BLACK);
+
+	Engine::TextObject* timeValue = new Engine::TextObject("00:00");
+	timeValue->transform.position = glm::vec3(340.0f, 15.0f, 1.0f);
+	timeValue->setColor(Engine::ORANGE);
+	timeValue->addTag("time_value");
+
+	Engine::Canvas* hud = new Engine::Canvas(glm::vec2(800.0f, 70.0f));
+	hud->transform.position = glm::vec3(0.0f, 530.f, 3.0f);
+	hud->setColor(Engine::GRAY);
+	scene->addGameObject(hud);
+	
+	hud->addChild(settingsTitle);
+
+	hud->addChild(wireframeTitle);
+	hud->addChild(wireframeValue);
+	hud->addChild(texturesTitle);
+	hud->addChild(textureValue);
+	hud->addChild(speedTitle);
+	hud->addChild(speedValue);
+	hud->addChild(interpolateTitle);
+	hud->addChild(interpolateValue);
+
+	scene->addGameObject(hudDivider);
+	
+	hud->addChild(gameplayTitle);
+
+	hud->addChild(scoreTitle);
+	hud->addChild(scoreValue);
+	hud->addChild(timeTitle);
+	hud->addChild(timeValue);
 }

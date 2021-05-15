@@ -1,4 +1,4 @@
-# Blender v2.91.2 OBJ File: 'newDuck.blend'
+# Blender v2.91.2 OBJ File: 'newDuck (3).blend'
 # www.blender.org
 mtllib river.mtl
 o Plane
@@ -11,7 +11,7 @@ vt 1.000000 0.000000
 vt 1.000000 1.000000
 vt 0.000000 1.000000
 vn 0.0000 1.0000 0.0000
-g Plane_Plane_Material.002
-usemtl Material.002
-s off
+g Plane_Plane_water
+usemtl water
+s 1
 f 1/1/1 2/2/1 4/3/1 3/4/1

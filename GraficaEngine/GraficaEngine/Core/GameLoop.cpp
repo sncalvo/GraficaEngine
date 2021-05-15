@@ -48,6 +48,18 @@ namespace Engine
 		{
 			bool showingColliders = settings.getShowColliders();
 			settings.setShowColliders(!showingColliders);
+    }
+  }
+
+  void GameLoop::_handleInterpolationToggle() const
+  {
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_U))
+		{
+			bool useInterpolation = settings.getUseInterpolation();
+			settings.setUseInterpolation(!useInterpolation);
 		}
 	}
 
@@ -89,6 +101,7 @@ namespace Engine
 			_handleTexturesToggle();
 			_handleShowCollidersToggle();
 			_handleWireframeToggle();
+			_handleInterpolationToggle();
 
 			if (_gamePaused || !_activeScene)
 			{

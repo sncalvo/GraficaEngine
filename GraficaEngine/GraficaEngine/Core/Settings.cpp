@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	Settings::Settings() : _isWireframe(false), _showTextures(true), _useInterpolation(true), _showColliders(false), _gameSpeed(GameSpeed::NORMAL)
+	Settings::Settings() : _isWireframe(false), _showTextures(true), _useInterpolation(false), _showColliders(false), _gameSpeed(GameSpeed::NORMAL)
 	{
 	}
 
@@ -23,7 +23,6 @@ namespace Engine
 
 	void Settings::setShowTextures(bool showTextures)
 	{
-		// TODO: Show or not textures depending on the value of `showTextures`
 		_showTextures = showTextures;
 	}
 
@@ -34,7 +33,6 @@ namespace Engine
 
 	void Settings::setUseInterpolation(bool useInterpolation)
 	{
-		// TODO: Use interpolation or not depending on the value of `useInterpolation`
 		_useInterpolation = useInterpolation;
 	}
 
@@ -56,7 +54,6 @@ namespace Engine
 
 	void Settings::setGameSpeed(GameSpeed gameSpeed)
 	{
-		// TODO: Change game speed
 		_gameSpeed = gameSpeed;
 	}
 

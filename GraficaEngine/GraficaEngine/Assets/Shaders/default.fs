@@ -5,6 +5,7 @@ out vec4 FragColor;
 in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
+in vec3 worldPosition;
 
 struct Material
 {
@@ -25,13 +26,25 @@ struct Light
 
 uniform sampler2D texture_diffuse1;
 uniform bool has_texture;
+uniform bool is_flat;
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
 
 void main()
 {
-    vec3 norm = normalize(Normal);
+    vec3 norm;
+    if (is_flat)
+    {
+        vec3 xTangent = dFdx(worldPosition);
+        vec3 yTangent = dFdy(worldPosition);
+        norm = normalize(cross(xTangent, yTangent));
+    }
+    else
+    {
+        norm = normalize(Normal);
+    }
+
     vec3 lightDir = normalize(-light.direction);
 
     // ambient

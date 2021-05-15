@@ -110,8 +110,9 @@ int main(int argc, char *argv[])
 	duck->transform.scale = glm::vec3(.5f);
 
 	Engine::GameObject *grass = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/floor.obj")),
-		Engine::MaterialObject(shader));
+		new Engine::Model(_strdup("Assets/Models/grass.obj")),
+		Engine::MaterialObject(shader)
+	);
 	grass->addTag("ground");
 	grass->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.0f, -3.f), glm::vec3(24.f, 0.0f, 3.f)));
 
@@ -157,6 +158,7 @@ int main(int argc, char *argv[])
 
 	Engine::BaseGameObject *spawner = new Engine::BaseGameObject();
 	std::vector<Environment> environments{grass, grass, river, road};
+
 	spawner->addBehaviour(new EndlessSpawner(environments));
 	scene->addGameObject(spawner);
 

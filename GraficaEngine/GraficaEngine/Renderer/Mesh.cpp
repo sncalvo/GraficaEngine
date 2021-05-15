@@ -80,6 +80,8 @@ namespace Engine
             glBindTexture(GL_TEXTURE_2D, 0);
         }
 
+        shader.setBool("is_flat", !settings.getUseInterpolation());
+
         shader.setVec3f("material.ambient", glm::value_ptr(_material.ambient));
         shader.setVec3f("material.diffuse", glm::value_ptr(_material.diffuse));
         shader.setVec3f("material.specular", glm::value_ptr(_material.specular));

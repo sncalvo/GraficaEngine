@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+#include "Settings.h"
+
 namespace Engine
 {
 	Scene::Scene(Camera *defaultCamera)
@@ -87,6 +89,14 @@ namespace Engine
 		for (BaseGameObject *gameObject : _gameObjects)
 		{
 			gameObject->draw();
+		}
+
+		if (Settings::getInstance().getShowColliders())
+		{
+			for (Collider *collider : _colliders)
+			{
+				collider->draw();
+			}
 		}
 	}
 

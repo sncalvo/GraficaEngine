@@ -38,6 +38,7 @@
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Platform\Window.cpp" />
+    <ClCompile Include="Scripts\JumpController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Platform\Window.h" />
     <ClInclude Include="Core\Colors.h" />
+    <ClInclude Include="Scripts\JumpController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.fs" />

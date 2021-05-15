@@ -19,6 +19,7 @@ namespace Engine
 
 		for (std::string tag : _tags)
 		{
+			std::cout << "HOLA: ";
 			addTag(tag);
 		}
 

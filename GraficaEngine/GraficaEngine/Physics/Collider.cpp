@@ -6,15 +6,18 @@
 
 namespace Engine
 {
-    Collider::Collider(glm::vec3 min, glm::vec3 max) : _min(min), _max(max), _gameObject(nullptr)
+    Collider::Collider(glm::vec3 min, glm::vec3 max) : _min(min),
+                                                       _max(max),
+                                                       _gameObject(nullptr),
+                                                       _mesh(_initializeMesh(min, max))
     {
     }
 
-    Collider::Collider(Collider* otherCollider)
+    Collider::Collider(Collider *otherCollider) : _min(otherCollider->_min),
+                                                  _max(otherCollider->_max),
+                                                  _gameObject(otherCollider->_gameObject),
+                                                  _mesh(otherCollider->_mesh)
     {
-        _min = otherCollider->getMin();
-        _max = otherCollider->getMax();
-        _gameObject = otherCollider->getGameObject();
     }
 
     void Collider::resetCollisions()
@@ -70,7 +73,85 @@ namespace Engine
             (minA.z <= maxB.z && maxA.z >= minB.z));
     }
 
+    void Collider::draw() const
+    {
+        Shader &shader = *_gameObject->getMaterial().getShader();
+        shader.use();
+        _gameObject->transform.apply(shader);
+
+        std::vector<Light *> lights = _gameObject->getScene()->getLights();
+
+        for (Light *light : lights)
+        {
+            light->apply(shader);
+        }
+
+        Camera *camera = _gameObject->getScene()->getActiveCamera();
+        camera->apply(shader);
+
+        _mesh.draw(shader);
+    }
+
     Collider::~Collider()
     {
+    }
+
+    Mesh Collider::_initializeMesh(glm::vec3 min, glm::vec3 max)
+    {
+        std::vector<Vertex> vertices{
+            Vertex{
+                min,
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                glm::vec3{min.x, max.y, min.z},
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                glm::vec3{min.x, max.y, max.z},
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                glm::vec3{min.x, min.y, max.z},
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                glm::vec3{max.x, min.y, max.z},
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                max,
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                glm::vec3{max.x, max.y, min.z},
+                glm::vec3(0.f),
+                glm::vec3(0.f)},
+            Vertex{
+                glm::vec3{max.x, min.y, min.z},
+                glm::vec3(0.f),
+                glm::vec3(0.f)}};
+
+        std::vector<unsigned int> indices{
+            2, 1, 0,
+            2, 0, 3,
+            4, 2, 3,
+            5, 2, 4,
+            5, 4, 6,
+            6, 4, 7,
+            1, 6, 7,
+            1, 7, 0,
+            1, 2, 6,
+            6, 2, 5,
+            4, 3, 0,
+            4, 0, 7};
+
+        Material material{
+            glm::vec3{0.4f, 1.f, 0.4f},
+            glm::vec3{0.4f, 1.f, 0.4f},
+            glm::vec3{0.4f, 1.f, 0.4f},
+            1.f};
+
+        return Mesh(vertices, indices, {}, material);
     }
 }

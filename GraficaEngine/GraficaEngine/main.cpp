@@ -25,6 +25,7 @@
 #include "Core/Colors.h"
 
 #include "Scripts/PlayerController.h"
+#include "Scripts/JumpController.h"
 #include "Scripts/SwapCameras.h"
 #include "Scripts/FlyingCameraController.h"
 #include "Scripts/OffsetPlayer.h"
@@ -99,10 +100,10 @@ int main(int argc, char *argv[])
 
 	Engine::GameObject *duck = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/duck.obj")),
-		Engine::MaterialObject(shader)
-	);
-	duck->setCollider(new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f)));
+		Engine::MaterialObject(shader));
+	duck->setCollider(new Engine::Collider(glm::vec3(-1.f, -0.2f, -1.f), glm::vec3(1.f, 5.f, 1.f)));
 	duck->addBehaviour(new PlayerController());
+	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
 	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
@@ -110,8 +111,9 @@ int main(int argc, char *argv[])
 
 	Engine::GameObject *floor = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/floor.obj")),
-		Engine::MaterialObject(shader)
-	);
+		Engine::MaterialObject(shader));
+	floor->addTag("ground");
+	floor->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.0f, -3.f), glm::vec3(24.f, 0.0f, 3.f)));
 
 	for (int index = -5; index < 5; index++)
 	{
@@ -123,40 +125,36 @@ int main(int argc, char *argv[])
 
 	Engine::GameObject *river = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/river.obj")),
-		Engine::MaterialObject(shader)
-	);
+		Engine::MaterialObject(shader));
 	river->setCollider(new Engine::Collider(glm::vec3(-12.f, 0.f, -1.5f), glm::vec3(12.f, 0.f, 1.5f)));
 	river->addBehaviour(new Hazard());
 
 	Engine::GameObject *log = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/log.obj")),
-		Engine::MaterialObject(shader)
-	);
+		Engine::MaterialObject(shader));
 	log->setCollider(new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f)));
 	log->addBehaviour(new Boundary(-30.f, 10.f));
 
-	river->addBehaviour(new ObstacleSpawner(Obstacles { log }));
+	river->addBehaviour(new ObstacleSpawner(Obstacles{log}));
 
 	Engine::GameObject *car = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
-		Engine::MaterialObject(shader)
-	);
+		Engine::MaterialObject(shader));
 	car->setCollider(new Engine::Collider(glm::vec3(-1.5f, 0, -1.f), glm::vec3(1.5f, 0.f, 1.f)));
 	car->addBehaviour(new Hazard());
 	car->addBehaviour(new Boundary(-30.f, 10.f));
 	car->addTag("hazard");
 
-	floor->addBehaviour(new ObstacleSpawner(Obstacles{ car }));
+	floor->addBehaviour(new ObstacleSpawner(Obstacles{car}));
 
 	Engine::BaseGameObject *spawner = new Engine::BaseGameObject();
-	std::vector<Environment> environments { floor, river };
+	std::vector<Environment> environments{floor, river};
 	spawner->addBehaviour(new EndlessSpawner(environments));
 	scene->addGameObject(spawner);
 
 	Engine::GameObject *tree = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
-		Engine::MaterialObject(shader)
-	);
+		Engine::MaterialObject(shader));
 	scene->addGameObject(tree);
 	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
 

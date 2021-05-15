@@ -9,13 +9,15 @@
 
 namespace Engine
 {
-	struct Vertex {
+	struct Vertex
+	{
 		glm::vec3 position;
 		glm::vec3 normal;
 		glm::vec2 textureCoordinates;
 	};
 
-	struct Material {
+	struct Material
+	{
 		glm::vec3 ambient;
 		glm::vec3 diffuse;
 		glm::vec3 specular;
@@ -33,6 +35,7 @@ namespace Engine
 		unsigned int VAO, VBO, EBO;
 
 		void setupMesh();
+
 	public:
 		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, std::vector<Texture> texture, Material material);
 		void draw(Shader &shader) const;

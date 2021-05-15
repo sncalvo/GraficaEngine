@@ -4,6 +4,9 @@
 
 #include <glm/glm.hpp>
 
+#include "../Renderer/Shader.h"
+#include "../Renderer/Mesh.h"
+
 namespace Engine
 {
     class GameObject;
@@ -14,6 +17,9 @@ namespace Engine
         glm::vec3 _min, _max;
         std::vector<Collider *> _collidingWith;
         GameObject *_gameObject;
+        Mesh _mesh;
+
+        Mesh _initializeMesh(glm::vec3 min, glm::vec3 max);
 
     public:
         Collider(glm::vec3 min, glm::vec3 max);
@@ -25,6 +31,7 @@ namespace Engine
         glm::vec3 getMax() const;
         std::vector<Collider *> getCollisions() const;
         GameObject *getGameObject() const;
+        void draw() const;
         static bool intersect(Collider *, Collider *);
         ~Collider();
     };

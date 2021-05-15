@@ -2,7 +2,8 @@
 
 namespace Engine
 {
-	enum class GameSpeed {
+	enum class GameSpeed
+	{
 		SLOW,
 		NORMAL,
 		FAST,
@@ -11,12 +12,12 @@ namespace Engine
 	class Settings
 	{
 	private:
-		bool _isWireframe, _showTextures, _useInterpolation;
+		bool _isWireframe, _showTextures, _useInterpolation, _showColliders;
 		GameSpeed _gameSpeed;
 		Settings();
 
 	public:
-		static Settings& getInstance()
+		static Settings &getInstance()
 		{
 			static Settings _instance;
 			return _instance;
@@ -29,5 +30,7 @@ namespace Engine
 		void setUseInterpolation(bool);
 		float getGameSpeed() const;
 		void setGameSpeed(GameSpeed);
+		bool getShowColliders() const;
+		void setShowColliders(bool);
 	};
 }

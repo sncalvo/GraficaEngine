@@ -158,6 +158,7 @@
     <ClCompile Include="Core\OrthographicCamera.cpp" />
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
+    <ClCompile Include="Scripts\JumpController.cpp" />
     <ClCompile Include="Scripts\Boundary.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
     <ClCompile Include="Scripts\FirstPersonCameraController.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Core\PerspectiveCamera.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
+    <ClInclude Include="Scripts\JumpController.h" />
     <ClInclude Include="Scripts\Boundary.h" />
     <ClInclude Include="Physics\Collider.h" />
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />

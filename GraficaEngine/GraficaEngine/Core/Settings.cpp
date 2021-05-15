@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	Settings::Settings() : _isWireframe(false), _showTextures(true), _useInterpolation(true), _gameSpeed(GameSpeed::NORMAL)
+	Settings::Settings() : _isWireframe(false), _showTextures(true), _useInterpolation(true), _showColliders(true), _gameSpeed(GameSpeed::NORMAL)
 	{
 	}
 
@@ -59,5 +59,15 @@ namespace Engine
 	{
 		// TODO: Change game speed
 		_gameSpeed = gameSpeed;
+	}
+
+	bool Settings::getShowColliders() const
+	{
+		return _showColliders;
+	}
+
+	void Settings::setShowColliders(bool showColliders)
+	{
+		_showColliders = showColliders;
 	}
 }

@@ -30,6 +30,7 @@ uniform bool is_flat;
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
+uniform vec2 texture_offset;
 
 void main()
 {
@@ -46,16 +47,17 @@ void main()
     }
 
     vec3 lightDir = normalize(-light.direction);
+    vec3 textureColor = texture(texture_diffuse1, TexCoords + texture_offset).xyz;
 
     // ambient
     vec3 ambient = light.ambient;
     if (has_texture)
     {
-        ambient = ambient * texture(texture_diffuse1, TexCoords).xyz;
+        ambient = ambient * textureColor;
     }
     else
     {
-        ambient = ambient * material.ambient;
+        ambient = ambient * material.diffuse;
     }
 
     // diffuse
@@ -63,7 +65,7 @@ void main()
     vec3 diffuse = light.diffuse;
     if (has_texture)
     {
-        diffuse = diffuse * diff * texture(texture_diffuse1, TexCoords).xyz;
+        diffuse = diffuse * diff * textureColor;
     }
     else
     {

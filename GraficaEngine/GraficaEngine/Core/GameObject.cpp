@@ -22,7 +22,7 @@ namespace Engine
 	{
 		Model *modelCopy = new Model(otherGameObject->getModel());
 		_model = modelCopy;
-		_material = MaterialObject(otherGameObject->getMaterial().getShader());
+		_material = MaterialObject(otherGameObject->_material.getShader());
 		Collider* otherCollider = otherGameObject->getCollider();
 		if (otherCollider != nullptr)
 		{
@@ -38,6 +38,7 @@ namespace Engine
 		}
 		Shader *shader = _material.getShader();
 		shader->use();
+		_material.applyTextureOffset();
 		transform.apply(*shader);
 		std::vector<Light *> lights = _scene->getLights();
 
@@ -73,7 +74,7 @@ namespace Engine
 		return _model;
 	}
 
-	MaterialObject GameObject::getMaterial() const
+	MaterialObject &GameObject::getMaterial()
 	{
 		return _material;
 	}

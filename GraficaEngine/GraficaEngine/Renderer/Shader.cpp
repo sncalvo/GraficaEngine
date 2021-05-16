@@ -108,6 +108,14 @@ namespace Engine
 	{
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
+	void Shader::setVec2f(const std::string& name, const glm::f32* value) const
+	{
+		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, value);
+	}
+	void Shader::setVec2(const std::string& name, float value0, float value1) const
+	{
+		glUniform2f(glGetUniformLocation(ID, name.c_str()), value0, value1);
+	}
 	void Shader::setVec3f(const std::string& name, const glm::f32* value) const
 	{
 		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, value);

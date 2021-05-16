@@ -10,6 +10,7 @@ namespace Engine
 	{
 	protected:
 		BaseGameObject* gameObject;
+
 	public:
 		virtual void update() {};
 		virtual Behaviour* clone() const {

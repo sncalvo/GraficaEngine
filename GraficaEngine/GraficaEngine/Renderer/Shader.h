@@ -20,6 +20,8 @@ namespace Engine
 		void setInt(const std::string& name, int value) const;
 		void setFloat(const std::string& name, float value) const;
 		void setFloat4f(const std::string& name, float value0, float value1, float value2, float value3) const;
+		void setVec2f(const std::string& name, const glm::f32* value) const;
+		void setVec2(const std::string& name, float value0, float value1) const;
 		void setVec3f(const std::string& name, const glm::f32* value) const;
 		void setVec3(const std::string& name, float value0, float value1, float value2) const;
 		void setMatrix4f(const std::string& name, glm::f32* matrix) const;

@@ -159,6 +159,7 @@
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
+    <ClCompile Include="Scripts\RiverMover.cpp" />
     <ClCompile Include="Scripts\JumpController.cpp" />
     <ClCompile Include="Scripts\Boundary.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
     <ClInclude Include="Scripts\HintController.h" />
+    <ClInclude Include="Scripts\RiverMover.h" />
     <ClInclude Include="Scripts\JumpController.h" />
     <ClInclude Include="Scripts\Boundary.h" />
     <ClInclude Include="Physics\Collider.h" />

@@ -3,11 +3,13 @@
 #include "../Core/Input.h"
 #include "../Core/Time.h"
 #include "../Core/GameObject.h"
+#include "../Core/TextObject.h"
 
 #include "../Utils/DebugLog.h"
 
 PlayerController::PlayerController(): _speed(7.f)
 {
+	_score = 0;
 }
 
 void PlayerController::update()
@@ -44,4 +46,11 @@ void PlayerController::update()
 void PlayerController::die()
 {
 	gameObject->getScene()->deleteGameObject(gameObject);
+}
+
+void PlayerController::increaseScore(int amount)
+{
+	_score += amount;
+	Engine::TextObject* text = dynamic_cast<Engine::TextObject*>(gameObject->getScene()->getGameObjectWithTag("score_value"));
+	text->setText(std::to_string(_score));
 }

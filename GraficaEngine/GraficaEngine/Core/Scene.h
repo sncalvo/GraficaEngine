@@ -43,6 +43,7 @@ namespace Engine
 		std::vector<std::string> getCameraNames() const;
 		std::vector<Light *> getLights();
 		void draw();
+		void start();
 		void update();
 		void physicsUpdate();
 		~Scene();

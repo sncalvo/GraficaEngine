@@ -38,6 +38,12 @@ namespace Engine
 			{
 				return gameObject;
 			}
+			BaseGameObject* child = gameObject->getChildWithTag(tag);
+			if (child != nullptr)
+			{
+				return child;
+			}
+
 		}
 		return nullptr;
 	}
@@ -100,6 +106,14 @@ namespace Engine
 		}
 	}
 
+	void Scene::start()
+	{
+		for (BaseGameObject* gameObject : _gameObjects)
+		{
+			gameObject->start();
+		}
+	}
+
 	void Scene::update()
 	{
 		_activeCamera->update();
@@ -138,6 +152,11 @@ namespace Engine
 			_gameObjects.end(),
 			_queuedGameObjects.begin(),
 			_queuedGameObjects.end());
+
+		for (BaseGameObject* gameObject : _queuedGameObjects)
+		{
+			gameObject->start();
+		}
 
 		_queuedGameObjects.clear();
 

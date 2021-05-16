@@ -39,7 +39,6 @@ void EndlessSpawner::update()
 		return;
 	}
 
-	srand(time(nullptr));
 	int randomEnvironmentIndex = rand() % _environments.size();
 
 	Environment referenceEnvironment = _environments[randomEnvironmentIndex];

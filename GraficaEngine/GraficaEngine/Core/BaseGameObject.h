@@ -27,6 +27,7 @@ namespace Engine
 		virtual ~BaseGameObject();
 		Transform transform;
 		void update();
+		void start();
 		void addBehaviour(Behaviour *);
 		std::vector<Behaviour *> getBehaviours() const;
 		void addChild(BaseGameObject *);
@@ -40,6 +41,7 @@ namespace Engine
 		virtual void draw() const;
 		void addTag(std::string tag);
 		bool hasTag(std::string tag) const;
+		BaseGameObject *getChildWithTag(std::string tag) const;
 
 		template<class BehaviourType> BehaviourType* getComponent() const
 		{

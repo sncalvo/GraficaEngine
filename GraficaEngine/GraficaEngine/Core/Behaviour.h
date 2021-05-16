@@ -11,7 +11,7 @@ namespace Engine
 	protected:
 		BaseGameObject* gameObject;
 	public:
-		virtual void update() = 0;
+		virtual void update() {};
 		virtual Behaviour* clone() const {
 			throw new NotSupposedToCopyException();
 		};
@@ -20,5 +20,6 @@ namespace Engine
 		{
 			gameObject = parentGameObject;
 		}
+		virtual void start() {};
 	};
 }

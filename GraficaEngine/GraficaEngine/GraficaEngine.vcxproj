@@ -161,6 +161,7 @@
     <ClCompile Include="Scripts\JumpController.cpp" />
     <ClCompile Include="Scripts\Boundary.cpp" />
     <ClCompile Include="Physics\Collider.cpp" />
+    <ClCompile Include="Scripts\CoinController.cpp" />
     <ClCompile Include="Scripts\FirstPersonCameraController.cpp" />
     <ClCompile Include="Scripts\FlyingCameraController.cpp" />
     <ClCompile Include="Core\TextObject.cpp" />
@@ -173,8 +174,10 @@
     <ClCompile Include="Scripts\OffsetPlayer.cpp" />
     <ClCompile Include="Scripts\PlayerController.cpp" />
     <ClCompile Include="Scripts\EndlessSpawner.cpp" />
+    <ClCompile Include="Scripts\StaticSpawner.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
+    <ClCompile Include="Scripts\TimeController.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -202,6 +205,7 @@
     <ClInclude Include="Scripts\JumpController.h" />
     <ClInclude Include="Scripts\Boundary.h" />
     <ClInclude Include="Physics\Collider.h" />
+    <ClInclude Include="Scripts\CoinController.h" />
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\TextObject.h" />
@@ -216,8 +220,10 @@
     <ClInclude Include="Scripts\OffsetPlayer.h" />
     <ClInclude Include="Scripts\PlayerController.h" />
     <ClInclude Include="Scripts\EndlessSpawner.h" />
+    <ClInclude Include="Scripts\StaticSpawner.h" />
     <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
+    <ClInclude Include="Scripts\TimeController.h" />
     <ClInclude Include="Utils\CircularBuffer.h" />
     <ClInclude Include="Utils\DebugLog.h" />
     <ClInclude Include="Core\GameObject.h" />

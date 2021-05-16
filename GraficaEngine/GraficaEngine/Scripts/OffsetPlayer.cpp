@@ -12,5 +12,9 @@ void OffsetPlayer::update()
 		return;
 	}
 
-	gameObject->transform.position = player->transform.position + _offset;
+	gameObject->transform.position = glm::vec3(
+		player->transform.position.x + _offset.x,
+		gameObject->transform.position.y,
+		player->transform.position.z + _offset.z
+	);
 }

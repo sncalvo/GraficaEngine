@@ -23,7 +23,6 @@
     <ClCompile Include="Scripts\EndlessSpawner.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
-    <ClCompile Include="Scripts\TextController.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -67,7 +66,6 @@
     <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Utils\CircularBuffer.h" />
-    <ClInclude Include="Scripts\TextController.h" />
     <ClInclude Include="Utils\DebugLog.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Input.h" />

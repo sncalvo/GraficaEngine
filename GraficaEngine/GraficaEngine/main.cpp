@@ -109,18 +109,18 @@ int main(int argc, char *argv[])
 	duck->transform.position = glm::vec3(1.0f, 1.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
-	Engine::GameObject *floor = new Engine::GameObject(
+	Engine::GameObject *grass = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/floor.obj")),
 		Engine::MaterialObject(shader));
-	floor->addTag("ground");
-	floor->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.0f, -3.f), glm::vec3(24.f, 0.0f, 3.f)));
+	grass->addTag("ground");
+	grass->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.0f, -3.f), glm::vec3(24.f, 0.0f, 3.f)));
 
 	for (int index = -5; index < 5; index++)
 	{
-		Engine::GameObject *newFloor = new Engine::GameObject(floor);
-		newFloor->transform.scale = glm::vec3(.5f);
-		newFloor->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
-		scene->addGameObject(newFloor);
+		Engine::GameObject *newgrass = new Engine::GameObject(grass);
+		newgrass->transform.scale = glm::vec3(.5f);
+		newgrass->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
+		scene->addGameObject(newgrass);
 	}
 
 	Engine::GameObject *river = new Engine::GameObject(
@@ -128,6 +128,13 @@ int main(int argc, char *argv[])
 		Engine::MaterialObject(shader));
 	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
 	river->addBehaviour(new Hazard());
+
+	Engine::GameObject *road = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/road.obj")),
+		Engine::MaterialObject(shader)
+	);
+	road->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
+	road->addTag("ground");
 
 	Engine::GameObject *log = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/log.obj")),
@@ -146,10 +153,10 @@ int main(int argc, char *argv[])
 	car->addBehaviour(new Boundary(-30.f, 10.f));
 	car->addTag("hazard");
 
-	floor->addBehaviour(new ObstacleSpawner(Obstacles{car}));
+	road->addBehaviour(new ObstacleSpawner(Obstacles{car}));
 
 	Engine::BaseGameObject *spawner = new Engine::BaseGameObject();
-	std::vector<Environment> environments{floor, river};
+	std::vector<Environment> environments{grass, grass, river, road};
 	spawner->addBehaviour(new EndlessSpawner(environments));
 	scene->addGameObject(spawner);
 

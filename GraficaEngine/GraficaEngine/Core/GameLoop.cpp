@@ -1,5 +1,6 @@
 #include "GameLoop.h"
 
+#include "Light.h"
 #include "Settings.h"
 #include <stdlib.h>
 #include <time.h>
@@ -8,6 +9,31 @@ namespace Engine
 {
 	GameLoop::GameLoop() : _activeScene(nullptr), _shader(nullptr), _window(nullptr), _gamePaused(false)
 	{
+	}
+
+	void GameLoop::_handleDayTime() const
+	{
+		Input &input = Input::getInstance();
+		Settings &settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_O))
+		{
+			switch (settings.getDayTime())
+			{
+			case DayTime::MORNING:
+				settings.setDayTime(DayTime::MIDDAY);
+				break;
+			case DayTime::MIDDAY:
+				settings.setDayTime(DayTime::AFTERNOON);
+				break;
+			case DayTime::AFTERNOON:
+				settings.setDayTime(DayTime::NIGHT);
+				break;
+			case DayTime::NIGHT:
+				settings.setDayTime(DayTime::MORNING);
+				break;
+			}
+		}
 	}
 
 	void GameLoop::_handleGameSpeed() const
@@ -43,20 +69,20 @@ namespace Engine
 
 	void GameLoop::_handleShowCollidersToggle() const
 	{
-		Input& input = Input::getInstance();
-		Settings& settings = Settings::getInstance();
+		Input &input = Input::getInstance();
+		Settings &settings = Settings::getInstance();
 
 		if (input.getKeyDown(KEY_C))
 		{
 			bool showingColliders = settings.getShowColliders();
 			settings.setShowColliders(!showingColliders);
-    }
-  }
+		}
+	}
 
-  void GameLoop::_handleInterpolationToggle() const
-  {
-		Input& input = Input::getInstance();
-		Settings& settings = Settings::getInstance();
+	void GameLoop::_handleInterpolationToggle() const
+	{
+		Input &input = Input::getInstance();
+		Settings &settings = Settings::getInstance();
 
 		if (input.getKeyDown(KEY_U))
 		{
@@ -67,8 +93,8 @@ namespace Engine
 
 	void GameLoop::_handleWireframeToggle() const
 	{
-		Input& input = Input::getInstance();
-		Settings& settings = Settings::getInstance();
+		Input &input = Input::getInstance();
+		Settings &settings = Settings::getInstance();
 
 		if (input.getKeyDown(KEY_Y))
 		{
@@ -79,7 +105,7 @@ namespace Engine
 
 	void GameLoop::start()
 	{
-		srand((unsigned) time(0));
+		srand((unsigned)time(0));
 
 		Input &input = Input::getInstance();
 
@@ -108,6 +134,7 @@ namespace Engine
 			_handleShowCollidersToggle();
 			_handleWireframeToggle();
 			_handleInterpolationToggle();
+			_handleDayTime();
 
 			if (_gamePaused || !_activeScene)
 			{
@@ -140,7 +167,7 @@ namespace Engine
 		delete _activeScene;
 		delete _shader;
 		delete _window;
-		FontManager* fm = FontManager::getInstance();
+		FontManager *fm = FontManager::getInstance();
 		delete fm;
 		MediaLayer::exit();
 	}

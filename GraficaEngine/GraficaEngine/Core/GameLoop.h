@@ -31,6 +31,7 @@ namespace Engine
 		Scene *_activeScene;
 		std::vector<GameObject *> _gameObjects;
 		bool _gamePaused;
+		void _handleDayTime() const;
 		void _handleGameSpeed() const;
 		void _handleWireframeToggle() const;
 		void _handleTexturesToggle() const;

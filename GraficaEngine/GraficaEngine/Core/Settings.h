@@ -1,5 +1,11 @@
 #pragma once
 
+#include <tuple>
+
+#include <glm/glm.hpp>
+
+#include "Light.h"
+
 namespace Engine
 {
 	enum class GameSpeed
@@ -12,6 +18,7 @@ namespace Engine
 	class Settings
 	{
 	private:
+		DayTime _dayTime;
 		bool _isWireframe, _showTextures, _useInterpolation, _showColliders;
 		GameSpeed _gameSpeed;
 		Settings();
@@ -32,5 +39,7 @@ namespace Engine
 		void setGameSpeed(GameSpeed);
 		bool getShowColliders() const;
 		void setShowColliders(bool);
+		DayTime getDayTime() const;
+		void setDayTime(DayTime);
 	};
 }

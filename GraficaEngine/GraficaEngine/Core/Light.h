@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <map>
+
 #include <GL/glew.h>
 #include <SDL/SDL_opengl.h>
 
@@ -11,6 +13,14 @@
 
 namespace Engine
 {
+	enum class DayTime
+	{
+		MORNING,
+		MIDDAY,
+		AFTERNOON,
+		NIGHT,
+	};
+	
 	class Light
 	{
 	private:
@@ -22,6 +32,7 @@ namespace Engine
 
 		glm::vec3 _direction;
 		float _intensity;
+
 	public:
 		Light(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction);
 		Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction);
@@ -31,5 +42,7 @@ namespace Engine
 		void setAmbient(glm::vec4 color);
 		void setDiffuse(glm::vec4 color);
 		void setSpecular(glm::vec4 color);
+
+		static std::map<DayTime, Light *> lightPresets;
 	};
 }

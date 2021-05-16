@@ -48,14 +48,22 @@ void main()
     vec3 lightDir = normalize(-light.direction);
 
     // ambient
-    vec3 ambient = light.ambient * material.ambient;
+    vec3 ambient = light.ambient;
+    if (has_texture)
+    {
+        ambient = ambient * texture(texture_diffuse1, TexCoords).xyz;
+    }
+    else
+    {
+        ambient = ambient * material.ambient;
+    }
 
     // diffuse
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = light.diffuse;
     if (has_texture)
     {
-        diffuse = diffuse * diff * (texture(texture_diffuse1, TexCoords).xyz);
+        diffuse = diffuse * diff * texture(texture_diffuse1, TexCoords).xyz;
     }
     else
     {

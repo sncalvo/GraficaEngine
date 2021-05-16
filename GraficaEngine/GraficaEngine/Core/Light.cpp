@@ -61,4 +61,43 @@ namespace Engine
 	{
 		_specular = color;
 	}
+
+	std::map<DayTime, Light *> Light::lightPresets{
+		{
+			DayTime::MORNING,
+			new Light(
+				glm::vec3(0.6f, 0.3f, 0.2f),
+				glm::vec3(1.f, 0.7f, 0.2f),
+				glm::vec3(1.5f),
+				glm::vec3(1.f, 0.5f, 0.f)
+			),
+		},
+		{
+			DayTime::MIDDAY,
+			new Light(
+				glm::vec3(0.7f, 0.8f, 0.8f),
+				glm::vec3(0.8f, 1.f, 1.f),
+				glm::vec3(1.5f),
+				glm::vec3(1.f)
+			),
+		},
+		{
+			DayTime::AFTERNOON,
+			new Light(
+				glm::vec3(0.7f, 0.4f, 0.2f),
+				glm::vec3(1.f, 0.7f, 0.2f),
+				glm::vec3(1.5f),
+				glm::vec3(-1.f, 0.5f, 0.f)
+			),
+		},
+		{
+			DayTime::NIGHT,
+			new Light(
+				glm::vec3(0.f, 0.2f, 0.4f),
+				glm::vec3(0.1f, 0.4f, 0.8f),
+				glm::vec3(1.5f),
+				glm::vec3(1.f)
+			),
+		},
+	};
 }

@@ -60,7 +60,8 @@ namespace Engine
 
 	std::vector<Light *> Scene::getLights()
 	{
-		return _lights;
+		Light *light = Light::lightPresets[Settings::getInstance().getDayTime()];
+		return std::vector<Light *>{light};
 	}
 
 	Camera *Scene::getActiveCamera()

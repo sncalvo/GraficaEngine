@@ -36,6 +36,9 @@
 #include "Scripts/Boundary.h"
 #include "Scripts/EndlessSpawner.h"
 #include "Scripts/ObstacleSpawner.h"
+#include "Scripts/CoinController.h"
+#include "Scripts/StaticSpawner.h"
+#include "Scripts/TimeController.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -171,6 +174,19 @@ int main(int argc, char *argv[])
 	Engine::Light *light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
 	scene->addLight(light);
 
+	Engine::GameObject *coin = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/coin.obj")),
+		Engine::MaterialObject(shader)
+	);
+	coin->setCollider(new Engine::Collider(glm::vec3(-.5f, 0, -.5f), glm::vec3(.5f, 0.f, .5f)));
+	coin->addBehaviour(new CoinController());
+	coin->transform.rotateX(90.0f);
+	coin->transform.scale = glm::vec3(.4f);
+	coin->addTag("coin");
+
+	grass->addBehaviour(new StaticSpawner(coin));
+	road->addBehaviour(new StaticSpawner(coin));
+
 	loadHUD(scene);
 
 	gameLoop.setActiveScene(scene);
@@ -233,7 +249,7 @@ void loadHUD(Engine::Scene *scene)
 	scoreTitle->transform.position = glm::vec3(300.0f, 5.0f, 1.0f);
 	scoreTitle->setColor(Engine::BLACK);
 
-	Engine::TextObject* scoreValue = new Engine::TextObject("175");
+	Engine::TextObject* scoreValue = new Engine::TextObject("0");
 	scoreValue->transform.position = glm::vec3(337.0f, 5.0f, 1.0f);
 	scoreValue->setColor(Engine::ORANGE);
 	scoreValue->addTag("score_value");
@@ -246,6 +262,7 @@ void loadHUD(Engine::Scene *scene)
 	timeValue->transform.position = glm::vec3(340.0f, 15.0f, 1.0f);
 	timeValue->setColor(Engine::ORANGE);
 	timeValue->addTag("time_value");
+	timeValue->addBehaviour(new TimeController());
 
 	Engine::Canvas* hud = new Engine::Canvas(glm::vec2(800.0f, 70.0f));
 	hud->transform.position = glm::vec3(0.0f, 530.f, 3.0f);

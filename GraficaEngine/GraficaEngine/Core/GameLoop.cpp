@@ -1,6 +1,8 @@
 #include "GameLoop.h"
 
 #include "Settings.h"
+#include <stdlib.h>
+#include <time.h>
 
 namespace Engine
 {
@@ -77,11 +79,15 @@ namespace Engine
 
 	void GameLoop::start()
 	{
+		srand((unsigned) time(0));
+
 		Input &input = Input::getInstance();
 
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_CULL_FACE);
+
+		_activeScene->start();
 
 		while (true)
 		{

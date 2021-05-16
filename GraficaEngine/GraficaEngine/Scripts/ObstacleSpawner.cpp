@@ -10,14 +10,12 @@
 
 ObstacleSpawner::ObstacleSpawner(std::vector<Engine::GameObject *> obstacles) : _obstacles(obstacles)
 {
-	srand(time(nullptr));
 	_timeToNextSpawn = Engine::Time::getTime() + rand() % 5;
 	_speed = rand() % 5 + 5.f;
 }
 
 ObstacleSpawner::ObstacleSpawner(ObstacleSpawner *otherObstacleSpawner): _obstacles(otherObstacleSpawner->_obstacles)
 {
-	srand(time(nullptr));
 	_timeToNextSpawn = Engine::Time::getTime() + rand() % 5;
 	_speed = rand() % 5 + 5.f;
 }

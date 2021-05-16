@@ -24,6 +24,7 @@ namespace Engine
 
 		setScene(otherBaseGameObject->getScene());
 		setParent(otherBaseGameObject->getParent());
+		transform = otherBaseGameObject->transform;
 	}
 
 	BaseGameObject::~BaseGameObject()
@@ -59,6 +60,7 @@ namespace Engine
 		}
 		child->setParent(this);
 		_children.push_back(child);
+		child->start();
 	}
 
 	BaseGameObject *BaseGameObject::getParent() const
@@ -101,6 +103,19 @@ namespace Engine
 		}
 	}
 
+	void BaseGameObject::start()
+	{
+		for (Behaviour* behaviour : _behaviours)
+		{
+			behaviour->start();
+		}
+
+		for (BaseGameObject* child : _children)
+		{
+			child->start();
+		}
+	}
+
 	void BaseGameObject::setScene(Scene *scene)
 	{
 		_scene = scene;
@@ -139,5 +154,17 @@ namespace Engine
 			}
 		}
 		return false;
+	}
+
+	BaseGameObject* BaseGameObject::getChildWithTag(std::string tag) const
+	{
+		for (BaseGameObject* child : _children)
+		{
+			if (child->hasTag(tag))
+			{
+				return child;
+			}
+		}
+		return nullptr;
 	}
 }

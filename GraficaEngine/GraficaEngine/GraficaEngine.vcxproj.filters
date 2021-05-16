@@ -37,13 +37,10 @@
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Platform\Window.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Scripts\JumpController.cpp" />
-=======
     <ClCompile Include="Scripts\CoinController.cpp" />
     <ClCompile Include="Scripts\StaticSpawner.cpp" />
     <ClCompile Include="Scripts\TimeController.cpp" />
->>>>>>> Add coin. Also score and time to hud
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -87,7 +84,10 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Platform\Window.h" />
     <ClInclude Include="Core\Colors.h" />
+<<<<<<< HEAD
     <ClInclude Include="Scripts\JumpController.h" />
+=======
+>>>>>>> Add coin. Also score and time to hud
     <ClInclude Include="Scripts\CoinController.h" />
     <ClInclude Include="Scripts\StaticSpawner.h" />
     <ClInclude Include="Scripts\TimeController.h" />

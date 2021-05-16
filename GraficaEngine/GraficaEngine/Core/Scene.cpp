@@ -114,14 +114,6 @@ namespace Engine
 		}
 	}
 
-	void Scene::start()
-	{
-		for (BaseGameObject* gameObject : _gameObjects)
-		{
-			gameObject->start();
-		}
-	}
-
 	void Scene::update()
 	{
 		_activeCamera->update();

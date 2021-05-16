@@ -39,6 +39,8 @@
 #include "Scripts/CoinController.h"
 #include "Scripts/StaticSpawner.h"
 #include "Scripts/TimeController.h"
+#include "Scripts/HudController.h"
+#include "Scripts/HintController.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -187,6 +189,18 @@ int main(int argc, char *argv[])
 	grass->addBehaviour(new StaticSpawner(coin));
 	road->addBehaviour(new StaticSpawner(coin));
 
+	Engine::Canvas* hint = new Engine::Canvas(glm::vec2(300, 80));
+	hint->setColor(Engine::GRAY);
+	hint->transform.position = glm::vec3(800.f, 0.f, 1.f);
+
+	Engine::TextObject* hintText = new Engine::TextObject("Cambiá de cámara con V");
+	hintText->transform.position = glm::vec3(15.f, 15.f, 2.f);
+	hintText->setColor(Engine::BLACK);
+	hint->addChild(hintText);
+
+	scene->addGameObject(hint);
+	hint->addBehaviour(new HintController(5.f, 300.f));
+
 	loadHUD(scene);
 
 	gameLoop.setActiveScene(scene);
@@ -201,7 +215,7 @@ void loadHUD(Engine::Scene *scene)
 	settingsTitle->transform.position = glm::vec3(100.0f, 25.0f, 1.0f);
 	settingsTitle->setColor(Engine::BLACK);
 	
-	Engine::TextObject* wireframeTitle = new Engine::TextObject("Wireframe(4):");
+	Engine::TextObject* wireframeTitle = new Engine::TextObject("Wireframe(Y):");
 	wireframeTitle->transform.position = glm::vec3(10.0f, 5.0f, 1.0f);
 	wireframeTitle->setColor(Engine::BLACK);
 
@@ -210,12 +224,12 @@ void loadHUD(Engine::Scene *scene)
 	wireframeValue->setColor(Engine::RED);
 	wireframeValue->addTag("wireframe_value");
 
-	Engine::TextObject* texturesTitle = new Engine::TextObject("Textures(5):");
-	texturesTitle->transform.position = glm::vec3(90.0f, 15.0f, 1.0f);
+	Engine::TextObject* texturesTitle = new Engine::TextObject("Textures(T):");
+	texturesTitle->transform.position = glm::vec3(90.0f, 15.0f, 2.0f);
 	texturesTitle->setColor(Engine::BLACK);
 
 	Engine::TextObject* textureValue = new Engine::TextObject("ON");
-	textureValue->transform.position = glm::vec3(145.0f, 15.0f, 1.0f);
+	textureValue->transform.position = glm::vec3(145.0f, 15.0f, 0.1f);
 	textureValue->setColor(Engine::GREEN);
 	textureValue->addTag("texture_value");
 
@@ -228,14 +242,14 @@ void loadHUD(Engine::Scene *scene)
 	speedValue->setColor(Engine::BLACK);
 	speedValue->addTag("speed_value");
 
-	Engine::TextObject* interpolateTitle = new Engine::TextObject("Interpolate(6):");
+	Engine::TextObject* interpolateTitle = new Engine::TextObject("Interpolate(U):");
 	interpolateTitle->transform.position = glm::vec3(100.0f, 5.0f, 1.0f);
 	interpolateTitle->setColor(Engine::BLACK);
 
-	Engine::TextObject* interpolateValue = new Engine::TextObject("ON");
+	Engine::TextObject* interpolateValue = new Engine::TextObject("OFF");
 	interpolateValue->transform.position = glm::vec3(167.0f, 5.0f, 1.0f);
-	interpolateValue->setColor(Engine::GREEN);
-	interpolateValue->addTag("interpolate_value");
+	interpolateValue->setColor(Engine::RED);
+	interpolateValue->addTag("interpolation_value");
 
 	Engine::Canvas* hudDivider = new Engine::Canvas(glm::vec2(2.0f, 70.0f));
 	hudDivider->transform.position = glm::vec3(555.0f, 530.f, 4.0f);
@@ -267,6 +281,7 @@ void loadHUD(Engine::Scene *scene)
 	Engine::Canvas* hud = new Engine::Canvas(glm::vec2(800.0f, 70.0f));
 	hud->transform.position = glm::vec3(0.0f, 530.f, 3.0f);
 	hud->setColor(Engine::GRAY);
+	hud->addBehaviour(new HudController());
 	scene->addGameObject(hud);
 	
 	hud->addChild(settingsTitle);

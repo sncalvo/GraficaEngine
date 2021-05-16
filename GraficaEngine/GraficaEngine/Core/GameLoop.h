@@ -32,6 +32,7 @@ namespace Engine
 		std::vector<GameObject *> _gameObjects;
 		bool _gamePaused;
 		void _handleGameSpeed() const;
+		void _handleWireframeToggle() const;
 		void _handleTexturesToggle() const;
 		void _handleShowCollidersToggle() const;
 

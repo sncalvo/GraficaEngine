@@ -13,7 +13,6 @@ namespace Engine
 
 	void Settings::setIsWireframe(bool isWireframe)
 	{
-		// TODO: Change to wireframe mode if isWireframe == true
 		_isWireframe = isWireframe;
 	}
 

@@ -51,6 +51,18 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleWireframeToggle() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_Y))
+		{
+			bool wireframeOn = settings.getIsWireframe();
+			settings.setIsWireframe(!wireframeOn);
+		}
+	}
+
 	void GameLoop::start()
 	{
 		Input &input = Input::getInstance();
@@ -66,6 +78,8 @@ namespace Engine
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+			glPolygonMode(GL_FRONT_AND_BACK, Settings::getInstance().getIsWireframe() ? GL_LINE : GL_FILL);
+
 			if (input.getKeyDown(PAUSE_KEY))
 			{
 				_gamePaused = !_gamePaused;
@@ -74,6 +88,7 @@ namespace Engine
 			_handleGameSpeed();
 			_handleTexturesToggle();
 			_handleShowCollidersToggle();
+			_handleWireframeToggle();
 
 			if (_gamePaused || !_activeScene)
 			{

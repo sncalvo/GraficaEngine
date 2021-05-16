@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	Settings::Settings() : _isWireframe(false), _showTextures(true), _useInterpolation(true), _showColliders(true), _gameSpeed(GameSpeed::NORMAL)
+	Settings::Settings() : _isWireframe(false), _showTextures(true), _useInterpolation(true), _showColliders(false), _gameSpeed(GameSpeed::NORMAL)
 	{
 	}
 

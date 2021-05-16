@@ -33,6 +33,7 @@ namespace Engine
 		bool _gamePaused;
 		void _handleGameSpeed() const;
 		void _handleTexturesToggle() const;
+		void _handleShowCollidersToggle() const;
 
 	public:
 		static GameLoop getInstance()

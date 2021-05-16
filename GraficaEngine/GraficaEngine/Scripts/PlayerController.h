@@ -5,7 +5,7 @@
 class PlayerController : public Engine::Behaviour
 {
 private:
-	float _speed = 10.f;
+	float _speed;
 
 public:
 	PlayerController();

@@ -9,10 +9,10 @@
 
 #include <stdio.h>
 
-JumpController::JumpController() : _gravity(-9.8f),
+JumpController::JumpController() : _gravity(-19.8f),
 								   _velocity(0.f),
 								   _mass(1.f),
-								   _jumpStrength(1.f),
+								   _jumpStrength(7.f),
 								   _grounded(false)
 {
 }
@@ -21,11 +21,7 @@ void JumpController::update()
 {
 	Engine::Transform &transform = gameObject->transform;
 
-	if (_shouldJump())
-	{
-		glm::vec3 jumpDirection = glm::normalize(transform.getForward() + transform.getUp());
-		_velocity = _jumpStrength * jumpDirection;
-	}
+	_updateGrounded();
 
 	if (_grounded)
 	{
@@ -36,25 +32,32 @@ void JumpController::update()
 		_updateVelocity();
 	}
 
-	//std::cout << _grounded << std::endl;
+	if (_shouldJump())
+	{
+		glm::vec3 jumpDirection = glm::normalize(transform.getUp());
+		_velocity = _jumpStrength * jumpDirection;
+	}
 
 	_updatePosition();
 }
 
-bool JumpController::_shouldJump()
+void JumpController::_updateGrounded()
 {
 	_grounded = false;
-	for (Engine::Collider *collision : gameObject->getCollider()->getCollisions())
+	for (Engine::Collider* collision : gameObject->getCollider()->getCollisions())
 	{
-		Engine::GameObject *other = collision->getGameObject();
+		Engine::GameObject* other = collision->getGameObject();
 
 		if (other->hasTag("ground"))
 		{
 			_grounded = true;
-			break;
+			return;
 		}
 	}
+}
 
+bool JumpController::_shouldJump()
+{
 	Engine::Input &input = Engine::Input::getInstance();
 
 	return _grounded && input.getKeyDown(Engine::KEY_SPACE);
@@ -68,5 +71,5 @@ void JumpController::_updatePosition()
 
 void JumpController::_updateVelocity()
 {
-	_velocity = _gravity * Engine::Time::getDeltaTime() * glm::vec3(0.f, 1.f, 0.f) + _velocity;
+	_velocity += _gravity * Engine::Time::getDeltaTime() * glm::vec3(0.f, 1.f, 0.f);
 }

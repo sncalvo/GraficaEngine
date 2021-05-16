@@ -6,7 +6,7 @@
 
 #include "../Utils/DebugLog.h"
 
-PlayerController::PlayerController()
+PlayerController::PlayerController(): _speed(7.f)
 {
 }
 

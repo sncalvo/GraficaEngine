@@ -39,6 +39,18 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleShowCollidersToggle() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_C))
+		{
+			bool showingColliders = settings.getShowColliders();
+			settings.setShowColliders(!showingColliders);
+		}
+	}
+
 	void GameLoop::start()
 	{
 		Input &input = Input::getInstance();
@@ -61,6 +73,7 @@ namespace Engine
 
 			_handleGameSpeed();
 			_handleTexturesToggle();
+			_handleShowCollidersToggle();
 
 			if (_gamePaused || !_activeScene)
 			{

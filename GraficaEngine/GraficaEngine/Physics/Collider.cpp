@@ -62,10 +62,10 @@ namespace Engine
             return false;
         }
 
-        glm::vec3 minA = a->_min + a->_gameObject->transform.position;
-        glm::vec3 maxA = a->_max + a->_gameObject->transform.position;
-        glm::vec3 minB = b->_min + b->_gameObject->transform.position;
-        glm::vec3 maxB = b->_max + b->_gameObject->transform.position;
+        glm::vec3 minA = a->_min * a->_gameObject->transform.scale + a->_gameObject->transform.position;
+        glm::vec3 maxA = a->_max * a->_gameObject->transform.scale + a->_gameObject->transform.position;
+        glm::vec3 minB = b->_min * b->_gameObject->transform.scale + b->_gameObject->transform.position;
+        glm::vec3 maxB = b->_max * b->_gameObject->transform.scale + b->_gameObject->transform.position;
 
         return (
             (minA.x <= maxB.x && maxA.x >= minB.x) &&
@@ -102,35 +102,35 @@ namespace Engine
             Vertex{
                 min,
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 glm::vec3{min.x, max.y, min.z},
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 glm::vec3{min.x, max.y, max.z},
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 glm::vec3{min.x, min.y, max.z},
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 glm::vec3{max.x, min.y, max.z},
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 max,
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 glm::vec3{max.x, max.y, min.z},
                 glm::vec3(0.f),
-                glm::vec3(0.f)},
+                glm::vec2(0.f)},
             Vertex{
                 glm::vec3{max.x, min.y, min.z},
                 glm::vec3(0.f),
-                glm::vec3(0.f)}};
+                glm::vec2(0.f)}};
 
         std::vector<unsigned int> indices{
             2, 1, 0,

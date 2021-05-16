@@ -17,9 +17,8 @@ namespace Engine
 			addBehaviour(otherBehaviour->clone());
 		}
 
-		for (std::string tag : _tags)
+		for (std::string tag : otherBaseGameObject->_tags)
 		{
-			std::cout << "HOLA: ";
 			addTag(tag);
 		}
 

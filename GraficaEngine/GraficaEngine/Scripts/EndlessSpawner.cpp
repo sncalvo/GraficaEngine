@@ -45,7 +45,7 @@ void EndlessSpawner::update()
 	Environment referenceEnvironment = _environments[randomEnvironmentIndex];
 	Environment environmentToSpawn = new Engine::GameObject(referenceEnvironment);
 	environmentToSpawn->transform.position = glm::vec3(0.f, 0.f, _getZCoordinateRow());
-	environmentToSpawn->transform.scale = glm::vec3(.5f);
+	environmentToSpawn->transform.scale = glm::vec3(.5f); // TODO: Do it in main once transforms are copied
 	_scene->addGameObject(environmentToSpawn);
 
 	_rows->put(environmentToSpawn);

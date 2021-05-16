@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
-	duck->transform.position += glm::vec3(1.0f, 0.f, 0.f);
+	duck->transform.position = glm::vec3(1.0f, 1.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
 	Engine::GameObject *floor = new Engine::GameObject(
@@ -126,21 +126,22 @@ int main(int argc, char *argv[])
 	Engine::GameObject *river = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/river.obj")),
 		Engine::MaterialObject(shader));
-	river->setCollider(new Engine::Collider(glm::vec3(-12.f, 0.f, -1.5f), glm::vec3(12.f, 0.f, 1.5f)));
+	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
 	river->addBehaviour(new Hazard());
 
 	Engine::GameObject *log = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/log.obj")),
 		Engine::MaterialObject(shader));
-	log->setCollider(new Engine::Collider(glm::vec3(-1.f), glm::vec3(1.f)));
+	log->setCollider(new Engine::Collider(glm::vec3(-2.5, -.6f, -.5f), glm::vec3(2.5f, .6f, .5f)));
 	log->addBehaviour(new Boundary(-30.f, 10.f));
+	log->addTag("ground");
 
 	river->addBehaviour(new ObstacleSpawner(Obstacles{log}));
 
 	Engine::GameObject *car = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
 		Engine::MaterialObject(shader));
-	car->setCollider(new Engine::Collider(glm::vec3(-1.5f, 0, -1.f), glm::vec3(1.5f, 0.f, 1.f)));
+	car->setCollider(new Engine::Collider(glm::vec3(-1.5f, 0, -1.f), glm::vec3(1.5f, 1.5f, 1.f)));
 	car->addBehaviour(new Hazard());
 	car->addBehaviour(new Boundary(-30.f, 10.f));
 	car->addTag("hazard");

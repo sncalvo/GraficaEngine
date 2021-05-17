@@ -9,10 +9,9 @@
 #include "ObstacleSpawner.h"
 #include "StaticSpawner.h"
 
-Riser::Riser(float stopHeight, float speed) :
-	_stopHeight(stopHeight),
-	_speed(speed),
-	_finished(false)
+Riser::Riser(float stopHeight, float speed) : _stopHeight(stopHeight),
+											  _speed(speed),
+											  _finished(false)
 {
 }
 
@@ -24,7 +23,7 @@ Riser *Riser::clone() const
 void Riser::update()
 {
 	Engine::Transform &transform = gameObject->transform;
-	
+
 	if (_finished)
 	{
 		return;
@@ -37,6 +36,7 @@ void Riser::update()
 	else
 	{
 		_finished = true;
+		transform.position.y = _stopHeight;
 		ObstacleSpawner *obstacleSpawner = gameObject->getComponent<ObstacleSpawner>();
 		if (obstacleSpawner != nullptr)
 		{

@@ -205,7 +205,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	hint->setColor(Engine::GRAY);
 	hint->transform.position = glm::vec3(800.f, 0.f, 1.f);
 
-	Engine::TextObject *hintText = new Engine::TextObject("Cambia de camara con V");
+	Engine::TextObject *hintText = new Engine::TextObject("Cambiá de cámara con V");
 	hintText->transform.position = glm::vec3(15.f, 15.f, 2.f);
 	hintText->setColor(Engine::BLACK);
 	hint->addChild(hintText);

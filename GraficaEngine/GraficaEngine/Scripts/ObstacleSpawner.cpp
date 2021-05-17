@@ -8,22 +8,20 @@
 #include "Boundary.h"
 #include "Hazard.h"
 
-ObstacleSpawner::ObstacleSpawner(std::vector<Engine::GameObject *> obstacles) :
-	_obstacles(obstacles),
-	_canSpawn(false)
+ObstacleSpawner::ObstacleSpawner(std::vector<Engine::GameObject *> obstacles) : _obstacles(obstacles),
+																				_canSpawn(false)
 {
 	_timeToNextSpawn = Engine::Time::getTime() + rand() % 5;
 	_speed = rand() % 5 + 5.f;
-	_sign = ((bool)(rand() % 1)) ? -1.f : 1.f;
+	_sign = ((bool)(rand() % 2)) ? -1.f : 1.f;
 }
 
-ObstacleSpawner::ObstacleSpawner(const ObstacleSpawner *otherObstacleSpawner) :
-	_obstacles(otherObstacleSpawner->_obstacles),
-	_canSpawn(false)
+ObstacleSpawner::ObstacleSpawner(const ObstacleSpawner *otherObstacleSpawner) : _obstacles(otherObstacleSpawner->_obstacles),
+																				_canSpawn(false)
 {
 	_timeToNextSpawn = Engine::Time::getTime() + rand() % 5;
 	_speed = rand() % 5 + 5.f;
-	_sign = ((bool)(rand() % 1)) ? -1.f : 1.f;
+	_sign = ((bool)(rand() % 2)) ? -1.f : 1.f;
 }
 
 ObstacleSpawner *ObstacleSpawner::clone() const

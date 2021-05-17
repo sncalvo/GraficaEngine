@@ -89,7 +89,9 @@ namespace Engine
         Camera *camera = _gameObject->getScene()->getActiveCamera();
         camera->apply(shader);
 
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         _mesh.draw(shader);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
     Collider::~Collider()

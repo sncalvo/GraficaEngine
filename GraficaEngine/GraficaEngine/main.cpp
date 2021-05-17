@@ -43,6 +43,7 @@
 #include "Scripts/HudController.h"
 #include "Scripts/HintController.h"
 #include "Scripts/RiverMover.h"
+#include "Scripts/TreeSpawner.h"
 
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
@@ -198,7 +199,14 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	coin->transform.scale = glm::vec3(.4f);
 	coin->addTag("coin");
 
+	Engine::GameObject* spanwableTree = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/tree.obj")),
+		Engine::MaterialObject(shader));
+	spanwableTree->addTag("tree");
+
 	grass->addBehaviour(new StaticSpawner(coin));
+	grass->addBehaviour(new TreeSpawner(spanwableTree));
+
 	road->addBehaviour(new StaticSpawner(coin));
 
 	Engine::Canvas *hint = new Engine::Canvas(glm::vec2(300, 80));

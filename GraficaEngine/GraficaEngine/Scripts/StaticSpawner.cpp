@@ -3,12 +3,14 @@
 #include <stdlib.h>
 
 StaticSpawner::StaticSpawner(Engine::GameObject* objectToSpawn) :
-	_finished(false)
+	_finished(false),
+	_canSpawn(false)
 {
 	_objectToSpawn = objectToSpawn;
 }
 
-void StaticSpawner::update() {
+void StaticSpawner::update()
+{
 	if (_finished || !_canSpawn)
 	{
 		return;

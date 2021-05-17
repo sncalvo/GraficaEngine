@@ -46,6 +46,7 @@
     <ClCompile Include="Scripts\RiverMover.cpp" />
     <ClCompile Include="Scripts\Riser.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
+    <ClCompile Include="Scripts\TreeSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Scripts\RiverMover.h" />
     <ClInclude Include="Scripts\Riser.h" />
     <ClInclude Include="Core\SceneManager.h" />
+    <ClInclude Include="Scripts\TreeSpawner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.fs" />

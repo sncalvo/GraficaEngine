@@ -157,6 +157,7 @@
     <ClCompile Include="Core\FontManager.cpp" />
     <ClCompile Include="Core\OrthographicCamera.cpp" />
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
+    <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
     <ClCompile Include="Scripts\RiverMover.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Scripts\PlayerController.cpp" />
     <ClCompile Include="Scripts\EndlessSpawner.cpp" />
     <ClCompile Include="Scripts\StaticSpawner.cpp" />
+    <ClCompile Include="Scripts\Riser.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
     <ClCompile Include="Scripts\TimeController.cpp" />
@@ -203,6 +205,7 @@
     <ClInclude Include="Core\FontManager.h" />
     <ClInclude Include="Core\OrthographicCamera.h" />
     <ClInclude Include="Core\PerspectiveCamera.h" />
+    <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
     <ClInclude Include="Scripts\HintController.h" />
@@ -227,6 +230,7 @@
     <ClInclude Include="Scripts\PlayerController.h" />
     <ClInclude Include="Scripts\EndlessSpawner.h" />
     <ClInclude Include="Scripts\StaticSpawner.h" />
+    <ClInclude Include="Scripts\Riser.h" />
     <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Scripts\TimeController.h" />

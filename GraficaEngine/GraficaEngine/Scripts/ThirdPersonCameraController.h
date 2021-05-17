@@ -16,4 +16,5 @@ private:
 public:
     ThirdPersonCameraController(float distance, glm::vec3 offset);
     void update();
+    ThirdPersonCameraController *clone() const override;
 };

@@ -36,6 +36,7 @@ namespace Engine
 	public:
 		Light(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction);
 		Light(Transform transform, float intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, glm::vec3 direction);
+		Light(const Light *);
 		void apply(Shader&) const;
 		void setIntensity(float intensity);
 		void setPosition(glm::vec4 position);

@@ -13,9 +13,7 @@ namespace Engine
 
 	public:
 		virtual void update() {};
-		virtual Behaviour* clone() const {
-			throw new NotSupposedToCopyException();
-		};
+		virtual Behaviour* clone() const = 0;
 		virtual ~Behaviour() {};
 		void setGameObject(BaseGameObject* parentGameObject)
 		{

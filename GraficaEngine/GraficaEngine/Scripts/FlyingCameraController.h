@@ -7,5 +7,7 @@
 
 class FlyingCameraController : public Engine::Behaviour
 {
+public:
 	void update();
+	FlyingCameraController *clone() const override;
 };

@@ -9,6 +9,11 @@
 constexpr auto TEXT_ON = "ON";
 constexpr auto TEXT_OFF = "OFF";
 
+HudController *HudController::clone() const
+{
+	return new HudController();
+}
+
 void HudController::update()
 {
 	Engine::Input &input = Engine::Input::getInstance();

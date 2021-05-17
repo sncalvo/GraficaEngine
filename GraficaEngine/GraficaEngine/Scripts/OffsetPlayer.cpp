@@ -3,6 +3,11 @@
 OffsetPlayer::OffsetPlayer(glm::vec3 offset): _offset(offset)
 {}
 
+OffsetPlayer *OffsetPlayer::clone() const
+{
+	return new OffsetPlayer(_offset);
+}
+
 void OffsetPlayer::update()
 {
 	Engine::BaseGameObject* player = gameObject->getScene()->getGameObjectWithTag("player");

@@ -13,4 +13,5 @@ public:
 	void update();
 	void die();
 	void increaseScore(int amount);
+	PlayerController *clone() const override;
 };

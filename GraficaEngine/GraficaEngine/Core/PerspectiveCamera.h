@@ -13,6 +13,8 @@ namespace Engine
 			float yaw = YAW,
 			float pitch = PITCH
 		);
+		PerspectiveCamera(const PerspectiveCamera *);
+		PerspectiveCamera *clone() const;
 		virtual glm::mat4 getProjectionMatrix() const;
 	};
 }

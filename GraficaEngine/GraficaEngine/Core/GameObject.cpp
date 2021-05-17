@@ -17,7 +17,7 @@ namespace Engine
 		return _collider;
 	}
 
-	GameObject::GameObject(GameObject *otherGameObject):
+	GameObject::GameObject(const GameObject *otherGameObject):
 		BaseGameObject::BaseGameObject(otherGameObject)
 	{
 		Model *modelCopy = new Model(otherGameObject->getModel());
@@ -28,6 +28,11 @@ namespace Engine
 		{
 			setCollider(new Collider(otherGameObject->getCollider()));
 		}
+	}
+
+	GameObject *GameObject::clone() const
+	{
+		return new GameObject(this);
 	}
 
 	void GameObject::draw() const

@@ -23,7 +23,8 @@ namespace Engine
 		std::vector<BaseGameObject *> _children; // TODO: Create local transform
 	public:
 		BaseGameObject();
-		BaseGameObject(BaseGameObject *);
+		BaseGameObject(const BaseGameObject *);
+		virtual BaseGameObject *clone() const;
 		virtual ~BaseGameObject();
 		Transform transform;
 		void update();
@@ -55,6 +56,21 @@ namespace Engine
 			}
 
 			return nullptr;
+		}
+
+		template<class BehaviourType> std::vector<BehaviourType*> getComponents() const
+		{
+			std::vector<BehaviourType*> behaviours;
+			for (Behaviour* behaviour : _behaviours)
+			{
+				BehaviourType* component = dynamic_cast<BehaviourType*>(behaviour);
+				if (component != nullptr)
+				{
+					behaviours.push_back(component);
+				}
+			}
+
+			return behaviours;
 		}
 	};
 }

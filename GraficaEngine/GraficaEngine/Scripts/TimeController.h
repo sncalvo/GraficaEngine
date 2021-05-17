@@ -10,4 +10,5 @@ private:
 public:
 	TimeController();
 	void update();
+	TimeController *clone() const override;
 };

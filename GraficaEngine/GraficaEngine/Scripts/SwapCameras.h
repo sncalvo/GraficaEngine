@@ -9,7 +9,9 @@
 class SwapCameras : public Engine::Behaviour
 {
 private:
-	int _currentIndex = 0;
+	int _currentIndex;
 public:
+	SwapCameras();
 	void update();
+	SwapCameras *clone() const override;
 };

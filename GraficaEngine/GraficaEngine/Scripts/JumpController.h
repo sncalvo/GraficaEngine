@@ -22,4 +22,6 @@ private:
 public:
 	void update();
 	JumpController();
+	JumpController(const JumpController *);
+	JumpController *clone() const override;
 };

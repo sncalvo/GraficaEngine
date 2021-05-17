@@ -10,6 +10,19 @@ namespace Engine {
         _font = FontManager::getInstance()->getFont("arial_rounded.TTF"); //TODO add optional parameter with default font
 	}
 
+    TextObject::TextObject(const TextObject* otherTextObject) :
+        _font(otherTextObject->_font),
+        _text(otherTextObject->_text),
+        _color(otherTextObject->_color),
+        BaseGameObject(otherTextObject)
+    {
+    }
+
+    TextObject *TextObject::clone() const
+    {
+        return new TextObject(this);
+    }
+
 	void TextObject::draw() const
     {
         Shader* shader = FontManager::getInstance()->getFontsShader();

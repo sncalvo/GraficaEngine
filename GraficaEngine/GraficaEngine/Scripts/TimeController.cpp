@@ -10,6 +10,11 @@ TimeController::TimeController()
 	_seconds = 0;
 }
 
+TimeController *TimeController::clone() const
+{
+	return new TimeController();
+}
+
 void TimeController::update()
 {
 	_time += Engine::Time::getDeltaTime();

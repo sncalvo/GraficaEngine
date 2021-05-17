@@ -9,6 +9,16 @@ FirstPersonCameraController::FirstPersonCameraController(glm::vec3 relativePosit
 {
 }
 
+FirstPersonCameraController::FirstPersonCameraController(const FirstPersonCameraController* otherController) :
+    _relativePosition(otherController->_relativePosition)
+{
+}
+
+FirstPersonCameraController *FirstPersonCameraController::clone() const
+{
+    return new FirstPersonCameraController(this);
+}
+
 void FirstPersonCameraController::update()
 {
     Engine::Transform &transform = gameObject->transform;

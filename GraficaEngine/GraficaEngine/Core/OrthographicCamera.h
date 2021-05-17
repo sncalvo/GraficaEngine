@@ -13,6 +13,8 @@ namespace Engine
 			float yaw = YAW,
 			float pitch = PITCH
 		);
+		OrthographicCamera(const OrthographicCamera *);
+		OrthographicCamera *clone() const;
 		virtual glm::mat4 getProjectionMatrix() const;
 	};
 }

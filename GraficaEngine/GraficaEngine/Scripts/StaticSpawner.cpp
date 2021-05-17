@@ -2,12 +2,18 @@
 
 #include <stdlib.h>
 
-StaticSpawner::StaticSpawner(Engine::GameObject* objectToSpawn)
+StaticSpawner::StaticSpawner(Engine::GameObject* objectToSpawn) :
+	_finished(false)
 {
 	_objectToSpawn = objectToSpawn;
 }
 
-void StaticSpawner::start() {
+void StaticSpawner::update() {
+	if (_finished || !_canSpawn)
+	{
+		return;
+	}
+
 	int random = rand() % 5;
 	if (random == 0)
 	{
@@ -16,7 +22,13 @@ void StaticSpawner::start() {
 		int position = (rand() % 25) - 11;
 		newGameObject->transform.position.x += position;
 		gameObject->addChild(newGameObject);
+		_finished = true;
 	}
+}
+
+void StaticSpawner::startSpawning()
+{
+	_canSpawn = true;
 }
 
 StaticSpawner *StaticSpawner::clone() const

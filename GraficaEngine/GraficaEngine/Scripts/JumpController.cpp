@@ -17,6 +17,20 @@ JumpController::JumpController() : _gravity(-19.8f),
 {
 }
 
+JumpController::JumpController(const JumpController* otherController) :
+	_gravity(otherController->_gravity),
+	_velocity(otherController->_velocity),
+	_mass(otherController->_mass),
+	_jumpStrength(otherController->_jumpStrength),
+	_grounded(otherController->_grounded)
+{
+}
+
+JumpController *JumpController::clone() const
+{
+	return new JumpController(this);
+}
+
 void JumpController::update()
 {
 	Engine::Transform &transform = gameObject->transform;

@@ -4,12 +4,18 @@
 #include "../Core/Time.h"
 #include "../Core/GameObject.h"
 #include "../Core/TextObject.h"
+#include "../Core/SceneManager.h"
 
 #include "../Utils/DebugLog.h"
 
 PlayerController::PlayerController(): _speed(7.f)
 {
 	_score = 0;
+}
+
+PlayerController *PlayerController::clone() const
+{
+	return new PlayerController();
 }
 
 void PlayerController::update()
@@ -45,7 +51,8 @@ void PlayerController::update()
 
 void PlayerController::die()
 {
-	gameObject->getScene()->deleteGameObject(gameObject);
+	Engine::SceneManager &sceneManager = Engine::SceneManager::getInstance();
+	sceneManager.setShouldRestart(true);
 }
 
 void PlayerController::increaseScore(int amount)

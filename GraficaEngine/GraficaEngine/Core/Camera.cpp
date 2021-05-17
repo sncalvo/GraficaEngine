@@ -18,6 +18,25 @@ namespace Engine
         transform.position = position;
     }
 
+    Camera::Camera(const Camera *otherCamera) :
+        _front(otherCamera->_front),
+        _up(otherCamera->_up),
+        _right(otherCamera->_right),
+        _worldUp(otherCamera->_worldUp),
+        _yaw(otherCamera->_yaw),
+        _pitch(otherCamera->_pitch),
+        _movementSpeed(otherCamera->_movementSpeed),
+        _mouseSensitivity(otherCamera->_mouseSensitivity),
+        _zoom(otherCamera->_zoom),
+        BaseGameObject(otherCamera)
+    {
+    }
+
+    Camera *Camera::clone() const
+    {
+        return new Camera(this);
+    }
+
     glm::mat4 Camera::getViewMatrix() const
     {
         return glm::lookAt(

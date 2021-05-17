@@ -14,10 +14,12 @@ namespace Engine {
 		glm::vec2 _size;
 	public:
 		Canvas(glm::vec2 size, glm::vec3 color = glm::vec3(1.f));
+		Canvas(const Canvas *);
 		void setSize(glm::vec2 size);
 		glm::vec2 getSize();
 		void setColor(glm::vec3 color);
 		glm::vec3 getColor();
 		void draw() const;
+		Canvas *clone() const override;
 	};
 }

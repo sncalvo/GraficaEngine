@@ -50,6 +50,21 @@ namespace Engine {
 		glBindVertexArray(0);
 	}
 
+	Canvas::Canvas(const Canvas *otherCanvas) :
+		_shader(otherCanvas->_shader),
+		_VAO(otherCanvas->_VAO),
+		_VBO(otherCanvas->_VBO),
+		_color(otherCanvas->_color),
+		_size(otherCanvas->_size),
+		BaseGameObject(otherCanvas)
+	{
+	}
+
+	Canvas *Canvas::clone() const
+	{
+		return new Canvas(this);
+	}
+
 	void Canvas::setSize(glm::vec2 size)
 	{
 		_size = size;

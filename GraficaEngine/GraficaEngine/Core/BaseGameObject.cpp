@@ -10,8 +10,12 @@ namespace Engine
 	{
 	}
 
-	BaseGameObject::BaseGameObject(BaseGameObject *otherBaseGameObject)
+	BaseGameObject::BaseGameObject(const BaseGameObject *otherBaseGameObject)
 	{
+		setScene(otherBaseGameObject->getScene());
+		setParent(otherBaseGameObject->getParent());
+		transform = otherBaseGameObject->transform;
+		
 		for (Behaviour *otherBehaviour : otherBaseGameObject->_behaviours)
 		{
 			addBehaviour(otherBehaviour->clone());
@@ -22,9 +26,15 @@ namespace Engine
 			addTag(tag);
 		}
 
-		setScene(otherBaseGameObject->getScene());
-		setParent(otherBaseGameObject->getParent());
-		transform = otherBaseGameObject->transform;
+		for (BaseGameObject *child : otherBaseGameObject->_children)
+		{
+			addChild(child->clone());
+		}
+	}
+
+	BaseGameObject *BaseGameObject::clone() const
+	{
+		return new BaseGameObject(this);
 	}
 
 	BaseGameObject::~BaseGameObject()

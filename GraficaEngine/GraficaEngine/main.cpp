@@ -20,6 +20,7 @@
 #include "Core/OrthographicCamera.h"
 #include "Core/Time.h"
 #include "Core/Behaviour.h"
+#include "Core/SceneManager.h"
 #include "Physics/Collider.h"
 #include "Core/Canvas.h"
 #include "Core/Colors.h"
@@ -46,7 +47,8 @@
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
 
-void loadHUD(Engine::Scene *);
+Engine::Scene *loadMainScene(Engine::Shader*);
+void loadHUD(Engine::Scene*);
 
 int main(int argc, char *argv[])
 {
@@ -60,51 +62,66 @@ int main(int argc, char *argv[])
 	Engine::Window *window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
 	gameLoop.addWindow(window);
 
-	Engine::OrthographicCamera *isometricCamera = new Engine::OrthographicCamera(
+	Engine::Shader* shader = new Engine::Shader();
+	gameLoop.addShader(shader);
+
+	Engine::Scene *scene = loadMainScene(shader);
+	loadHUD(scene);
+
+	Engine::SceneManager& sceneManager = Engine::SceneManager::getInstance();
+	sceneManager.addScene("main", scene);
+	sceneManager.loadScene("main");
+
+	gameLoop.start();
+
+	return 0;
+}
+
+Engine::Scene* loadMainScene(Engine::Shader *shader)
+{
+	Engine::OrthographicCamera* isometricCamera = new Engine::OrthographicCamera(
 		glm::vec3(0.f, 4.f, 0.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		-35.264f - 90.f,
 		-45.f);
 	isometricCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.f, 0.f)));
-	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
+	Engine::PerspectiveCamera* centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		Engine::YAW,
-		-30.f);
-	centeredFixedCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.5f, 5.f)));
+		-20.f);
+	centeredFixedCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 0.f, 8.5f)));
 
-	Engine::PerspectiveCamera *firstPersonCamera = new Engine::PerspectiveCamera(
+	Engine::PerspectiveCamera* firstPersonCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 2.f, -0.5f));
 	firstPersonCamera->addBehaviour(new FirstPersonCameraController(glm::vec3(0.5f, 1.f, 0.f)));
 
-	Engine::PerspectiveCamera *thirdPersonCamera = new Engine::PerspectiveCamera(
+	Engine::PerspectiveCamera* thirdPersonCamera = new Engine::PerspectiveCamera(
 		glm::vec3(0.f, 0.f, 0.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		Engine::YAW,
 		-30.f);
 	thirdPersonCamera->addBehaviour(new ThirdPersonCameraController(10.f, glm::vec3(0.f, 1.f, 0.f)));
 
-	Engine::PerspectiveCamera *flyingCamera = new Engine::PerspectiveCamera(
+	Engine::PerspectiveCamera* flyingCamera = new Engine::PerspectiveCamera(
 		glm::vec3(0.f, 5.f, 5.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		Engine::YAW,
 		-45.f);
 	flyingCamera->addBehaviour(new FlyingCameraController());
 
-	Engine::Scene *scene = new Engine::Scene(flyingCamera);
+	Engine::Scene* scene = new Engine::Scene(flyingCamera);
+
 	scene->addCamera("isometric", isometricCamera);
 	scene->addCamera("centeredFixed", centeredFixedCamera);
 	scene->addCamera("firstPerson", firstPersonCamera);
 	scene->addCamera("thirdPerson", thirdPersonCamera);
 
-	Engine::Shader *shader = new Engine::Shader();
-	gameLoop.addShader(shader);
-
-	Engine::BaseGameObject *cameraManager = new Engine::BaseGameObject();
+	Engine::BaseGameObject* cameraManager = new Engine::BaseGameObject();
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-	Engine::GameObject *duck = new Engine::GameObject(
+	Engine::GameObject* duck = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/duck.obj")),
 		Engine::MaterialObject(shader));
 	duck->setCollider(new Engine::Collider(glm::vec3(-1.f, -0.2f, -1.f), glm::vec3(1.f, 5.f, 1.f)));
@@ -115,7 +132,7 @@ int main(int argc, char *argv[])
 	duck->transform.position = glm::vec3(1.0f, 1.f, 0.f);
 	duck->transform.scale = glm::vec3(.5f);
 
-	Engine::GameObject *grass = new Engine::GameObject(
+	Engine::GameObject* grass = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/grass.obj")),
 		Engine::MaterialObject(shader));
 	grass->addTag("ground");
@@ -123,60 +140,57 @@ int main(int argc, char *argv[])
 
 	for (int index = -5; index < 5; index++)
 	{
-		Engine::GameObject *newgrass = new Engine::GameObject(grass);
+		Engine::GameObject* newgrass = new Engine::GameObject(grass);
 		newgrass->transform.scale = glm::vec3(.5f);
 		newgrass->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
 		scene->addGameObject(newgrass);
 	}
 
-	Engine::GameObject *river = new Engine::GameObject(
+	Engine::GameObject* river = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/river.obj")),
 		Engine::MaterialObject(shader));
 	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
 	river->addBehaviour(new Hazard());
 	river->addBehaviour(new RiverMover(-0.5f));
 
-	Engine::GameObject *road = new Engine::GameObject(
+	Engine::GameObject* road = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/road.obj")),
 		Engine::MaterialObject(shader));
 	road->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
 	road->addTag("ground");
 
-	Engine::GameObject *log = new Engine::GameObject(
+	Engine::GameObject* log = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/log.obj")),
 		Engine::MaterialObject(shader));
-	log->setCollider(new Engine::Collider(glm::vec3(-2.5, -.6f, -.5f), glm::vec3(2.5f, .6f, .5f)));
-	log->addBehaviour(new Boundary(-30.f, 10.f));
+	log->setCollider(new Engine::Collider(glm::vec3(-2.5, -.7f, -.5f), glm::vec3(2.5f, .7f, .5f)));
+	log->addBehaviour(new Boundary(-30.f, 30.f));
 	log->addTag("ground");
 
-	river->addBehaviour(new ObstacleSpawner(Obstacles{log}));
+	river->addBehaviour(new ObstacleSpawner(Obstacles{ log }));
 
-	Engine::GameObject *car = new Engine::GameObject(
+	Engine::GameObject* car = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
 		Engine::MaterialObject(shader));
 	car->setCollider(new Engine::Collider(glm::vec3(-1.5f, 0, -1.f), glm::vec3(1.5f, 1.5f, 1.f)));
 	car->addBehaviour(new Hazard());
-	car->addBehaviour(new Boundary(-30.f, 10.f));
+	car->addBehaviour(new Boundary(-30.f, 30.f));
 	car->addTag("hazard");
 
-	road->addBehaviour(new ObstacleSpawner(Obstacles{car}));
+	road->addBehaviour(new ObstacleSpawner(Obstacles{ car }));
 
-	Engine::BaseGameObject *spawner = new Engine::BaseGameObject();
-	std::vector<Environment> environments{grass, grass, river, road};
+	Engine::BaseGameObject* spawner = new Engine::BaseGameObject();
+	std::vector<Environment> environments{ grass, grass, river, road };
 
 	spawner->addBehaviour(new EndlessSpawner(environments));
 	scene->addGameObject(spawner);
 
-	Engine::GameObject *tree = new Engine::GameObject(
+	Engine::GameObject* tree = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
 		Engine::MaterialObject(shader));
 	scene->addGameObject(tree);
 	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
 
-	Engine::Light *light = new Engine::Light(glm::vec3(.4f), glm::vec3(1.f), glm::vec3(1.5f), glm::vec3(1.f, -1.f, -1.f));
-	scene->addLight(light);
-
-	Engine::GameObject *coin = new Engine::GameObject(
+	Engine::GameObject* coin = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/coin.obj")),
 		Engine::MaterialObject(shader));
 	coin->setCollider(new Engine::Collider(glm::vec3(-.5f, 0, -.5f), glm::vec3(.5f, 0.f, .5f)));
@@ -192,7 +206,7 @@ int main(int argc, char *argv[])
 	hint->setColor(Engine::GRAY);
 	hint->transform.position = glm::vec3(800.f, 0.f, 1.f);
 
-	Engine::TextObject *hintText = new Engine::TextObject("Cambi� de c�mara con V");
+	Engine::TextObject *hintText = new Engine::TextObject("Cambia de camara con V");
 	hintText->transform.position = glm::vec3(15.f, 15.f, 2.f);
 	hintText->setColor(Engine::BLACK);
 	hint->addChild(hintText);
@@ -200,12 +214,7 @@ int main(int argc, char *argv[])
 	scene->addGameObject(hint);
 	hint->addBehaviour(new HintController(5.f, 300.f));
 
-	loadHUD(scene);
-
-	gameLoop.setActiveScene(scene);
-	gameLoop.start();
-
-	return 0;
+	return scene;
 }
 
 void loadHUD(Engine::Scene *scene)

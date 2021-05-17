@@ -1,5 +1,10 @@
 #include "FlyingCameraController.h"
 
+FlyingCameraController *FlyingCameraController::clone() const
+{
+	return new FlyingCameraController();
+}
+
 void FlyingCameraController::update()
 {
 	Engine::Input& input = Engine::Input::getInstance();

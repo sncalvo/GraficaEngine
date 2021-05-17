@@ -12,4 +12,5 @@ private:
 	void _changeOnKey(std::string newText, Engine::KeyboardKey, std::string valueObject);
 public:
 	void update();
+	HudController *clone() const override;
 };

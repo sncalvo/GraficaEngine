@@ -14,6 +14,29 @@ namespace Engine
 		_activeCamera = defaultCamera;
 	}
 
+	Scene::Scene(const Scene *otherScene)
+	{
+		for (BaseGameObject *gameObject : otherScene->_gameObjects)
+		{
+			BaseGameObject *gameObjectCopy = gameObject->clone();
+			addGameObject(gameObjectCopy);
+		}
+
+		for (BaseGameObject *gameObject : otherScene->_queuedGameObjects)
+		{
+			BaseGameObject *gameObjectCopy = gameObject->clone();
+			addGameObject(gameObjectCopy);
+		}
+
+		for (std::string cameraName : otherScene->_cameraNames)
+		{
+			Camera* cameraClone = otherScene->_cameras.at(cameraName)->clone();
+			addCamera(cameraName, cameraClone);
+		}
+
+		setActiveCamera("default"); // TODO: Make generic
+	}
+
 	void Scene::addGameObject(BaseGameObject *gameObject)
 	{
 		gameObject->setScene(this);
@@ -46,16 +69,6 @@ namespace Engine
 
 		}
 		return nullptr;
-	}
-
-	void Scene::addLight(Light *light)
-	{
-		_lights.push_back(light);
-	}
-
-	void Scene::removeLight(Light *light)
-	{
-		std::remove(_lights.begin(), _lights.end(), light);
 	}
 
 	std::vector<Light *> Scene::getLights()
@@ -215,11 +228,6 @@ namespace Engine
 		for (BaseGameObject *gameObject : _gameObjects)
 		{
 			delete gameObject;
-		}
-
-		for (Light *light : _lights)
-		{
-			delete light;
 		}
 	}
 }

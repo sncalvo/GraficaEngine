@@ -13,4 +13,6 @@ private:
 public:
 	HintController(float hintDuration, float xDisplacement);
 	void update();
+	HintController(const HintController *);
+	HintController *clone() const override;
 };

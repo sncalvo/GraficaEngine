@@ -11,5 +11,7 @@ private:
 
 public:
 	FirstPersonCameraController(glm::vec3 relativePos);
+	FirstPersonCameraController(const FirstPersonCameraController *);
 	void update();
+	FirstPersonCameraController *clone() const override;
 };

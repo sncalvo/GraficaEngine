@@ -4,6 +4,15 @@
 
 #include "SwapCameras.h"
 
+SwapCameras::SwapCameras() : _currentIndex(0)
+{
+}
+
+SwapCameras *SwapCameras::clone() const
+{
+	return new SwapCameras();
+}
+
 void SwapCameras::update()
 {
 	Engine::Input& input = Engine::Input::getInstance();
@@ -17,7 +26,7 @@ void SwapCameras::update()
 		_currentIndex = (_currentIndex + 1) % scene->getCameraNames().size();
 		
 		std::string newCameraName = scene->getCameraNames()[_currentIndex];
-		if (newCameraName == "isometric")
+		if (newCameraName == "isometric" || newCameraName == "centeredFixed")
 		{
 			player->transform.lookAt(glm::vec3(0.f, 0.f, -1.f));
 		}

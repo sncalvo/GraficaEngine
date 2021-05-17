@@ -7,8 +7,11 @@ class StaticSpawner : public Engine::Behaviour
 {
 private:
 	Engine::GameObject* _objectToSpawn;
+	bool _canSpawn;
+	bool _finished;
 public:
 	StaticSpawner(Engine::GameObject *objectToSpawn);
-	StaticSpawner* clone() const;
-	void start();
+	StaticSpawner* clone() const override;
+	void update();
+	void startSpawning();
 };

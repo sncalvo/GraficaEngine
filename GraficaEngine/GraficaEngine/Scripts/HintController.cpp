@@ -7,6 +7,20 @@
 HintController::HintController(float hintDuration, float xDisplacement) : _hintDuration(hintDuration), _xDisplacement(xDisplacement), _direction(-1.f), _position(0.f), _sliding(true)
 {}
 
+HintController::HintController(const HintController *otherController) :
+	_hintDuration(otherController->_hintDuration),
+	_direction(otherController->_direction),
+	_xDisplacement(otherController->_xDisplacement),
+	_position(otherController->_position),
+	_sliding(otherController->_sliding)
+{
+}
+
+HintController *HintController::clone() const
+{
+	return new HintController(this);
+}
+
 void HintController::update()
 {
 	if (_sliding)

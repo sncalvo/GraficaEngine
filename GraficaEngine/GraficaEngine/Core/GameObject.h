@@ -19,7 +19,8 @@ namespace Engine
 
 	public:
 		GameObject(Model *model, MaterialObject material);
-		GameObject(GameObject *);
+		GameObject(const GameObject *);
+		GameObject *clone() const override;
 		~GameObject();
 		void setCollider(Collider *collider);
 		Collider *getCollider() const;

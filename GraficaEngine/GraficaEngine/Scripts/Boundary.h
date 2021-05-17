@@ -10,6 +10,6 @@ private:
 public:
 	Boundary(float minX, float maxX);
 	Boundary(Boundary *);
-	Boundary *clone() const;
+	Boundary *clone() const override;
 	void update();
 };

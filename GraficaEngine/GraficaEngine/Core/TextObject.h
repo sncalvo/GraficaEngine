@@ -18,7 +18,6 @@
 
 namespace Engine
 {
-
     constexpr auto DEFAULT_FONT_PATH = "Assets/Fonts/showg.ttf";
 
     class TextObject : public BaseGameObject
@@ -29,10 +28,12 @@ namespace Engine
         glm::vec3 _color = glm::vec3(1.0f, 1.0f, 1.0f);
 	public:
         TextObject(std::string text = "");
+        TextObject(const TextObject *);
         void setText(std::string text);
         void draw() const;
         bool isDrawable() const;
 		void setFont(std::string font);
         void setColor(glm::vec3 color);
+        TextObject *clone() const override;
 	};
 }

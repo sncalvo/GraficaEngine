@@ -12,6 +12,11 @@ ThirdPersonCameraController::ThirdPersonCameraController(float distance, glm::ve
 {
 }
 
+ThirdPersonCameraController *ThirdPersonCameraController::clone() const
+{
+    return new ThirdPersonCameraController(_distance, _offset);
+}
+
 void ThirdPersonCameraController::update()
 {
     Engine::Transform &transform = gameObject->transform;

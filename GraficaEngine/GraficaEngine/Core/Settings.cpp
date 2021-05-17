@@ -4,7 +4,7 @@ namespace Engine
 {
 	Settings::Settings() : _isWireframe(false),
 						   _showTextures(true),
-						   _useInterpolation(true),
+						   _useInterpolation(false),
 						   _showColliders(false),
 						   _gameSpeed(GameSpeed::NORMAL),
 						   _dayTime(DayTime::MIDDAY)

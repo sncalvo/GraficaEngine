@@ -28,7 +28,6 @@ namespace Engine
 		GameLoop();
 		Window *_window;
 		Shader *_shader;
-		Scene *_activeScene;
 		std::vector<GameObject *> _gameObjects;
 		bool _gamePaused;
 		void _handleDayTime() const;
@@ -45,7 +44,6 @@ namespace Engine
 			return _instance;
 		}
 		void start();
-		void setActiveScene(Scene *);
 		void addWindow(Window *);
 		void addShader(Shader *);
 	};

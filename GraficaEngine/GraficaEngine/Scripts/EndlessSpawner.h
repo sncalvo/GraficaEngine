@@ -28,6 +28,8 @@ private:
 	bool _nearPlayer() const;
 public:
 	EndlessSpawner(std::vector<Environment> environments);
+	EndlessSpawner(const EndlessSpawner *);
 	~EndlessSpawner();
 	void update();
+	EndlessSpawner *clone() const override;
 };

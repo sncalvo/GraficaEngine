@@ -1,13 +1,17 @@
 #include "GameLoop.h"
 
 #include "Light.h"
+#include "SceneManager.h"
 #include "Settings.h"
 #include <stdlib.h>
 #include <time.h>
 
 namespace Engine
 {
-	GameLoop::GameLoop() : _activeScene(nullptr), _shader(nullptr), _window(nullptr), _gamePaused(false)
+	GameLoop::GameLoop() :
+		_shader(nullptr),
+		_window(nullptr),
+		_gamePaused(false)
 	{
 	}
 
@@ -108,26 +112,36 @@ namespace Engine
 		srand((unsigned)time(0));
 
 		Input &input = Input::getInstance();
+		SceneManager &sceneManager = SceneManager::getInstance();
 
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_CULL_FACE);
 
-		_activeScene->start();
+		Scene *activeScene = sceneManager.getActiveScene();
+		activeScene->start();
 
 		while (true)
 		{
 			Time::updateTime();
 			input.update();
-
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			glPolygonMode(GL_FRONT_AND_BACK, Settings::getInstance().getIsWireframe() ? GL_LINE : GL_FILL);
+			
+			if (input.getKeyDown(KEY_Q))
+				break;
 
 			if (input.getKeyDown(PAUSE_KEY))
 			{
 				_gamePaused = !_gamePaused;
 			}
+
+			if (_gamePaused || !activeScene)
+			{
+				continue;
+			}
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			glPolygonMode(GL_FRONT_AND_BACK, Settings::getInstance().getIsWireframe() ? GL_LINE : GL_FILL);
 
 			_handleGameSpeed();
 			_handleTexturesToggle();
@@ -136,15 +150,14 @@ namespace Engine
 			_handleInterpolationToggle();
 			_handleDayTime();
 
-			if (_gamePaused || !_activeScene)
+			if (sceneManager.getShouldRestart())
 			{
-				continue;
+				sceneManager.loadScene("main");
+				sceneManager.setShouldRestart(false);
+				activeScene = sceneManager.getActiveScene();
 			}
 
-			Camera *camera = _activeScene->getActiveCamera();
-
-			if (input.getKeyDown(KEY_Q))
-				break;
+			Camera *camera = activeScene->getActiveCamera();
 
 			_shader->use();
 			glm::mat4 projection = camera->getProjectionMatrix();
@@ -152,9 +165,9 @@ namespace Engine
 			_shader->setMat4("projection", projection);
 			_shader->setMat4("view", view);
 
-			_activeScene->physicsUpdate();
-			_activeScene->update();
-			_activeScene->draw();
+			activeScene->physicsUpdate();
+			activeScene->update();
+			activeScene->draw();
 
 			_window->swap();
 		}
@@ -164,22 +177,12 @@ namespace Engine
 			delete gameObject;
 		}
 
-		delete _activeScene;
+		// delete sceneManager;
 		delete _shader;
 		delete _window;
 		FontManager *fm = FontManager::getInstance();
 		delete fm;
 		MediaLayer::exit();
-	}
-
-	void GameLoop::setActiveScene(Scene *scene)
-	{
-		if (_activeScene)
-		{
-			delete _activeScene;
-		}
-
-		_activeScene = scene;
 	}
 
 	void GameLoop::addWindow(Window *window)

@@ -9,4 +9,5 @@ private:
 public:
 	Mover(float speed);
 	void update();
+	Mover *clone() const override;
 };

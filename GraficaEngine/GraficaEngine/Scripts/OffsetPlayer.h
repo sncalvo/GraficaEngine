@@ -13,4 +13,5 @@ private:
 public:
 	OffsetPlayer(glm::vec3 offset);
 	void update();
+	OffsetPlayer *clone() const override;
 };

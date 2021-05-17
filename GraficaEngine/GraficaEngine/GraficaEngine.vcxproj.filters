@@ -43,8 +43,9 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Platform\Window.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
-    <ClCompile Include="Scripts\JumpController.cpp" />
     <ClCompile Include="Scripts\RiverMover.cpp" />
+    <ClCompile Include="Scripts\Riser.cpp" />
+    <ClCompile Include="Core\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -97,6 +98,8 @@
     <ClInclude Include="Core\Colors.h" />
     <ClInclude Include="Scripts\JumpController.h" />
     <ClInclude Include="Scripts\RiverMover.h" />
+    <ClInclude Include="Scripts\Riser.h" />
+    <ClInclude Include="Core\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.fs" />

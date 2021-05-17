@@ -6,6 +6,11 @@
 Mover::Mover(float speed = 10.f): _speed(speed)
 {}
 
+Mover *Mover::clone() const
+{
+	return new Mover(_speed);
+}
+
 void Mover::update()
 {
 	Engine::Transform& transform = gameObject->transform;

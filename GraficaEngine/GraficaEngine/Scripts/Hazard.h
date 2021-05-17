@@ -9,5 +9,5 @@ private:
 
 public:
 	void update();
-	Hazard *clone() const;
+	Hazard *clone() const override;
 };

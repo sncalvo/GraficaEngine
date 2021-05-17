@@ -30,6 +30,8 @@ namespace Engine
     {
     public:
         Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch);
+        Camera(const Camera *);
+        Camera *clone() const;
         glm::mat4 getViewMatrix() const;
         virtual glm::mat4 getProjectionMatrix() const;
         void apply(Shader &shader) const;

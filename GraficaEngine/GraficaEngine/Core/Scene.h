@@ -28,8 +28,7 @@ namespace Engine
 
 	public:
 		Scene(Camera *);
-		void addLight(Light *);
-		void removeLight(Light *);
+		Scene(const Scene *);
 		void addGameObject(BaseGameObject *);
 		void addCollider(Collider *);
 		void removeCollider(Collider *);

@@ -10,5 +10,5 @@ private:
 public:
 	CoinController();
 	void update();
-	CoinController* clone() const;
+	CoinController* clone() const override;
 };

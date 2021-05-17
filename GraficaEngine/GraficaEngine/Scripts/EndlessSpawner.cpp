@@ -5,6 +5,7 @@
 
 #include "../Core/Scene.h"
 #include "ObstacleSpawner.h"
+#include "Riser.h"
 
 EndlessSpawner::EndlessSpawner(std::vector<Environment> environments) :
 	_environments(environments), _rows(new CircularBuffer<Engine::GameObject*>(10)), _currentRow(0)
@@ -14,6 +15,21 @@ EndlessSpawner::EndlessSpawner(std::vector<Environment> environments) :
 EndlessSpawner::~EndlessSpawner()
 {
 	delete _rows;
+}
+
+EndlessSpawner::EndlessSpawner(const EndlessSpawner *otherEndlessSpawner) :
+	_rows(new CircularBuffer<Engine::GameObject*>(10)),
+	_currentRow(0)
+{
+	for (Environment environment : otherEndlessSpawner->_environments)
+	{
+		_environments.push_back(environment->clone());
+	}
+}
+
+EndlessSpawner* EndlessSpawner::clone() const
+{
+	return new EndlessSpawner(this);
 }
 
 float EndlessSpawner::_getZCoordinateRow() const
@@ -43,8 +59,9 @@ void EndlessSpawner::update()
 
 	Environment referenceEnvironment = _environments[randomEnvironmentIndex];
 	Environment environmentToSpawn = new Engine::GameObject(referenceEnvironment);
-	environmentToSpawn->transform.position = glm::vec3(0.f, 0.f, _getZCoordinateRow());
+	environmentToSpawn->transform.position = glm::vec3(0.f, -5.f, _getZCoordinateRow());
 	environmentToSpawn->transform.scale = glm::vec3(.5f); // TODO: Do it in main once transforms are copied
+	environmentToSpawn->addBehaviour(new Riser());
 	_scene->addGameObject(environmentToSpawn);
 
 	_rows->put(environmentToSpawn);

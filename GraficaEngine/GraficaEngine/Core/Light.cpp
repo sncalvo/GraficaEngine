@@ -29,6 +29,16 @@ namespace Engine
 		_direction(direction)
 	{}
 
+	Light::Light(const Light *otherLight) :
+		_transform(otherLight->_transform),
+		_intensity(otherLight->_intensity),
+		_ambient(otherLight->_ambient),
+		_diffuse(otherLight->_diffuse),
+		_specular(otherLight->_specular),
+		_direction(otherLight->_direction)
+	{
+	}
+
 	void Light::apply(Shader& shader) const
 	{
 		shader.setVec3f("light.diffuse", glm::value_ptr(_diffuse));

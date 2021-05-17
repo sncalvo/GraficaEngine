@@ -47,6 +47,7 @@
     <ClCompile Include="Scripts\Riser.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Scripts\TreeSpawner.cpp" />
+    <ClCompile Include="Renderer\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -102,9 +103,12 @@
     <ClInclude Include="Scripts\Riser.h" />
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Scripts\TreeSpawner.h" />
+    <ClInclude Include="Renderer\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.fs" />
     <None Include="default.vs" />
+    <None Include="Assets\Shaders\skybox.vs" />
+    <None Include="Assets\Shaders\skybox.fs" />
   </ItemGroup>
 </Project>

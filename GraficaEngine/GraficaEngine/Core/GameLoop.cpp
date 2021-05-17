@@ -165,6 +165,8 @@ namespace Engine
 			_shader->setMat4("projection", projection);
 			_shader->setMat4("view", view);
 
+			activeScene->drawSkybox(projection, view);
+
 			activeScene->physicsUpdate();
 			activeScene->update();
 			activeScene->draw();

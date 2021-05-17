@@ -13,6 +13,7 @@
 #include "Platform/MediaLayer.h"
 #include "Platform/Window.h"
 #include "Renderer/Model.h"
+#include "Renderer/Skybox.h"
 #include "Core/GameLoop.h"
 #include "Core/Light.h"
 #include "Core/GameObject.h"
@@ -95,7 +96,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 
 	Engine::PerspectiveCamera *firstPersonCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 2.f, -0.5f));
-	firstPersonCamera->addBehaviour(new FirstPersonCameraController(glm::vec3(0.5f, 1.f, 0.f)));
+	firstPersonCamera->addBehaviour(new FirstPersonCameraController(glm::vec3(.8f, 2.2f, 0.f)));
 
 	Engine::PerspectiveCamera *thirdPersonCamera = new Engine::PerspectiveCamera(
 		glm::vec3(0.f, 0.f, 0.f),
@@ -220,6 +221,17 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 
 	scene->addGameObject(hint);
 	hint->addBehaviour(new HintController(5.f, 300.f));
+
+	std::vector<std::string> faces {
+		"Assets/Skybox/right.jpg",
+		"Assets/Skybox/left.jpg",
+		"Assets/Skybox/bottom.jpg",
+		"Assets/Skybox/top.jpg",
+		"Assets/Skybox/front.jpg",
+		"Assets/Skybox/back.jpg",
+	};
+	Engine::Skybox *skybox = new Engine::Skybox(faces);
+	scene->setSkybox(skybox);
 
 	return scene;
 }

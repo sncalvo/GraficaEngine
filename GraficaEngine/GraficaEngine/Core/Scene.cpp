@@ -34,6 +34,8 @@ namespace Engine
 			addCamera(cameraName, cameraClone);
 		}
 
+		setSkybox(otherScene->_skybox);
+
 		setActiveCamera("default"); // TODO: Make generic
 	}
 
@@ -229,5 +231,18 @@ namespace Engine
 		{
 			delete gameObject;
 		}
+	}
+
+	void Scene::drawSkybox(glm::mat4 projection, glm::mat4 view)
+	{
+		if (_skybox != nullptr)
+		{
+			_skybox->draw(projection, view);
+		}
+	}
+
+	void Scene::setSkybox(Skybox *skybox)
+	{
+		_skybox = skybox;
 	}
 }

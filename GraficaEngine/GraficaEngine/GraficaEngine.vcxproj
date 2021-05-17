@@ -159,6 +159,7 @@
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
+    <ClCompile Include="Renderer\Skybox.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
     <ClCompile Include="Scripts\RiverMover.cpp" />
     <ClCompile Include="Scripts\JumpController.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
+    <ClInclude Include="Renderer\Skybox.h" />
     <ClInclude Include="Scripts\HintController.h" />
     <ClInclude Include="Scripts\RiverMover.h" />
     <ClInclude Include="Scripts\JumpController.h" />
@@ -253,6 +255,8 @@
     <ClInclude Include="Platform\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\skybox.fs" />
+    <None Include="Assets\Shaders\skybox.vs" />
     <None Include="default.fs" />
     <None Include="default.vs" />
   </ItemGroup>

@@ -10,6 +10,7 @@
 #include "Light.h"
 #include "TextObject.h"
 
+#include "../Renderer/Skybox.h"
 #include "../Physics/Collider.h"
 
 namespace Engine
@@ -25,6 +26,7 @@ namespace Engine
 		std::set<BaseGameObject *> _gameObjectsToDelete;
 		std::vector<Collider *> _colliders;
 		std::vector<Light *> _lights;
+		Skybox *_skybox;
 
 	public:
 		Scene(Camera *);
@@ -41,6 +43,8 @@ namespace Engine
 		Camera *getCamera(std::string);
 		std::vector<std::string> getCameraNames() const;
 		std::vector<Light *> getLights();
+		void drawSkybox(glm::mat4 projection, glm::mat4 view);
+		void setSkybox(Skybox *);
 		void draw();
 		void start();
 		void update();

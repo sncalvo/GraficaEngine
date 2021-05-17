@@ -1,4 +1,4 @@
-#include "TextObject.h";
+#include "TextObject.h"
 #include "Scene.h"
 #include "Canvas.h"
 

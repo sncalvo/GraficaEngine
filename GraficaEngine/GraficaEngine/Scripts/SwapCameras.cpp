@@ -26,7 +26,7 @@ void SwapCameras::update()
 		_currentIndex = (_currentIndex + 1) % scene->getCameraNames().size();
 		
 		std::string newCameraName = scene->getCameraNames()[_currentIndex];
-		if (newCameraName == "isometric" || newCameraName == "centeredFixed")
+		if (newCameraName == "default" || newCameraName == "centeredFixed")
 		{
 			player->transform.lookAt(glm::vec3(0.f, 0.f, -1.f));
 		}

@@ -6,6 +6,10 @@
 #include <experimental/filesystem>
 #include <gl/glew.h>
 
+constexpr auto SMALL_SIZE = 15;
+constexpr auto NORMAL_SIZE = 18;
+constexpr auto LARGE_SIZE = 36;
+
 namespace stdfs = std::experimental::filesystem;
 
 namespace Engine
@@ -27,8 +31,10 @@ namespace Engine
 
     void setFaceSize(FT_Face face, int size)
     {
-        FT_Set_Pixel_Sizes(face, 0, 18);
+        FT_Set_Pixel_Sizes(face, 0, size);
     }
+
+    bool endsWith(std::string const& fullString, std::string const& ending);
 
 	FontManager::FontManager()
 	{
@@ -51,8 +57,16 @@ namespace Engine
                 continue;
             }
 
-            setFaceSize(newFont.face, 18); //TODO do we need to create a new face for each font size?
-
+            int size = NORMAL_SIZE;
+            if (endsWith(fontPath.filename().string(), "_large.TTF") || endsWith(fontPath.filename().string(), "_large.otf"))
+            {
+                size = LARGE_SIZE;
+            }
+            else if (endsWith(fontPath.filename().string(), "_small.TTF") || endsWith(fontPath.filename().string(), "_small.otf"))
+            {
+                size = SMALL_SIZE;
+            }
+            setFaceSize(newFont.face, size);
 
             glm::vec4* vertices = new glm::vec4[255 * 4];
 
@@ -188,6 +202,18 @@ namespace Engine
     Shader* FontManager::getFontsShader() const
     {
         return _fontsShader;
+    }
+
+    bool endsWith(std::string const& fullString, std::string const& ending)
+    {
+        if (fullString.length() >= ending.length())
+        {
+            return (0 == fullString.compare(fullString.length() - ending.length(), ending.length(), ending));
+        }
+        else
+        {
+            return false;
+        }
     }
 
     FontManager::~FontManager()

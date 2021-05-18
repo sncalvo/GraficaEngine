@@ -35,6 +35,7 @@ namespace Engine
 		void setShowTextures(bool);
 		bool getUseInterpolation() const;
 		void setUseInterpolation(bool);
+		GameSpeed getGameSpeedEnum() const;
 		float getGameSpeed() const;
 		void setGameSpeed(GameSpeed);
 		bool getShowColliders() const;

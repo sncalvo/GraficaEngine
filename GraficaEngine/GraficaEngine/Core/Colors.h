@@ -8,4 +8,5 @@ namespace Engine {
 	constexpr auto BLACK = glm::vec3(0.f);
 	constexpr auto GRAY = glm::vec3(0.76f);
 	constexpr auto ORANGE = glm::vec3(1.f, 0.5f, 0.15f);
+	constexpr auto WHITE = glm::vec3(1.f);
 }

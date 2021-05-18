@@ -160,7 +160,10 @@
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
     <ClCompile Include="Renderer\Skybox.cpp" />
+    <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
+    <ClCompile Include="Scripts\HomeScreenController.cpp" />
+    <ClCompile Include="Scripts\MoveDownOnStart.cpp" />
     <ClCompile Include="Scripts\RiverMover.cpp" />
     <ClCompile Include="Scripts\JumpController.cpp" />
     <ClCompile Include="Scripts\Boundary.cpp" />
@@ -199,6 +202,7 @@
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Platform\Window.cpp" />
+    <ClCompile Include="Utils\SmoothAcceleratedPosition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -211,7 +215,10 @@
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
     <ClInclude Include="Renderer\Skybox.h" />
+    <ClInclude Include="Scripts\GameKeysHomeController.h" />
     <ClInclude Include="Scripts\HintController.h" />
+    <ClInclude Include="Scripts\HomeScreenController.h" />
+    <ClInclude Include="Scripts\MoveDownOnStart.h" />
     <ClInclude Include="Scripts\RiverMover.h" />
     <ClInclude Include="Scripts\JumpController.h" />
     <ClInclude Include="Scripts\Boundary.h" />
@@ -253,6 +260,7 @@
     <ClInclude Include="Core\Time.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Platform\Window.h" />
+    <ClInclude Include="Utils\SmoothAcceleratedPosition.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\skybox.fs" />

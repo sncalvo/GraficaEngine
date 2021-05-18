@@ -82,11 +82,11 @@ int main(int argc, char *argv[])
 Engine::Scene *loadMainScene(Engine::Shader *shader)
 {
 	Engine::OrthographicCamera *isometricCamera = new Engine::OrthographicCamera(
-		glm::vec3(0.f, 4.f, 0.f),
+		glm::vec3(0.f, 8.f, 0.f),
 		glm::vec3(0.f, 1.f, 0.f),
 		-35.264f - 90.f,
 		-45.f);
-	isometricCamera->addBehaviour(new OffsetPlayer(glm::vec3(0.f, 4.f, 0.f)));
+	isometricCamera->addBehaviour(new OffsetPlayer(glm::vec3(3.f, 4.f, 4.f)));
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
 		glm::vec3(0.f, 1.f, 0.f),
@@ -131,7 +131,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
-	duck->transform.position = glm::vec3(1.0f, 1.f, 0.f);
+	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f);
 
 	Engine::GameObject *grass = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/grass.obj")),
@@ -142,7 +142,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	for (int index = -5; index < 5; index++)
 	{
 		Engine::GameObject *newgrass = new Engine::GameObject(grass);
-		newgrass->transform.scale = glm::vec3(.5f);
+		newgrass->transform.scale = glm::vec3(1.f, 1.f, .5f);
 		newgrass->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
 		scene->addGameObject(newgrass);
 	}
@@ -189,7 +189,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
 		Engine::MaterialObject(shader));
 	scene->addGameObject(tree);
-	tree->transform.position += glm::vec3(4.0f, 0.f, 5.f);
+	tree->transform.position = glm::vec3(4.0f, 0.f, 5.f);
 
 	Engine::GameObject *coin = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/coin.obj")),

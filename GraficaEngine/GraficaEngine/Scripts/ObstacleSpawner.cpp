@@ -12,7 +12,7 @@ ObstacleSpawner::ObstacleSpawner(std::vector<Engine::GameObject *> obstacles) : 
 																				_canSpawn(false)
 {
 	_timeToNextSpawn = Engine::Time::getTime() + rand() % 5;
-	_speed = rand() % 5 + 5.f;
+	_speed = rand() % 5 + 7.f;
 	_sign = ((bool)(rand() % 2)) ? -1.f : 1.f;
 }
 
@@ -20,7 +20,7 @@ ObstacleSpawner::ObstacleSpawner(const ObstacleSpawner *otherObstacleSpawner) : 
 																				_canSpawn(false)
 {
 	_timeToNextSpawn = Engine::Time::getTime() + rand() % 5;
-	_speed = rand() % 5 + 5.f;
+	_speed = rand() % 5 + 7.f;
 	_sign = ((bool)(rand() % 2)) ? -1.f : 1.f;
 }
 
@@ -47,7 +47,7 @@ void ObstacleSpawner::update()
 		Engine::GameObject *obstacleToSpawn = new Engine::GameObject(randomObstacle);
 		obstacleToSpawn->addBehaviour(new Mover(_speed));
 		obstacleToSpawn->transform.position = gameObject->transform.position;
-		obstacleToSpawn->transform.position.x = _sign * -20.f;
+		obstacleToSpawn->transform.position.x = _sign * -23.f;
 		if (_sign == -1.f)
 		{
 			obstacleToSpawn->transform.rotateY(180.f);

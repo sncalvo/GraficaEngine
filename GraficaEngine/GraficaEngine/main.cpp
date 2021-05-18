@@ -150,7 +150,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	Engine::GameObject *river = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/river.obj")),
 		Engine::MaterialObject(shader));
-	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
+	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -2.5f), glm::vec3(24.f, 0.f, 2.5f)));
 	river->addBehaviour(new Hazard());
 	river->addBehaviour(new RiverMover(-0.5f));
 
@@ -163,7 +163,7 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	Engine::GameObject *log = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/log.obj")),
 		Engine::MaterialObject(shader));
-	log->setCollider(new Engine::Collider(glm::vec3(-2.5, -.7f, -.5f), glm::vec3(2.5f, .7f, .5f)));
+	log->setCollider(new Engine::Collider(glm::vec3(-3.0, -.7f, -.5f), glm::vec3(3.0f, .7f, .5f)));
 	log->addBehaviour(new Boundary(-30.f, 30.f));
 	log->addTag("ground");
 
@@ -172,12 +172,28 @@ Engine::Scene *loadMainScene(Engine::Shader *shader)
 	Engine::GameObject *car = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
 		Engine::MaterialObject(shader));
-	car->setCollider(new Engine::Collider(glm::vec3(-1.5f, 0, -1.f), glm::vec3(1.5f, 1.5f, 1.f)));
+	car->setCollider(new Engine::Collider(glm::vec3(-2.f, 0, -1.f), glm::vec3(2.f, 3.f, 1.f)));
 	car->addBehaviour(new Hazard());
 	car->addBehaviour(new Boundary(-30.f, 30.f));
 	car->addTag("hazard");
 
-	road->addBehaviour(new ObstacleSpawner(Obstacles{car}));
+	Engine::GameObject* truck = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/truck.obj")),
+		Engine::MaterialObject(shader));
+	truck->setCollider(new Engine::Collider(glm::vec3(-2.5f, 0, -1.f), glm::vec3(2.5f, 3.5f, 1.f)));
+	truck->addBehaviour(new Hazard());
+	truck->addBehaviour(new Boundary(-30.f, 30.f));
+	truck->addTag("hazard");
+
+	Engine::GameObject* pickuptruck = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/pickuptruck.obj")),
+		Engine::MaterialObject(shader));
+	pickuptruck->setCollider(new Engine::Collider(glm::vec3(-2.f, 0, -1.f), glm::vec3(2.f, 3.0f, 1.f)));
+	pickuptruck->addBehaviour(new Hazard());
+	pickuptruck->addBehaviour(new Boundary(-30.f, 30.f));
+	pickuptruck->addTag("hazard");
+
+	road->addBehaviour(new ObstacleSpawner(Obstacles{car, pickuptruck, truck}));
 
 	Engine::BaseGameObject *spawner = new Engine::BaseGameObject();
 	std::vector<Environment> environments{grass, grass, river, road};

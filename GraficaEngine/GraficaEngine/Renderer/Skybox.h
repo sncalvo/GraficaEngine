@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Shader.h"
+#include "../Core/Light.h"
 
 namespace Engine
 {
@@ -15,6 +16,6 @@ namespace Engine
 		float* _getVertices() const;
 	public:
 		Skybox(std::vector<std::string> faces);
-		void draw(glm::mat4 projection, glm::mat4 view);
+		void draw(glm::mat4 projection, glm::mat4 view, Light &light);
 	};
 }

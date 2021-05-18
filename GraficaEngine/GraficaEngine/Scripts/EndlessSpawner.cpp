@@ -7,8 +7,7 @@
 #include "ObstacleSpawner.h"
 #include "Riser.h"
 
-EndlessSpawner::EndlessSpawner(std::vector<Environment> environments) :
-	_environments(environments), _rows(new CircularBuffer<Engine::GameObject*>(10)), _currentRow(0)
+EndlessSpawner::EndlessSpawner(std::vector<Environment> environments) : _environments(environments), _rows(new CircularBuffer<Engine::GameObject *>(30)), _currentRow(0)
 {
 }
 
@@ -17,9 +16,8 @@ EndlessSpawner::~EndlessSpawner()
 	delete _rows;
 }
 
-EndlessSpawner::EndlessSpawner(const EndlessSpawner *otherEndlessSpawner) :
-	_rows(new CircularBuffer<Engine::GameObject*>(10)),
-	_currentRow(0)
+EndlessSpawner::EndlessSpawner(const EndlessSpawner *otherEndlessSpawner) : _rows(new CircularBuffer<Engine::GameObject *>(30)),
+																			_currentRow(0)
 {
 	for (Environment environment : otherEndlessSpawner->_environments)
 	{
@@ -27,7 +25,7 @@ EndlessSpawner::EndlessSpawner(const EndlessSpawner *otherEndlessSpawner) :
 	}
 }
 
-EndlessSpawner* EndlessSpawner::clone() const
+EndlessSpawner *EndlessSpawner::clone() const
 {
 	return new EndlessSpawner(this);
 }
@@ -41,15 +39,14 @@ bool EndlessSpawner::_nearPlayer() const
 {
 	float zCoordinateRow = _getZCoordinateRow();
 	return (
-		glm::abs(_player->transform.position.z - zCoordinateRow) <= RADIUS_TO_PLAYER
-	);
+		glm::abs(_player->transform.position.z - zCoordinateRow) <= RADIUS_TO_PLAYER);
 }
 
 void EndlessSpawner::update()
 {
 	_scene = gameObject->getScene();
 	_player = _scene->getGameObjectWithTag("player");
-	
+
 	if (_player == nullptr || !_nearPlayer())
 	{
 		return;

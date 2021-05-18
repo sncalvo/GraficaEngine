@@ -106,13 +106,14 @@ namespace Engine
         };
     }
 
-    void Skybox::draw(glm::mat4 projection, glm::mat4 view)
+    void Skybox::draw(glm::mat4 projection, glm::mat4 view, Light &light)
     {
         glDepthMask(GL_FALSE);
         _shader->use();
         _shader->setMat4("projection", projection);
         glm::mat4 viewWithoutTranslation = glm::mat4(glm::mat3(view));
         _shader->setMat4("view", viewWithoutTranslation);
+        light.apply(*_shader);
         glBindVertexArray(_VAO);
         glBindTexture(GL_TEXTURE_CUBE_MAP, _id);
         glDrawArrays(GL_TRIANGLES, 0, 36);

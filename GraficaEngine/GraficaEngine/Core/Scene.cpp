@@ -237,7 +237,7 @@ namespace Engine
 	{
 		if (_skybox != nullptr)
 		{
-			_skybox->draw(projection, view);
+			_skybox->draw(projection, view, *Light::lightPresets[Settings::getInstance().getDayTime()]);
 		}
 	}
 

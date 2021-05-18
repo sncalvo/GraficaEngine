@@ -57,6 +57,11 @@ namespace Engine
 		}
 	}
 
+	GameSpeed Settings::getGameSpeedEnum() const
+	{
+		return _gameSpeed;
+	}
+
 	void Settings::setGameSpeed(GameSpeed gameSpeed)
 	{
 		_gameSpeed = gameSpeed;

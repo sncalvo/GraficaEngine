@@ -209,7 +209,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
 		Engine::MaterialObject(shader));
 	scene->addGameObject(tree);
-	tree->transform.position = glm::vec3(4.0f, 0.f, 5.f);
+	tree->transform.position = glm::vec3(-4.0f, 0.f, 5.f);
 
 	Engine::GameObject* coin = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/coin.obj")),

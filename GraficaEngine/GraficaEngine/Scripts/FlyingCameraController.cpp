@@ -15,19 +15,19 @@ void FlyingCameraController::update()
 	Engine::Camera* camera = static_cast<Engine::Camera*>(gameObject);
 
 	camera->processMouseMovement(float(movementX) * Engine::Time::getDeltaTime(), float(movementY) * Engine::Time::getDeltaTime());
-	if (input.getKey(Engine::KEY_I))
+	if (input.getKey(Engine::KEY_UP) || input.getKey(Engine::KEY_W))
 	{
 		camera->processKeyboard(Engine::Camera_Movement::FORWARD, Engine::Time::getDeltaTime());
 	}
-	if (input.getKey(Engine::KEY_K))
+	if (input.getKey(Engine::KEY_DOWN) || input.getKey(Engine::KEY_S))
 	{
 		camera->processKeyboard(Engine::Camera_Movement::BACKWARD, Engine::Time::getDeltaTime());
 	}
-	if (input.getKey(Engine::KEY_J))
+	if (input.getKey(Engine::KEY_LEFT) || input.getKey(Engine::KEY_A))
 	{
 		camera->processKeyboard(Engine::Camera_Movement::LEFT, Engine::Time::getDeltaTime());
 	}
-	if (input.getKey(Engine::KEY_L))
+	if (input.getKey(Engine::KEY_RIGHT) || input.getKey(Engine::KEY_D))
 	{
 		camera->processKeyboard(Engine::Camera_Movement::RIGHT, Engine::Time::getDeltaTime());
 	}

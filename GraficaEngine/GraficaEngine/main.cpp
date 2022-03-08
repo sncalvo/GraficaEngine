@@ -234,7 +234,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 	hint->setColor(Engine::GRAY);
 	hint->transform.position = glm::vec3(800.f, 0.f, 1.f);
 
-	Engine::TextObject* hintText = new Engine::TextObject("Cambiá de cámara con V");
+	Engine::TextObject* hintText = new Engine::TextObject("Change camera with V");
 	hintText->setFont("eight-bit-dragon_small.otf");
 	hintText->transform.position = glm::vec3(20.f, 15.f, 2.f);
 	hintText->setColor(Engine::BLACK);
@@ -257,7 +257,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 	Engine::Canvas* homeScreen = new Engine::Canvas(glm::vec2(376, 35));
 	homeScreen->setColor(Engine::BLACK);
 	homeScreen->transform.position = glm::vec3(230.f, 320.f, 1.f);
-	Engine::TextObject* crossyRoad = new Engine::TextObject("Crossy Road");
+	Engine::TextObject* crossyRoad = new Engine::TextObject("Crossii Road");
 	crossyRoad->setColor(Engine::WHITE);
 	crossyRoad->setFont("8bit-wonder_large.TTF");
 	crossyRoad->transform.position = glm::vec3(1.f);
@@ -268,7 +268,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 	Engine::Canvas* gameKeysBack = new Engine::Canvas(glm::vec2(298, 19));
 	gameKeysBack->setColor(Engine::BLACK);
 	gameKeysBack->transform.position = glm::vec3(280.f, 280.f, 1.f);
-	Engine::TextObject* gameKeys = new Engine::TextObject("Movete con W A S D");
+	Engine::TextObject* gameKeys = new Engine::TextObject("Move with W A S D");
 	gameKeys->setColor(Engine::WHITE);
 	gameKeys->setFont("8bit-wonder.TTF");
 	gameKeys->transform.position = glm::vec3(1.f);
@@ -282,7 +282,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 void loadHUD(Engine::Scene* scene)
 {
-	Engine::TextObject* settingsTitle = new Engine::TextObject("Configuraciones");
+	Engine::TextObject* settingsTitle = new Engine::TextObject("Configurations");
 	settingsTitle->transform.position = glm::vec3(100.0f, 25.0f, 1.0f);
 	settingsTitle->setFont("8bit-wonder.TTF");
 	settingsTitle->setColor(Engine::BLACK);
@@ -298,7 +298,7 @@ void loadHUD(Engine::Scene* scene)
 	wireframeValue->setColor(Engine::RED);
 	wireframeValue->addTag("wireframe_value");
 
-	Engine::TextObject* texturesTitle = new Engine::TextObject("Texturas(T):");
+	Engine::TextObject* texturesTitle = new Engine::TextObject("Textures(T):");
 	texturesTitle->setFont("eight-bit-dragon_small.otf");
 	texturesTitle->transform.position = glm::vec3(185.0f, 5.0f, 2.0f);
 	texturesTitle->setColor(Engine::BLACK);
@@ -309,7 +309,7 @@ void loadHUD(Engine::Scene* scene)
 	textureValue->setColor(Engine::GREEN);
 	textureValue->addTag("texture_value");
 
-	Engine::TextObject* speedTitle = new Engine::TextObject("Velocidad(1, 2, 3):");
+	Engine::TextObject* speedTitle = new Engine::TextObject("Speed(1, 2, 3):");
 	speedTitle->transform.position = glm::vec3(3.0f, 15.0f, 1.0f);
 	speedTitle->setFont("eight-bit-dragon_small.otf");
 	speedTitle->setColor(Engine::BLACK);
@@ -320,7 +320,7 @@ void loadHUD(Engine::Scene* scene)
 	speedValue->setColor(Engine::BLACK);
 	speedValue->addTag("speed_value");
 
-	Engine::TextObject* interpolateTitle = new Engine::TextObject("Interpolado(U):");
+	Engine::TextObject* interpolateTitle = new Engine::TextObject("Interpolated(U):");
 	interpolateTitle->setFont("eight-bit-dragon_small.otf");
 	interpolateTitle->transform.position = glm::vec3(90.0f, 5.0f, 1.0f);
 	interpolateTitle->setColor(Engine::BLACK);
@@ -331,12 +331,12 @@ void loadHUD(Engine::Scene* scene)
 	interpolateValue->setColor(Engine::RED);
 	interpolateValue->addTag("interpolation_value");
 
-	Engine::TextObject* lightsTitle = new Engine::TextObject("Luz Ambiente(O):");
+	Engine::TextObject* lightsTitle = new Engine::TextObject("Ambient Light(O):");
 	lightsTitle->setFont("eight-bit-dragon_small.otf");
 	lightsTitle->transform.position = glm::vec3(98.0f, 15.0f, 2.0f);
 	lightsTitle->setColor(Engine::BLACK);
 
-	Engine::TextObject* lightsValue = new Engine::TextObject("Mediodía");
+	Engine::TextObject* lightsValue = new Engine::TextObject("Noon");
 	lightsValue->setFont("eight-bit-dragon_small.otf");
 	lightsValue->transform.position = glm::vec3(178.0f, 15.0f, 0.1f);
 	lightsValue->setColor(Engine::BLACK);
@@ -347,12 +347,12 @@ void loadHUD(Engine::Scene* scene)
 	hudDivider->setColor(Engine::BLACK);
 	hudDivider->addBehaviour(new MoveDownOnStart(67.f));
 
-	Engine::TextObject *gameplayTitle = new Engine::TextObject("Partida");
+	Engine::TextObject *gameplayTitle = new Engine::TextObject("Game");
 	gameplayTitle->setFont("8bit-wonder.TTF");
 	gameplayTitle->transform.position = glm::vec3(310.0f, 25.0f, 1.0f);
 	gameplayTitle->setColor(Engine::BLACK);
 
-	Engine::TextObject *scoreTitle = new Engine::TextObject("Puntos:");
+	Engine::TextObject *scoreTitle = new Engine::TextObject("Score:");
 	scoreTitle->setFont("eight-bit-dragon_small.otf");
 	scoreTitle->transform.position = glm::vec3(300.0f, 5.0f, 1.0f);
 	scoreTitle->setColor(Engine::BLACK);
@@ -363,7 +363,7 @@ void loadHUD(Engine::Scene* scene)
 	scoreValue->setColor(Engine::ORANGE);
 	scoreValue->addTag("score_value");
 
-	Engine::TextObject *timeTitle = new Engine::TextObject("Tiempo:");
+	Engine::TextObject *timeTitle = new Engine::TextObject("Time:");
 	timeTitle->setFont("eight-bit-dragon_small.otf");
 	timeTitle->transform.position = glm::vec3(300.0f, 15.0f, 1.0f);
 	timeTitle->setColor(Engine::BLACK);

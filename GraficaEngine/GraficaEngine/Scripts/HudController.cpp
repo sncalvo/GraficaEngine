@@ -23,10 +23,10 @@ void HudController::update()
 	_changeTextSetting(settings.getGameSpeedEnum() == Engine::GameSpeed::SLOW, "1", "speed_value");
 	_changeTextSetting(settings.getGameSpeedEnum() == Engine::GameSpeed::NORMAL, "2", "speed_value");
 	_changeTextSetting(settings.getGameSpeedEnum() == Engine::GameSpeed::FAST, "3", "speed_value");
-	_changeTextSetting(settings.getDayTime() == Engine::DayTime::AFTERNOON, "Tarde", "light_value");
-	_changeTextSetting(settings.getDayTime() == Engine::DayTime::MIDDAY, "Mediodía", "light_value");
-	_changeTextSetting(settings.getDayTime() == Engine::DayTime::MORNING, "Mañana", "light_value");
-	_changeTextSetting(settings.getDayTime() == Engine::DayTime::NIGHT, "Noche", "light_value");
+	_changeTextSetting(settings.getDayTime() == Engine::DayTime::AFTERNOON, "Afternoon", "light_value");
+	_changeTextSetting(settings.getDayTime() == Engine::DayTime::MIDDAY, "Midday", "light_value");
+	_changeTextSetting(settings.getDayTime() == Engine::DayTime::MORNING, "Morning", "light_value");
+	_changeTextSetting(settings.getDayTime() == Engine::DayTime::NIGHT, "Night", "light_value");
 }
 
 void HudController::_changeBoolSetting(bool state, std::string valueObject)

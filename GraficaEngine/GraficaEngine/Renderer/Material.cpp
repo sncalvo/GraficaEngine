@@ -6,17 +6,8 @@
 
 namespace Engine
 {
-	MaterialObject::MaterialObject(): _shader(nullptr)
+	MaterialObject::MaterialObject()
 	{
-	}
-
-	MaterialObject::MaterialObject(Shader* shader): _shader(shader)
-	{
-	}
-
-	Shader* MaterialObject::getShader() const
-	{
-		return _shader;
 	}
 
 	void MaterialObject::setTextureOffset(glm::vec2 textureOffset)
@@ -24,9 +15,9 @@ namespace Engine
 		_textureOffset = textureOffset;
 	}
 
-	void MaterialObject::applyTextureOffset() const
+	void MaterialObject::applyTextureOffset(Shader *shader) const
 	{	
-		_shader->setVec2f("texture_offset", glm::value_ptr(_textureOffset));
+		shader->setVec2f("texture_offset", glm::value_ptr(_textureOffset));
 	}
 
 	glm::vec2 MaterialObject::getTextureOffset() const

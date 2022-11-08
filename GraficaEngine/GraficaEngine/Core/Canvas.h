@@ -19,7 +19,7 @@ namespace Engine {
 		glm::vec2 getSize();
 		void setColor(glm::vec3 color);
 		glm::vec3 getColor();
-		void draw() const;
+		void draw(Shader *shader) const;
 		Canvas *clone() const override;
 	};
 }

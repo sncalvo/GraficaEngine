@@ -73,9 +73,9 @@ namespace Engine
             (minA.z <= maxB.z && maxA.z >= minB.z));
     }
 
-    void Collider::draw() const
+    void Collider::draw(Shader *shaderPtr) const
     {
-        Shader &shader = *_gameObject->getMaterial().getShader();
+        Shader& shader = *shaderPtr;
         shader.use();
         _gameObject->transform.apply(shader);
 

@@ -18,6 +18,8 @@
 #include "../Platform/Window.h"
 #include "../Platform/MediaLayer.h"
 
+#include "../Renderer/Renderer.h"
+
 namespace Engine
 {
 	constexpr auto PAUSE_KEY = KEY_P;
@@ -27,7 +29,7 @@ namespace Engine
 	private:
 		GameLoop();
 		Window *_window;
-		Shader *_shader;
+		Renderer _renderer;
 		std::vector<GameObject *> _gameObjects;
 		bool _gamePaused;
 		void _handleDayTime() const;
@@ -45,6 +47,5 @@ namespace Engine
 		}
 		void start();
 		void addWindow(Window *);
-		void addShader(Shader *);
 	};
 }

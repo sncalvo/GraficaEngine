@@ -9,9 +9,9 @@
 namespace Engine
 {
 	GameLoop::GameLoop() :
-		_shader(nullptr),
 		_window(nullptr),
-		_gamePaused(false)
+		_gamePaused(false),
+		_renderer(Renderer())
 	{
 	}
 
@@ -157,19 +157,10 @@ namespace Engine
 				activeScene = sceneManager.getActiveScene();
 			}
 
-			Camera *camera = activeScene->getActiveCamera();
-
-			_shader->use();
-			glm::mat4 projection = camera->getProjectionMatrix();
-			glm::mat4 view = camera->getViewMatrix();
-			_shader->setMat4("projection", projection);
-			_shader->setMat4("view", view);
-
-			activeScene->drawSkybox(projection, view);
-
 			activeScene->physicsUpdate();
 			activeScene->update();
-			activeScene->draw();
+
+			_renderer.draw(activeScene);
 
 			_window->swap();
 		}
@@ -180,7 +171,6 @@ namespace Engine
 		}
 
 		// delete sceneManager;
-		delete _shader;
 		delete _window;
 		FontManager *fm = FontManager::getInstance();
 		delete fm;
@@ -190,9 +180,7 @@ namespace Engine
 	void GameLoop::addWindow(Window *window)
 	{
 		_window = window;
-	}
-	void GameLoop::addShader(Shader *shader)
-	{
-		_shader = shader;
+		// After creating the window we can setup the renderer since gl has loaded
+		_renderer.setup();
 	}
 }

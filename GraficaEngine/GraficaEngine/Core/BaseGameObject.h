@@ -39,7 +39,7 @@ namespace Engine
 		void setScene(Scene *);
 		Scene *getScene() const;
 		virtual Collider *getCollider() const;
-		virtual void draw() const;
+		virtual void draw(Shader *) const;
 		void addTag(std::string tag);
 		bool hasTag(std::string tag) const;
 		BaseGameObject *getChildWithTag(std::string tag) const;

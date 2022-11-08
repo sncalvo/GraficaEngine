@@ -159,6 +159,7 @@
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\Skybox.cpp" />
     <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Skybox.h" />
     <ClInclude Include="Scripts\GameKeysHomeController.h" />
     <ClInclude Include="Scripts\HintController.h" />

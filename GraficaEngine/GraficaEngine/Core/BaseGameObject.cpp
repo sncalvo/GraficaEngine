@@ -141,11 +141,11 @@ namespace Engine
 		return _scene;
 	}
 
-	void BaseGameObject::draw() const
+	void BaseGameObject::draw(Shader *shader) const
 	{
 		for (BaseGameObject *child : _children)
 		{
-			child->draw();
+			child->draw(shader);
 		}
 	}
 

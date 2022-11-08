@@ -24,7 +24,7 @@ namespace Engine
 		~GameObject();
 		void setCollider(Collider *collider);
 		Collider *getCollider() const;
-		void draw() const;
+		void draw(Shader *shader) const;
 		Model *getModel() const;
 		MaterialObject &getMaterial();
 	};

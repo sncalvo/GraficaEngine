@@ -85,7 +85,7 @@ namespace Engine {
 		return _color;
 	}
 
-	void Canvas::draw() const
+	void Canvas::draw(Shader *shader) const
 	{
 		_shader->use();
 
@@ -94,6 +94,6 @@ namespace Engine {
 		_shader->setVec3f("color", glm::value_ptr(_color));
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		BaseGameObject::draw();
+		BaseGameObject::draw(shader);
 	}
 }

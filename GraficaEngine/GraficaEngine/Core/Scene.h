@@ -45,7 +45,7 @@ namespace Engine
 		std::vector<Light *> getLights();
 		void drawSkybox(glm::mat4 projection, glm::mat4 view);
 		void setSkybox(Skybox *);
-		void draw();
+		void draw(Shader *);
 		void start();
 		void update();
 		void physicsUpdate();

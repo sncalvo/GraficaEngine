@@ -106,18 +106,18 @@ namespace Engine
 		return _cameraNames;
 	}
 
-	void Scene::draw()
+	void Scene::draw(Shader *shader)
 	{
 		for (BaseGameObject *gameObject : _gameObjects)
 		{
-			gameObject->draw();
+			gameObject->draw(shader);
 		}
 
 		if (Settings::getInstance().getShowColliders())
 		{
 			for (Collider *collider : _colliders)
 			{
-				collider->draw();
+				collider->draw(shader);
 			}
 		}
 	}

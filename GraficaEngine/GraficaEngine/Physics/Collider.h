@@ -31,7 +31,7 @@ namespace Engine
         glm::vec3 getMax() const;
         std::vector<Collider *> getCollisions() const;
         GameObject *getGameObject() const;
-        void draw() const;
+        void draw(Shader *) const;
         static bool intersect(Collider *, Collider *);
         ~Collider();
     };

@@ -52,6 +52,7 @@
     <ClCompile Include="Scripts\MoveDownOnStart.cpp" />
     <ClCompile Include="Utils\SmoothAcceleratedPosition.cpp" />
     <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Scripts\MoveDownOnStart.h" />
     <ClInclude Include="Utils\SmoothAcceleratedPosition.h" />
     <ClInclude Include="Scripts\GameKeysHomeController.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.fs" />

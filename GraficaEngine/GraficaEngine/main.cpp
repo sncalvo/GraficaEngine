@@ -52,7 +52,7 @@
 constexpr int WINDOW_WIDTH = 800;
 constexpr int WINDOW_HEIGTH = 600;
 
-Engine::Scene *loadMainScene(Engine::Shader *);
+Engine::Scene *loadMainScene();
 void loadHUD(Engine::Scene *);
 
 int main(int argc, char *argv[])
@@ -67,10 +67,7 @@ int main(int argc, char *argv[])
 	Engine::Window *window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
 	gameLoop.addWindow(window);
 
-	Engine::Shader *shader = new Engine::Shader();
-	gameLoop.addShader(shader);
-
-	Engine::Scene *scene = loadMainScene(shader);
+	Engine::Scene *scene = loadMainScene();
 	loadHUD(scene);
 
 	Engine::SceneManager &sceneManager = Engine::SceneManager::getInstance();
@@ -82,7 +79,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-Engine::Scene* loadMainScene(Engine::Shader* shader)
+Engine::Scene* loadMainScene()
 {
 	Engine::OrthographicCamera *isometricCamera = new Engine::OrthographicCamera(
 		glm::vec3(0.f, 8.f, 0.f),
@@ -128,7 +125,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* duck = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/chicken.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	duck->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
 	duck->addBehaviour(new PlayerController());
 	duck->addBehaviour(new JumpController());
@@ -139,7 +136,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* grass = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/grass.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	grass->addTag("ground");
 	grass->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.0f, -3.f), glm::vec3(24.f, 0.0f, 3.f)));
 
@@ -153,20 +150,20 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* river = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/river.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -2.5f), glm::vec3(24.f, 0.f, 2.5f)));
 	river->addBehaviour(new Hazard());
 	river->addBehaviour(new RiverMover(-0.5f));
 
 	Engine::GameObject* road = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/road.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	road->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
 	road->addTag("ground");
 
 	Engine::GameObject* log = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/log.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	log->setCollider(new Engine::Collider(glm::vec3(-3.0, -.7f, -.5f), glm::vec3(3.0f, .7f, .5f)));
 	log->addBehaviour(new Boundary(-30.f, 30.f));
 	log->addTag("ground");
@@ -175,7 +172,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* car = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	car->setCollider(new Engine::Collider(glm::vec3(-2.f, 0, -1.f), glm::vec3(2.f, 3.f, 1.f)));
 	car->addBehaviour(new Hazard());
 	car->addBehaviour(new Boundary(-30.f, 30.f));
@@ -183,7 +180,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* truck = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/truck.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	truck->setCollider(new Engine::Collider(glm::vec3(-2.5f, 0, -1.f), glm::vec3(2.5f, 3.5f, 1.f)));
 	truck->addBehaviour(new Hazard());
 	truck->addBehaviour(new Boundary(-30.f, 30.f));
@@ -191,7 +188,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* pickuptruck = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/pickuptruck.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	pickuptruck->setCollider(new Engine::Collider(glm::vec3(-2.f, 0, -1.f), glm::vec3(2.f, 3.0f, 1.f)));
 	pickuptruck->addBehaviour(new Hazard());
 	pickuptruck->addBehaviour(new Boundary(-30.f, 30.f));
@@ -207,13 +204,13 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* tree = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	scene->addGameObject(tree);
 	tree->transform.position = glm::vec3(-4.0f, 0.f, 5.f);
 
 	Engine::GameObject* coin = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/coin.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	coin->setCollider(new Engine::Collider(glm::vec3(-.5f, 0, -.5f), glm::vec3(.5f, 0.f, .5f)));
 	coin->addBehaviour(new CoinController());
 	coin->transform.rotateX(90.0f);
@@ -222,7 +219,7 @@ Engine::Scene* loadMainScene(Engine::Shader* shader)
 
 	Engine::GameObject* spanwableTree = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
-		Engine::MaterialObject(shader));
+		Engine::MaterialObject());
 	spanwableTree->addTag("tree");
 
 	grass->addBehaviour(new StaticSpawner(coin));

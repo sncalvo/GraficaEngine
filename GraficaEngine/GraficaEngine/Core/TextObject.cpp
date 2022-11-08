@@ -23,7 +23,7 @@ namespace Engine {
         return new TextObject(this);
     }
 
-	void TextObject::draw() const
+	void TextObject::draw(Shader *shaderPtr) const
     {
         Shader* shader = FontManager::getInstance()->getFontsShader();
         shader->use();

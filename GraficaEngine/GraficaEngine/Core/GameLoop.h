@@ -18,7 +18,7 @@
 #include "../Platform/Window.h"
 #include "../Platform/MediaLayer.h"
 
-#include "../Renderer/Renderer.h"
+#include "../Renderer/RenderPipeline.h"
 
 namespace Engine
 {
@@ -29,7 +29,7 @@ namespace Engine
 	private:
 		GameLoop();
 		Window *_window;
-		Renderer _renderer;
+		RenderPipeline _renderer;
 		std::vector<GameObject *> _gameObjects;
 		bool _gamePaused;
 		void _handleDayTime() const;

@@ -11,7 +11,7 @@ namespace Engine
 	GameLoop::GameLoop() :
 		_window(nullptr),
 		_gamePaused(false),
-		_renderer(Renderer())
+		_renderer(RenderPipeline())
 	{
 	}
 
@@ -159,6 +159,7 @@ namespace Engine
 
 			activeScene->physicsUpdate();
 			activeScene->update();
+			activeScene->flushQueuedGameObjects();
 
 			_renderer.draw(activeScene);
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <set>
-#include <map>
+#include <unordered_map>
 
 #include "GameObject.h"
 #include "Camera.h"
@@ -13,13 +13,17 @@
 #include "../Renderer/Skybox.h"
 #include "../Physics/Collider.h"
 
+#include "../Renderer/MeshRenderer.h"
+#include "../Renderer/ShadowRenderer.h"
+#include "../Renderer/TextRenderer.h"
+
 namespace Engine
 {
 	class Scene
 	{
 	private:
 		Camera *_activeCamera;
-		std::map<std::string, Camera *> _cameras;
+		std::unordered_map<std::string, Camera *> _cameras;
 		std::vector<std::string> _cameraNames;
 		std::vector<BaseGameObject *> _gameObjects;
 		std::vector<BaseGameObject *> _queuedGameObjects;
@@ -27,6 +31,10 @@ namespace Engine
 		std::vector<Collider *> _colliders;
 		std::vector<Light *> _lights;
 		Skybox *_skybox;
+
+		std::unordered_map<std::string, std::vector<std::shared_ptr<MeshRenderer>>> _meshRenderers = {};
+		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>> _shadowRenderers = {};
+		std::unordered_map<std::string, std::vector<std::shared_ptr<TextRenderer>>> _textRenderers = {};
 
 	public:
 		Scene(Camera *);
@@ -49,6 +57,13 @@ namespace Engine
 		void start();
 		void update();
 		void physicsUpdate();
+		void addRenderers(BaseGameObject* gameObject);
+		void removeRenderers(BaseGameObject* gameObject);
+
+		std::unordered_map<std::string, std::vector<std::shared_ptr<MeshRenderer>>>& getMeshRenderers() { return _meshRenderers; };
+		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>>& getShadowRenderers() { return _shadowRenderers; };
+		std::unordered_map<std::string, std::vector<std::shared_ptr<TextRenderer>>>& getTextRenderers() { return _textRenderers; };
+
 		~Scene();
 	};
 }

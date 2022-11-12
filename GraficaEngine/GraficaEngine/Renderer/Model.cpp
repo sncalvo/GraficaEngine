@@ -12,6 +12,15 @@ namespace Engine
     Model::Model(Model* otherModel)
     {
         _meshes = otherModel->getMeshes();
+
+        for (auto renderer : otherModel->getMeshRenderers())
+        {
+            _meshRenderers.push_back(renderer->clone());
+        }
+        for (auto renderer : otherModel->getShadowRenderers())
+        {
+            _shadowRenderers.push_back(renderer->clone());
+        }
     }
 
     void Model::_loadModel(std::string path)
@@ -43,7 +52,7 @@ namespace Engine
         }
     }
 
-    Mesh Model::_processMesh(aiMesh* mesh, const aiScene* scene)
+    std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene)
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
@@ -90,8 +99,15 @@ namespace Engine
         textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
         Material material = _loadMaterial(meshMaterial);
         // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+        auto newMesh = std::make_shared<Mesh>(vertices, indices);
+
+        auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, material, textures);
+        auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh);
+
+        _meshRenderers.push_back(meshRenderer);
+        _shadowRenderers.push_back(shadowRenderer);
     
-        return Mesh(vertices, indices, textures, material);
+        return newMesh;
     }
 
     std::vector<Texture> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
@@ -126,16 +142,7 @@ namespace Engine
         return Material{ ambient, diffuse, specular, shininess };
     }
 
-
-    void Model::draw(Shader& shader) const
-    {
-        for (unsigned int i = 0; i < _meshes.size(); i++)
-        {
-            _meshes[i].draw(shader);
-        }
-    }
-
-    std::vector<Mesh> Model::getMeshes() const
+    std::vector<std::shared_ptr<Mesh>> Model::getMeshes() const
     {
         return _meshes;
     }

@@ -90,7 +90,8 @@ namespace Engine
         camera->apply(shader);
 
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        _mesh.draw(shader);
+        // TODO: Collider will die in favor of bullet collisions. Won't fix
+        // _mesh.draw(shader);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
 
@@ -154,6 +155,6 @@ namespace Engine
             glm::vec3{0.4f, 1.f, 0.4f},
             1.f};
 
-        return Mesh(vertices, indices, {}, material);
+        return Mesh(vertices, indices);
     }
 }

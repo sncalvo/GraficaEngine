@@ -4,6 +4,10 @@ namespace Engine
 {
 	GameObject::GameObject(Model *model, MaterialObject material) : _model(model), _material(material), _collider(nullptr)
 	{
+		for (auto renderer : model->getMeshRenderers())
+		{
+			renderer->setTransform(&transform);
+		}
 	}
 
 	void GameObject::setCollider(Collider *collider)
@@ -23,6 +27,10 @@ namespace Engine
 		Model *modelCopy = new Model(otherGameObject->getModel());
 		_model = modelCopy;
 		_material = MaterialObject();
+		for (auto renderer : _model->getMeshRenderers())
+		{
+			renderer->setTransform(&transform);
+		}
 		Collider* otherCollider = otherGameObject->getCollider();
 		if (otherCollider != nullptr)
 		{
@@ -37,13 +45,12 @@ namespace Engine
 
 	void GameObject::draw(Shader *shader) const
 	{
-		if (_model == nullptr)
+		/*if (_model == nullptr)
 		{
 			return;
 		}
 		shader->use();
 		_material.applyTextureOffset(shader);
-		transform.apply(*shader);
 		std::vector<Light *> lights = _scene->getLights();
 
 		for (Light *light : lights)
@@ -52,11 +59,14 @@ namespace Engine
 		}
 
 		Camera *camera = _scene->getActiveCamera();
-		camera->apply(*shader);
 
-		_model->draw(*shader);
+		std::vector<MeshRenderer*> meshRenderers = _model->getMeshRenderers();
+		for (size_t i = 0; i < meshRenderers.size(); ++i)
+		{
+			meshRenderers[i]->draw(camera->transform.position);
+		}
 
-		BaseGameObject::draw(shader);
+		BaseGameObject::draw(shader);*/
 	}
 
 	GameObject::~GameObject()
@@ -81,5 +91,10 @@ namespace Engine
 	MaterialObject &GameObject::getMaterial()
 	{
 		return _material;
+	}
+
+	std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> GameObject::getRenderers()
+	{
+		return { _model->getMeshRenderers(), _model->getShadowRenderers(), {} };
 	}
 }

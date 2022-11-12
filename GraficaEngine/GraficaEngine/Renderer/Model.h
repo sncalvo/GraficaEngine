@@ -10,17 +10,21 @@
 #include "Mesh.h"
 #include "../Utils/DebugLog.h"
 #include "Texture.h"
+#include "MeshRenderer.h"
+#include "ShadowRenderer.h"
 
 namespace Engine
 {
     class Model
     {
     private:
-        std::vector<Mesh> _meshes;
+        std::vector<std::shared_ptr<Mesh>> _meshes;
+        std::vector<std::shared_ptr<MeshRenderer>> _meshRenderers;
+        std::vector<std::shared_ptr<ShadowRenderer>> _shadowRenderers;
 
         void _loadModel(std::string path);
         void _processNode(aiNode* node, const aiScene* scene);
-        Mesh _processMesh(aiMesh* mesh, const aiScene* scene);
+        std::shared_ptr<Mesh> _processMesh(aiMesh* mesh, const aiScene* scene);
         std::vector<Texture> _loadMaterialTextures(
             aiMaterial* mat,
             aiTextureType type,
@@ -30,7 +34,13 @@ namespace Engine
     public:
         Model(char* path);
         Model(Model*);
-        void draw(Shader& shader) const;
-        std::vector<Mesh> getMeshes() const;
+        std::vector<std::shared_ptr<Mesh>> getMeshes() const;
+        // TODO: Probably we don't want model to be the source of the renderers. We should have a Manager of resources that creates this
+        std::vector<std::shared_ptr<MeshRenderer>> getMeshRenderers() const {
+            return _meshRenderers;
+        }
+        std::vector<std::shared_ptr<ShadowRenderer>> getShadowRenderers() const {
+            return _shadowRenderers;
+        }
     };
 }

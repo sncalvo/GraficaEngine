@@ -29,15 +29,13 @@ namespace Engine
 	private:
 		std::vector<Vertex> _vertices;
 		std::vector<unsigned int> _indices;
-		std::vector<Texture> _textures;
-		Material _material;
 
 		unsigned int VAO, VBO, EBO;
 
 		void setupMesh();
 
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, std::vector<Texture> texture, Material material);
-		void draw(Shader &shader) const;
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices);
+		void draw() const;
 	};
 }

@@ -112,14 +112,6 @@ namespace Engine
 		{
 			gameObject->draw(shader);
 		}
-
-		if (Settings::getInstance().getShowColliders())
-		{
-			for (Collider *collider : _colliders)
-			{
-				collider->draw(shader);
-			}
-		}
 	}
 
 	void Scene::start()
@@ -138,8 +130,6 @@ namespace Engine
 		{
 			gameObject->update();
 		}
-
-		flushQueuedGameObjects();
 	}
 
 	void Scene::addCollider(Collider *collider)
@@ -162,6 +152,21 @@ namespace Engine
 			_colliders.end());
 	}
 
+	void Scene::addRenderers(BaseGameObject* gameObject)
+	{
+		auto [meshRenderers, shadowRenderers, textRenderers] = gameObject->getRenderers();
+		_meshRenderers[gameObject->uuid] = meshRenderers;
+		_shadowRenderers[gameObject->uuid] = shadowRenderers;
+		_textRenderers[gameObject->uuid] = textRenderers;
+	}
+
+	void Scene::removeRenderers(BaseGameObject* gameObject)
+	{
+		_meshRenderers.erase(gameObject->uuid);
+		_shadowRenderers.erase(gameObject->uuid);
+		_textRenderers.erase(gameObject->uuid);
+	}
+
 	void Scene::flushQueuedGameObjects()
 	{
 		_gameObjects.insert(
@@ -172,12 +177,15 @@ namespace Engine
 		for (BaseGameObject* gameObject : _queuedGameObjects)
 		{
 			gameObject->start();
+			addRenderers(gameObject);
 		}
 
 		_queuedGameObjects.clear();
 
 		for (BaseGameObject *gameObjectToDelete : _gameObjectsToDelete)
 		{
+			removeRenderers(gameObjectToDelete);
+
 			if (gameObjectToDelete->hasParent())
 			{
 				gameObjectToDelete->getParent()->deleteChild(gameObjectToDelete);

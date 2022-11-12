@@ -27,5 +27,6 @@ namespace Engine
 		void draw(Shader *shader) const;
 		Model *getModel() const;
 		MaterialObject &getMaterial();
+		std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers() override;
 	};
 }

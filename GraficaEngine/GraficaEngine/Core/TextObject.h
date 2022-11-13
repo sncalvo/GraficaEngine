@@ -30,10 +30,11 @@ namespace Engine
         TextObject(std::string text = "");
         TextObject(const TextObject *);
         void setText(std::string text);
-        void draw() const;
+        void draw(Shader *shader) const;
         bool isDrawable() const;
 		void setFont(std::string font);
         void setColor(glm::vec3 color);
         TextObject *clone() const override;
+        std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers() { return { {}, {}, {} }; };
 	};
 }

@@ -13,7 +13,6 @@ namespace Engine
 		glm::vec3 _up;
 		glm::vec3 _forward;
 		glm::vec3 _right;
-		glm::mat4 _getTransformedModel() const;
 		void _updateVectors();
 		glm::vec3 _quaternionToEuler(glm::quat q);
 		glm::vec3 _rotation;
@@ -34,6 +33,7 @@ namespace Engine
 		glm::vec3 getRight() const;
 		glm::vec3 getUp() const;
 		glm::vec3 getForward() const;
+		glm::mat4 getTransformedModel() const;
 		void apply(Shader &, std::string uniform = "model") const;
 	};
 }

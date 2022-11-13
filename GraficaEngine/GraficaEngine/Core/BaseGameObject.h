@@ -6,6 +6,12 @@
 #include "Behaviour.h"
 #include "Transform.h"
 
+#include "../Renderer/MeshRenderer.h"
+#include "../Renderer/ShadowRenderer.h"
+#include "../Renderer/TextRenderer.h"
+
+#include "../Utils/UUID.h"
+
 namespace Engine
 {
 	class Scene;
@@ -22,6 +28,8 @@ namespace Engine
 		BaseGameObject *_parent;
 		std::vector<BaseGameObject *> _children; // TODO: Create local transform
 	public:
+		std::string uuid = getUUID();
+
 		BaseGameObject();
 		BaseGameObject(const BaseGameObject *);
 		virtual BaseGameObject *clone() const;
@@ -39,7 +47,8 @@ namespace Engine
 		void setScene(Scene *);
 		Scene *getScene() const;
 		virtual Collider *getCollider() const;
-		virtual void draw() const;
+		virtual void draw(Shader *) const;
+		virtual std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers();
 		void addTag(std::string tag);
 		bool hasTag(std::string tag) const;
 		BaseGameObject *getChildWithTag(std::string tag) const;

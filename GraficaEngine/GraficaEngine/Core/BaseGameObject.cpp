@@ -71,6 +71,11 @@ namespace Engine
 		child->setParent(this);
 		_children.push_back(child);
 		child->start();
+
+		if (_scene)
+		{
+			_scene->addRenderers(child);
+		}
 	}
 
 	BaseGameObject *BaseGameObject::getParent() const
@@ -97,6 +102,11 @@ namespace Engine
 				child),
 			_children.end());
 
+		if (_scene)
+		{
+			_scene->removeRenderers(child);
+		}
+		
 		delete child;
 	}
 
@@ -141,11 +151,11 @@ namespace Engine
 		return _scene;
 	}
 
-	void BaseGameObject::draw() const
+	void BaseGameObject::draw(Shader *shader) const
 	{
 		for (BaseGameObject *child : _children)
 		{
-			child->draw();
+			child->draw(shader);
 		}
 	}
 
@@ -176,5 +186,23 @@ namespace Engine
 			}
 		}
 		return nullptr;
+	}
+
+	std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> BaseGameObject::getRenderers()
+	{
+		std::vector<std::shared_ptr<MeshRenderer>> meshRenderers{};
+		std::vector<std::shared_ptr<ShadowRenderer>> shadowRenderers{};
+		std::vector<std::shared_ptr<TextRenderer>> textRenderers{};
+
+		for (BaseGameObject* child : _children)
+		{
+			auto [childMeshRenderers, childShadowRenderers, childTextRenderers] = child->getRenderers();
+
+			meshRenderers.insert(meshRenderers.end(), childMeshRenderers.begin(), childMeshRenderers.end());
+			shadowRenderers.insert(shadowRenderers.end(), childShadowRenderers.begin(), childShadowRenderers.end());
+			textRenderers.insert(textRenderers.end(), childTextRenderers.begin(), childTextRenderers.end());
+		}
+
+		return { meshRenderers, shadowRenderers, textRenderers };
 	}
 }

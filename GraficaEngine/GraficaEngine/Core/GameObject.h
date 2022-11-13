@@ -24,8 +24,9 @@ namespace Engine
 		~GameObject();
 		void setCollider(Collider *collider);
 		Collider *getCollider() const;
-		void draw() const;
+		void draw(Shader *shader) const;
 		Model *getModel() const;
 		MaterialObject &getMaterial();
+		std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers() override;
 	};
 }

@@ -19,7 +19,8 @@ namespace Engine {
 		glm::vec2 getSize();
 		void setColor(glm::vec3 color);
 		glm::vec3 getColor();
-		void draw() const;
+		void draw(Shader *shader) const;
 		Canvas *clone() const override;
+		std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers() { return { {}, {}, {} }; };
 	};
 }

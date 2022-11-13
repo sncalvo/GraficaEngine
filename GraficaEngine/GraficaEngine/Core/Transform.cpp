@@ -103,7 +103,7 @@ namespace Engine
 		_up = glm::normalize(glm::cross(_right, _forward));
 	}
 
-	glm::mat4 Transform::_getTransformedModel() const
+	glm::mat4 Transform::getTransformedModel() const
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, position);
@@ -119,7 +119,7 @@ namespace Engine
 
 	void Transform::apply(Shader &shader, std::string uniform) const
 	{
-		glm::mat4 model = _getTransformedModel();
+		glm::mat4 model = getTransformedModel();
 		shader.setMatrix4f(uniform, glm::value_ptr(model));
 	}
 

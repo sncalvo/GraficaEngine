@@ -95,7 +95,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,6 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,6 +160,9 @@
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
+    <ClCompile Include="Renderer\MeshRenderer.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\RenderPipeline.cpp" />
     <ClCompile Include="Renderer\Skybox.cpp" />
     <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
@@ -188,6 +192,8 @@
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
     <ClCompile Include="Scripts\TimeController.cpp" />
     <ClCompile Include="Scripts\TreeSpawner.cpp" />
+    <ClCompile Include="Renderer\TextRenderer.cpp" />
+    <ClCompile Include="Renderer\ShadowRenderer.cpp" />
     <ClCompile Include="Utils\DebugLog.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\Input.cpp" />
@@ -203,6 +209,7 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Platform\Window.cpp" />
     <ClCompile Include="Utils\SmoothAcceleratedPosition.cpp" />
+    <ClCompile Include="Utils\UUID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -214,6 +221,9 @@
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
+    <ClInclude Include="Renderer\MeshRenderer.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\RenderPipeline.h" />
     <ClInclude Include="Renderer\Skybox.h" />
     <ClInclude Include="Scripts\GameKeysHomeController.h" />
     <ClInclude Include="Scripts\HintController.h" />
@@ -245,6 +255,8 @@
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Scripts\TimeController.h" />
     <ClInclude Include="Scripts\TreeSpawner.h" />
+    <ClInclude Include="Renderer\TextRenderer.h" />
+    <ClInclude Include="Renderer\ShadowRenderer.h" />
     <ClInclude Include="Utils\CircularBuffer.h" />
     <ClInclude Include="Utils\DebugLog.h" />
     <ClInclude Include="Core\GameObject.h" />
@@ -261,6 +273,7 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Platform\Window.h" />
     <ClInclude Include="Utils\SmoothAcceleratedPosition.h" />
+    <ClInclude Include="Utils\UUID.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\skybox.fs" />

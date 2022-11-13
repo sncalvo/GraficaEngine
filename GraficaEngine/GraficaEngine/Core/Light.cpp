@@ -11,7 +11,9 @@ namespace Engine
 		_diffuse(diffuse),
 		_specular(specular),
 		_direction(direction)
-	{}
+	{
+		setPosition(glm::vec4(10.f, 10.f, 10.f, 1.f));
+	}
 
 	Light::Light(
 		Transform transform,
@@ -46,6 +48,17 @@ namespace Engine
 		shader.setVec3f("light.specular", glm::value_ptr(_specular));
 		shader.setVec3f("light.direction", glm::value_ptr(_direction));
 	}
+
+	glm::mat4 Light::getLightSpaceMatrix() const
+	{
+		// TODO: Make near and far params
+		float nearPlane = 1.0f, farPlane = 40.f;
+		glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, nearPlane, farPlane);
+		glm::mat4 lightView = _transform.getLookAt(glm::vec3{ 0.f, 0.f, 0.f });
+
+		return lightProjection * lightView;
+	}
+
 
 	void Light::setIntensity(float intensity)
 	{

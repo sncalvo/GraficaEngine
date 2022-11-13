@@ -2,8 +2,6 @@
 
 #include <glm/glm.hpp>
 
-#include "../Renderer/Shader.h"
-
 namespace Engine
 {
 	const glm::vec3 UP = glm::vec3(0.f, 1.f, 0.f);
@@ -34,6 +32,6 @@ namespace Engine
 		glm::vec3 getUp() const;
 		glm::vec3 getForward() const;
 		glm::mat4 getTransformedModel() const;
-		void apply(Shader &, std::string uniform = "model") const;
+		glm::mat4 getLookAt(glm::vec3 direction) const;
 	};
 }

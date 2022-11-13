@@ -17,24 +17,32 @@ namespace Engine {
         _textures = textures;
     }
 
-    void MeshRenderer::draw(glm::vec3 viewPosition) {
+    void MeshRenderer::draw(unsigned int depthMap) {
         auto shader = getShader();
 
         glm::mat4 model = _transform->getTransformedModel();
         shader->setMatrix4f("model", glm::value_ptr(model));
-        shader->setVec3f("viewPos", glm::value_ptr(viewPosition));
 
-        _setMaterialValues();
+        _setMaterialValues(depthMap);
 
         _mesh->draw();
     }
 
-    void MeshRenderer::_setMaterialValues() {
+    void MeshRenderer::_setMaterialValues(unsigned int depthMap) {
+        unsigned int lastTexture = 0;
+
+        glActiveTexture(GL_TEXTURE0 + lastTexture);
+        glBindTexture(GL_TEXTURE_2D, depthMap);
+        _shader->setInt("shadowMap", lastTexture);
+
+        lastTexture += 1;
+
         unsigned int diffuseNr = 1;
         unsigned int specularNr = 1;
+        
         for (unsigned int i = 0; i < _textures.size(); i++)
         {
-            glActiveTexture(GL_TEXTURE0 + i);
+            glActiveTexture(GL_TEXTURE0 + lastTexture);
 
             std::string number;
             std::string name = _textures[i].getType();
@@ -44,10 +52,10 @@ namespace Engine {
                 number = std::to_string(specularNr++);
 
             _shader->setBool("has_texture", true);
-            _shader->setFloat((name + number).c_str(), i);
+            _shader->setInt((name + number).c_str(), lastTexture);
             glBindTexture(GL_TEXTURE_2D, _textures[i].ID);
+            lastTexture += 1;
         }
-        glActiveTexture(GL_TEXTURE0);
 
         Settings& settings = Settings::getInstance();
 

@@ -91,6 +91,11 @@ namespace Engine
 		_up = glm::normalize(glm::cross(_right, _forward));
 	}
 
+	glm::mat4 Transform::getLookAt(glm::vec3 direction) const
+	{
+		return glm::lookAt(position, direction, UP);
+	}
+
 	void Transform::_updateVectors()
 	{
 		glm::vec3 forward;
@@ -115,12 +120,6 @@ namespace Engine
 			glm::radians(_rotation.z));
 
 		return model;
-	}
-
-	void Transform::apply(Shader &shader, std::string uniform) const
-	{
-		glm::mat4 model = getTransformedModel();
-		shader.setMatrix4f(uniform, glm::value_ptr(model));
 	}
 
 	glm::vec3 Transform::_quaternionToEuler(glm::quat q)

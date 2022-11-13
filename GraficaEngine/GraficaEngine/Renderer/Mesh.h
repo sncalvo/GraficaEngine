@@ -5,7 +5,6 @@
 #include <glm/vec2.hpp>
 
 #include "Texture.h"
-#include "Shader.h"
 
 namespace Engine
 {

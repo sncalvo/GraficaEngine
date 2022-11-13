@@ -43,6 +43,7 @@ namespace Engine
 		void setAmbient(glm::vec4 color);
 		void setDiffuse(glm::vec4 color);
 		void setSpecular(glm::vec4 color);
+		glm::mat4 getLightSpaceMatrix() const;
 
 		static std::map<DayTime, Light *> lightPresets;
 	};

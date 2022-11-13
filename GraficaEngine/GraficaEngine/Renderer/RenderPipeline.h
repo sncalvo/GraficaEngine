@@ -11,6 +11,8 @@ namespace Engine {
         Shader* _defaultShader;
         Shader* _shadowShader;
 
+        void _drawShadows(Scene* scene);
+        void _drawMeshes(Scene* scene);
     public:
         RenderPipeline();
         void setup();

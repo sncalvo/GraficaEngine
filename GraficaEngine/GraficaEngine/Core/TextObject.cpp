@@ -35,8 +35,10 @@ namespace Engine {
         // Acumulate position in X axis so we display each char next to the previous one
         float positionX = transform.position.x;
 
-        _parent->transform.apply(*shader, "parentModel");
-        transform.apply(*shader);
+        auto parentModel = _parent->transform.getTransformedModel();
+        shader->setMatrix4f("parentModel", glm::value_ptr(parentModel));
+        auto model = transform.getTransformedModel();
+        shader->setMatrix4f("model", glm::value_ptr(model));
 
         std::string::const_iterator c;
         for (char const& c : _text)

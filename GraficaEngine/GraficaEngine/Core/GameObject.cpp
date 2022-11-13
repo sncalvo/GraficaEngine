@@ -8,6 +8,10 @@ namespace Engine
 		{
 			renderer->setTransform(&transform);
 		}
+		for (auto renderer : model->getShadowRenderers())
+		{
+			renderer->setTransform(&transform);
+		}
 	}
 
 	void GameObject::setCollider(Collider *collider)
@@ -28,6 +32,10 @@ namespace Engine
 		_model = modelCopy;
 		_material = MaterialObject();
 		for (auto renderer : _model->getMeshRenderers())
+		{
+			renderer->setTransform(&transform);
+		}
+		for (auto renderer : _model->getShadowRenderers())
 		{
 			renderer->setTransform(&transform);
 		}

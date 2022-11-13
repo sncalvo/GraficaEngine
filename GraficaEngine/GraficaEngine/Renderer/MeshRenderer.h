@@ -13,7 +13,7 @@ namespace Engine {
     {
     public:
         MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture> textures);
-        void draw(glm::vec3 viewPosition);
+        void draw(unsigned int depthMap);
         void setTransform(Transform* transform) { _transform = transform; }
         static std::shared_ptr<Shader> getShader()
         {
@@ -38,6 +38,6 @@ namespace Engine {
         std::vector<Texture> _textures;
         Transform* _transform;
 
-        void _setMaterialValues();
+        void _setMaterialValues(unsigned int depthMap);
     };
 }

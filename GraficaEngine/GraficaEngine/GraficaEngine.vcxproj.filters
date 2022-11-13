@@ -126,9 +126,11 @@
     <ClInclude Include="Utils\UUID.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.fs" />
-    <None Include="default.vs" />
     <None Include="Assets\Shaders\skybox.vs" />
     <None Include="Assets\Shaders\skybox.fs" />
+    <None Include="Assets\Shaders\depthTest.fs" />
+    <None Include="Assets\Shaders\depthTest.vs" />
+    <None Include="Assets\Shaders\test.fs" />
+    <None Include="Assets\Shaders\test.vs" />
   </ItemGroup>
 </Project>

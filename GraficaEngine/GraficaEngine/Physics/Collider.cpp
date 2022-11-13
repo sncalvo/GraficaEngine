@@ -77,7 +77,9 @@ namespace Engine
     {
         Shader& shader = *shaderPtr;
         shader.use();
-        _gameObject->transform.apply(shader);
+
+        auto goModel = _gameObject->transform.getTransformedModel();
+        shader.setMatrix4f("model", glm::value_ptr(goModel));
 
         std::vector<Light *> lights = _gameObject->getScene()->getLights();
 

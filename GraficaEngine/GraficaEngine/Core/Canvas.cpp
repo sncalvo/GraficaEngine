@@ -15,11 +15,6 @@ namespace Engine {
 		_color = color;
 		_shader = new Shader("Assets/Shaders/canvas.vs", "Assets/Shaders/canvas.fs");
 
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600), -5.0f, 5.0f); //TODO Configure with viewport's size
-		_shader->use();
-		_shader->setMatrix4f("projection", glm::value_ptr(projection));
-
-
 		glm::vec2* vertices = new glm::vec2[4];
 		vertices[0].x = 0;
 		vertices[0].y = size.y;
@@ -89,8 +84,12 @@ namespace Engine {
 	{
 		_shader->use();
 
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600), -5.0f, 5.0f); //TODO Configure with viewport's size
+		_shader->setMatrix4f("projection", glm::value_ptr(projection));
+
 		glBindVertexArray(_VAO);
-		transform.apply(*_shader);
+		auto model = transform.getTransformedModel();
+		_shader->setMatrix4f("model", glm::value_ptr(model));
 		_shader->setVec3f("color", glm::value_ptr(_color));
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

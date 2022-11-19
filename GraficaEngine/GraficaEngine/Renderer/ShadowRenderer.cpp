@@ -27,7 +27,7 @@ namespace Engine {
         {
             // Lazy load shader since we need opengl to be initialized first. Note, this is NOT thread safe.
             // TODO: Change all shaders to be managed by a shader manager and initialized after opengl has started.
-            _shader = std::make_shared<Shader>("Assets/Shaders/depthTest.vs", "Assets/Shaders/depthTest.fs");
+            _shader = std::make_shared<Shader>("Assets/Shaders/depthTest.vs", "Assets/Shaders/depthTest.gs", "Assets/Shaders/depthTest.fs");
         }
 
         return _shader;

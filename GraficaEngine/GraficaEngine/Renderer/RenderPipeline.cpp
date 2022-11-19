@@ -9,8 +9,13 @@ void renderQuad();
 
 #include "./Shader.h"
 
+#include "../Core/Settings.h"
+
 Engine::Shader* testShader = nullptr;
 unsigned int depthMap = 0;
+unsigned int depthMapFBO;
+unsigned int matricesUBO;
+const unsigned int SHADOW_RESOLUTION = 2048;
 
 namespace Engine {
 	RenderPipeline::RenderPipeline() : _defaultShader(nullptr), _shadowShader(nullptr)
@@ -18,8 +23,61 @@ namespace Engine {
 	}
 
 	void RenderPipeline::setup() {
-		_defaultShader = new Shader();
+		glEnable(GL_DEPTH_TEST);
+		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+		glEnable(GL_CULL_FACE);
 		testShader = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/test.fs");
+
+		glGenFramebuffers(1, &depthMapFBO);
+		// TODO: Change to shadow mapping resolution
+		glGenTextures(1, &depthMap);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, depthMap);
+		glTexImage3D(
+			GL_TEXTURE_2D_ARRAY,
+			0,
+			GL_DEPTH_COMPONENT32F,
+			SHADOW_RESOLUTION,
+			SHADOW_RESOLUTION,
+			// TODO: Probably not 3
+			int(3) + 1,
+			0,
+			GL_DEPTH_COMPONENT,
+			GL_FLOAT,
+			nullptr);
+		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+		float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glTexParameterfv(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthMap, 0);
+		glDrawBuffer(GL_NONE);
+		glReadBuffer(GL_NONE);
+
+		int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		if (status != GL_FRAMEBUFFER_COMPLETE)
+		{
+			std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!";
+			throw 0;
+		}
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		auto shadowShader = ShadowRenderer::getShader();
+		unsigned int uniformBlockIndexLightSpaceMatrixShadow = glGetUniformBlockIndex(shadowShader->ID, "LightSpaceMatrices");
+		glUniformBlockBinding(shadowShader->ID, uniformBlockIndexLightSpaceMatrixShadow, 0);
+
+		auto meshShader = MeshRenderer::getShader();
+		unsigned int uniformBlockIndexLightSpaceMatrixMesh = glGetUniformBlockIndex(meshShader->ID, "LightSpaceMatrices");
+		glUniformBlockBinding(meshShader->ID, uniformBlockIndexLightSpaceMatrixMesh, 0);
+
+		glGenBuffers(1, &matricesUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+		glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4) * 16, nullptr, GL_STATIC_DRAW);
+		glBindBufferBase(GL_UNIFORM_BUFFER, 0, matricesUBO);
+		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 
     void RenderPipeline::draw(Scene* scene) {
@@ -48,40 +106,51 @@ namespace Engine {
 
 		// Important: auto does not infer references. So auto cannot be used here.
 		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>>& shadowRenderers = scene->getShadowRenderers();
+		
+		glViewport(0, 0, SHADOW_RESOLUTION, SHADOW_RESOLUTION);
 
-		unsigned int depthMapFBO;
-		glGenFramebuffers(1, &depthMapFBO);
-		// TODO: Change to shadow mapping resolution
-		const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
-		glGenTextures(1, &depthMap);
-		glBindTexture(GL_TEXTURE_2D, depthMap);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-			SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-		float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
-		glDrawBuffer(GL_NONE);
-		glReadBuffer(GL_NONE);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		std::vector<Light*> lights = scene->getLights();
-		auto frustumCorners = scene->getActiveCamera()->getFrustumCornersWorldSpace();
+		Settings& settings = Settings::getInstance();
+
+		std::vector<std::vector<glm::vec4>> corners{};
+
+		std::vector<float> shadowCascadeLevels = settings.getShadowCascadeLevels();
+		float cameraNearPlane, cameraFarPlane;
+		std::tie(cameraNearPlane, cameraFarPlane) = settings.getCameraNearAndFarPlane();
+
+		for (size_t i = 0; i < shadowCascadeLevels.size() + 1; ++i)
+		{
+			std::vector<glm::vec4> frustumCorners;
+			if (i == 0)
+			{
+				frustumCorners = scene->getActiveCamera()->getFrustumCornersWorldSpace(cameraNearPlane, shadowCascadeLevels[i]);
+			}
+			else if (i < shadowCascadeLevels.size())
+			{
+				frustumCorners = scene->getActiveCamera()->getFrustumCornersWorldSpace(shadowCascadeLevels[i - 1], shadowCascadeLevels[i]);
+			}
+			else
+			{
+				frustumCorners = scene->getActiveCamera()->getFrustumCornersWorldSpace(shadowCascadeLevels[i - 1], cameraFarPlane);
+			}
+
+			corners.push_back(frustumCorners);
+		}
 
 		// TODO: We are assumming only one light for now. We should create a map for each light
 		for (Light* light : lights)
 		{
-			auto lightSpaceMatrix = light->getLightSpaceMatrix();
-			shader->setMatrix4f("lightSpaceMatrix", glm::value_ptr(lightSpaceMatrix));
+			auto lightSpaceMatrices = light->getLightSpaceMatrices(corners);
+			glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
+			for (size_t i = 0; i < lightSpaceMatrices.size(); ++i)
+			{
+				glBufferSubData(GL_UNIFORM_BUFFER, i * sizeof(glm::mat4x4), sizeof(glm::mat4x4), &lightSpaceMatrices[i]);
+			}
+			glBindBuffer(GL_UNIFORM_BUFFER, 0);
+			//shader->setMatrix4f("lightSpaceMatrix", glm::value_ptr(lightSpaceMatrices));
 
 			for (auto& [key, value] : shadowRenderers)
 			{
@@ -109,6 +178,8 @@ namespace Engine {
 		meshShader->use();
 		meshShader->setMat4("projection", projection);
 		meshShader->setMat4("view", view);
+		auto cameraRange = Settings::getInstance().getCameraNearAndFarPlane();
+		meshShader->setFloat("farPlane", cameraRange.second);
 
 		std::vector<Light*> lights = scene->getLights();
 

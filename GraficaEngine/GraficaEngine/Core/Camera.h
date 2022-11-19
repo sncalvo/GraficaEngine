@@ -34,7 +34,8 @@ namespace Engine
         Camera *clone() const;
         glm::mat4 getViewMatrix() const;
         virtual glm::mat4 getProjectionMatrix() const;
-        std::vector<glm::vec4> getFrustumCornersWorldSpace() const;
+        virtual glm::mat4 getProjectionMatrixFor(const float near, const float far) const;
+        std::vector<glm::vec4> getFrustumCornersWorldSpace(const float near, const float far) const;
         void apply(Shader &shader) const;
         void processKeyboard(Camera_Movement direction, float deltaTime);
         void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);

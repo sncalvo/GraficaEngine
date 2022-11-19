@@ -45,7 +45,7 @@ namespace Engine
             transform.getUp());
     }
 
-    std::vector<glm::vec4> Camera::getFrustumCornersWorldSpace() const
+    std::vector<glm::vec4> Camera::getFrustumCornersWorldSpace(const float near, const float far) const
     {
         auto view = getViewMatrix();
         auto projection = getProjectionMatrix();
@@ -123,6 +123,11 @@ namespace Engine
     }
 
     glm::mat4 Camera::getProjectionMatrix() const
+    {
+        return getProjectionMatrixFor(0.f, 0.f);
+    }
+
+    glm::mat4 Camera::getProjectionMatrixFor(const float near, const float far) const
     {
         return glm::mat4(0.f);
     }

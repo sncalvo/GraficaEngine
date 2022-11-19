@@ -20,6 +20,8 @@ namespace Engine
 	private:
 		DayTime _dayTime;
 		bool _isWireframe, _showTextures, _useInterpolation, _showColliders;
+		// Only applicable for perspective camera
+		float _cameraNear, _cameraFar;
 		GameSpeed _gameSpeed;
 		Settings();
 
@@ -42,5 +44,7 @@ namespace Engine
 		void setShowColliders(bool);
 		DayTime getDayTime() const;
 		void setDayTime(DayTime);
+		std::pair<float, float> getCameraNearAndFarPlane() const;
+		std::vector<float> getShadowCascadeLevels() const;
 	};
 }

@@ -7,7 +7,8 @@ namespace Engine
 						   _useInterpolation(false),
 						   _showColliders(false),
 						   _gameSpeed(GameSpeed::NORMAL),
-						   _dayTime(DayTime::MIDDAY)
+						   _dayTime(DayTime::MIDDAY),
+						   _cameraNear(0.1f), _cameraFar(50.f)
 	{
 	}
 
@@ -85,5 +86,17 @@ namespace Engine
 	void Settings::setDayTime(DayTime dayTime)
 	{
 		_dayTime = dayTime;
+	}
+
+	std::pair<float, float> Settings::getCameraNearAndFarPlane() const
+	{
+		return { _cameraNear, _cameraFar };
+	}
+
+	std::vector<float> Settings::getShadowCascadeLevels() const
+	{
+		std::vector<float> shadowCascadeLevels{ _cameraFar / 50.0f, _cameraFar / 25.0f, _cameraFar / 10.0f, _cameraFar / 2.0f };
+
+		return shadowCascadeLevels;
 	}
 }

@@ -16,5 +16,6 @@ namespace Engine
 		OrthographicCamera(const OrthographicCamera *);
 		OrthographicCamera *clone() const;
 		virtual glm::mat4 getProjectionMatrix() const;
+		virtual glm::mat4 getProjectionMatrixFor(const float near, const float far) const;
 	};
 }

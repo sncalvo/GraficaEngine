@@ -32,7 +32,7 @@ namespace Engine {
         unsigned int lastTexture = 0;
 
         glActiveTexture(GL_TEXTURE0 + lastTexture);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, depthMap);
         _shader->setInt("shadowMap", lastTexture);
 
         lastTexture += 1;

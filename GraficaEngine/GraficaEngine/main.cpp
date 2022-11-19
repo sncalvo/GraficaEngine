@@ -81,12 +81,6 @@ int main(int argc, char *argv[])
 
 Engine::Scene* loadMainScene()
 {
-	Engine::OrthographicCamera *isometricCamera = new Engine::OrthographicCamera(
-		glm::vec3(0.f, 8.f, 0.f),
-		glm::vec3(0.f, 1.f, 0.f),
-		-35.264f - 90.f,
-		-45.f);
-	isometricCamera->addBehaviour(new OffsetPlayer(glm::vec3(3.f, 4.f, 4.f)));
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
 		glm::vec3(0.f, 1.f, 0.f),
@@ -112,7 +106,7 @@ Engine::Scene* loadMainScene()
 		-45.f);
 	flyingCamera->addBehaviour(new FlyingCameraController());
 
-	Engine::Scene* scene = new Engine::Scene(isometricCamera);
+	Engine::Scene* scene = new Engine::Scene(thirdPersonCamera);
 
 	scene->addCamera("flying", flyingCamera);
 	scene->addCamera("centeredFixed", centeredFixedCamera);

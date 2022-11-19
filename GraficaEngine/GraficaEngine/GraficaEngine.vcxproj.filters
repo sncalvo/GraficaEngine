@@ -132,5 +132,6 @@
     <None Include="Assets\Shaders\depthTest.vs" />
     <None Include="Assets\Shaders\test.fs" />
     <None Include="Assets\Shaders\test.vs" />
+    <None Include="Assets\Shaders\depthTest.gs" />
   </ItemGroup>
 </Project>

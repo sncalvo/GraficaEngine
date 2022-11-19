@@ -114,9 +114,7 @@ namespace Engine
 		Input &input = Input::getInstance();
 		SceneManager &sceneManager = SceneManager::getInstance();
 
-		glEnable(GL_DEPTH_TEST);
-		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-		glEnable(GL_CULL_FACE);
+		_renderer.setup();
 
 		Scene *activeScene = sceneManager.getActiveScene();
 		activeScene->start();
@@ -182,6 +180,5 @@ namespace Engine
 	{
 		_window = window;
 		// After creating the window we can setup the renderer since gl has loaded
-		_renderer.setup();
 	}
 }

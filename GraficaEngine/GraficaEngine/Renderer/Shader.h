@@ -13,6 +13,7 @@ namespace Engine
 		Shader();
 		// constructor reads and builds the shader
 		Shader(const char* vertexPath, const char* fragmentPath);
+		Shader(const char* vertexPath, const char* geometryPath, const char* fragmentPath);
 		// use/activate the shader
 		void use();
 		// utility uniform functions

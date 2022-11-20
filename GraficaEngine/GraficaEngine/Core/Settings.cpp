@@ -4,6 +4,9 @@ constexpr float CAMERA_NEAR_DEFAULT = 0.1f;
 constexpr float CAMERA_FAR_DEFAULT = 50.f;
 constexpr float EXPOSURE_DEFAULT = 2.f;
 constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 2048;
+constexpr unsigned int DEFAULT_WIDTH = 1900;
+constexpr unsigned int DEFAULT_HEIGHT = 1020;
+constexpr bool DEFAULT_FULLSCREEN = false;
 
 namespace Engine
 {
@@ -14,7 +17,8 @@ namespace Engine
 						   _gameSpeed(GameSpeed::NORMAL),
 						   _dayTime(DayTime::MIDDAY),
 						   _cameraNear(CAMERA_NEAR_DEFAULT), _cameraFar(CAMERA_FAR_DEFAULT),
-						   _exposure(EXPOSURE_DEFAULT), _shadowResolution(SHADOW_RESOLUTION_DEFAULT)
+						   _exposure(EXPOSURE_DEFAULT), _shadowResolution(SHADOW_RESOLUTION_DEFAULT),
+						   _windowWidth(DEFAULT_WIDTH), _windowHeight(DEFAULT_HEIGHT), _fullscreen(DEFAULT_FULLSCREEN)
 	{
 	}
 
@@ -124,5 +128,26 @@ namespace Engine
 	void Settings::setShadowResolution(unsigned int resolution)
 	{
 		_shadowResolution = resolution;
+	}
+
+	std::pair<unsigned int, unsigned int> Settings::getWindowSize() const
+	{
+		return { _windowWidth, _windowHeight };
+	}
+
+	void Settings::setWindowSize(unsigned int width, unsigned int height)
+	{
+		_windowWidth = width;
+		_windowHeight = height;
+	}
+
+	bool Settings::getFullscreen() const
+	{
+		return _fullscreen;
+	}
+
+	void Settings::setFullscreen(bool fullscreen)
+	{
+		_fullscreen = fullscreen;
 	}
 }

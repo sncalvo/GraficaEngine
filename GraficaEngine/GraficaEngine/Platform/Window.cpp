@@ -3,6 +3,8 @@
 #include "Window.h"
 #include "../Utils/DebugLog.h"
 
+#include "../Core/Settings.h"
+
 void GLAPIENTRY MessageCallback(GLenum source,
 	GLenum type,
 	GLuint id,
@@ -39,6 +41,14 @@ namespace Engine
 		// During init, enable debug output
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(MessageCallback, 0);
+
+		bool fullscreen = Settings::getInstance().getFullscreen();
+
+		if (fullscreen)
+		{
+			SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
+			SDL_RestoreWindow(_window);
+		}
 	}
 
 	void Window::swap()

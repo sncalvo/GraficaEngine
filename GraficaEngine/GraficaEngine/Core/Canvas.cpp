@@ -7,6 +7,8 @@
 
 #include <gl/glew.h>
 
+#include "Settings.h"
+
 namespace Engine {
 
 	Canvas::Canvas(glm::vec2 size, glm::vec3 color)
@@ -84,7 +86,10 @@ namespace Engine {
 	{
 		_shader->use();
 
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600), -5.0f, 5.0f); //TODO Configure with viewport's size
+		unsigned int width, height;
+		std::tie(width, height) = Settings::getInstance().getWindowSize();
+
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -5.0f, 5.0f); //TODO Configure with viewport's size
 		_shader->setMatrix4f("projection", glm::value_ptr(projection));
 
 		glBindVertexArray(_VAO);

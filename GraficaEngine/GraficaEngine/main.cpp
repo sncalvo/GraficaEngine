@@ -49,8 +49,7 @@
 #include "Scripts/MoveDownOnStart.h"
 #include "Scripts/GameKeysHomeController.h"
 
-constexpr int WINDOW_WIDTH = 800;
-constexpr int WINDOW_HEIGTH = 600;
+#include "Core/Settings.h"
 
 Engine::Scene *loadMainScene();
 void loadHUD(Engine::Scene *);
@@ -62,9 +61,12 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+	unsigned int width, height;
+	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
+
 	Engine::GameLoop gameLoop = Engine::GameLoop::getInstance();
 
-	Engine::Window *window = new Engine::Window(WINDOW_WIDTH, WINDOW_HEIGTH, "Grafica Engine");
+	Engine::Window *window = new Engine::Window(width, height, "Grafica Engine");
 	gameLoop.addWindow(window);
 
 	Engine::Scene *scene = loadMainScene();
@@ -221,9 +223,12 @@ Engine::Scene* loadMainScene()
 
 	road->addBehaviour(new StaticSpawner(coin));
 
+	unsigned int width, height;
+	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
+
 	Engine::Canvas* hint = new Engine::Canvas(glm::vec2(300, 80));
 	hint->setColor(Engine::GRAY);
-	hint->transform.position = glm::vec3(800.f, 0.f, 1.f);
+	hint->transform.position = glm::vec3((float)width, 0.f, 1.f);
 
 	Engine::TextObject* hintText = new Engine::TextObject("Change camera with V");
 	hintText->setFont("eight-bit-dragon_small.otf");
@@ -273,6 +278,9 @@ Engine::Scene* loadMainScene()
 
 void loadHUD(Engine::Scene* scene)
 {
+	unsigned int width, height;
+	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
+
 	Engine::TextObject* settingsTitle = new Engine::TextObject("Configurations");
 	settingsTitle->transform.position = glm::vec3(100.0f, 25.0f, 1.0f);
 	settingsTitle->setFont("8bit-wonder.TTF");
@@ -334,7 +342,7 @@ void loadHUD(Engine::Scene* scene)
 	lightsValue->addTag("light_value");
 
 	Engine::Canvas *hudDivider = new Engine::Canvas(glm::vec2(2.0f, 70.0f));
-	hudDivider->transform.position = glm::vec3(560.0f, 600.f, 4.0f);
+	hudDivider->transform.position = glm::vec3(560.0f, (float)height, 4.0f);
 	hudDivider->setColor(Engine::BLACK);
 	hudDivider->addBehaviour(new MoveDownOnStart(67.f));
 
@@ -366,8 +374,8 @@ void loadHUD(Engine::Scene* scene)
 	timeValue->addTag("time_value");
 	timeValue->addBehaviour(new TimeController());
 
-	Engine::Canvas *hud = new Engine::Canvas(glm::vec2(800.0f, 70.0f));
-	hud->transform.position = glm::vec3(0.0f, 600.f, 3.0f);
+	Engine::Canvas *hud = new Engine::Canvas(glm::vec2((float)width, 70.0f));
+	hud->transform.position = glm::vec3(0.0f, (float)height, 3.0f);
 	hud->setColor(Engine::GRAY);
 	hud->addBehaviour(new HudController());
 	hud->addBehaviour(new MoveDownOnStart(67.f));

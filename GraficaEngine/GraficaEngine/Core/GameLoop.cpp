@@ -119,10 +119,26 @@ namespace Engine
 		Scene *activeScene = sceneManager.getActiveScene();
 		activeScene->start();
 
+		float frameCounterUpdateThreshold = 0.f;
+		unsigned int counter = 0;
+
 		while (true)
 		{
+			counter++;
+
 			Time::updateTime();
 			input.update();
+			frameCounterUpdateThreshold += Time::getDeltaTime();
+			
+			if (frameCounterUpdateThreshold > 1.f)
+			{
+				std::string FPS = std::to_string((1.f / frameCounterUpdateThreshold) * counter);
+				std::string ms = std::to_string((frameCounterUpdateThreshold / counter) * 100);
+				std::string title = "GraficaEngine - " + FPS + " FPS / " + ms + " ms";
+				_window->setTitle(title);
+				counter = 0;
+				frameCounterUpdateThreshold = 0.f;
+			}			
 			
 			if (input.getKeyDown(KEY_Q))
 				break;
@@ -179,6 +195,5 @@ namespace Engine
 	void GameLoop::addWindow(Window *window)
 	{
 		_window = window;
-		// After creating the window we can setup the renderer since gl has loaded
 	}
 }

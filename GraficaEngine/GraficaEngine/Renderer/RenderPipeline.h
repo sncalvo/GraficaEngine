@@ -10,9 +10,12 @@ namespace Engine {
     private:
         Shader* _defaultShader;
         Shader* _shadowShader;
+        Shader* _hdrShader;
 
         void _drawShadows(Scene* scene);
         void _drawMeshes(Scene* scene);
+
+        void _drawFrame();
     public:
         RenderPipeline();
         void setup();

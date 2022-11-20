@@ -11,6 +11,7 @@ namespace Engine {
         Shader* _defaultShader;
         Shader* _shadowShader;
         Shader* _hdrShader;
+        Shader* _shaderBlur;
 
         void _drawShadows(Scene* scene);
         void _drawMeshes(Scene* scene);

@@ -2,9 +2,6 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-constexpr int SCREEN_WIDTH = 800;
-constexpr int SCREEN_HEIGHT = 600;
-
 void renderQuad();
 
 #include "./Shader.h"
@@ -22,8 +19,11 @@ unsigned int colorBuffers[2];
 unsigned int quadVAOHDR = 0;
 unsigned int quadVBOHDR = 0;
 
+unsigned int pingpongFBO[2];
+unsigned int pingpongBuffers[2];
+
 namespace Engine {
-	RenderPipeline::RenderPipeline() : _defaultShader(nullptr), _shadowShader(nullptr)
+	RenderPipeline::RenderPipeline() : _defaultShader(nullptr), _shadowShader(nullptr), _shaderBlur(nullptr)
 	{
 	}
 
@@ -33,7 +33,11 @@ namespace Engine {
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_CULL_FACE);
 		testShader = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/test.fs");
-		_hdrShader = new Engine::Shader("Assets/Shaders/hdrDraw.vs", "Assets/Shaders/hdrDraw.fs");
+		_hdrShader = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/hdrDraw.fs");
+		_shaderBlur = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/blur.fs");
+
+		_shaderBlur->use();
+		_shaderBlur->setInt("image", 0);
 
 		glGenFramebuffers(1, &depthMapFBO);
 		// TODO: Change to shadow mapping resolution
@@ -89,10 +93,13 @@ namespace Engine {
 		glGenFramebuffers(1, &hdrFBO);
 
 		// create depth buffer (renderbuffer)
+		// TODO: We will need to destroy and regenerate this if we change window size
 		GLuint rboDepth;
+		unsigned int width, height;
+		std::tie(width, height) = Settings::getInstance().getWindowSize();
 		glGenRenderbuffers(1, &rboDepth);
 		glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCREEN_WIDTH, SCREEN_HEIGHT);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 
 		// attach buffers
 		glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
@@ -103,7 +110,7 @@ namespace Engine {
 		{
 			glBindTexture(GL_TEXTURE_2D, colorBuffers[i]);
 			glTexImage2D(
-				GL_TEXTURE_2D, 0, GL_RGBA16F, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL
+				GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL
 			);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -122,6 +129,25 @@ namespace Engine {
 			std::cout << "Framebuffer not complete!" << std::endl;
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		// Generate framebuffers for bloom effect
+		glGenFramebuffers(2, pingpongFBO);
+		glGenTextures(2, pingpongBuffers);
+		for (unsigned int i = 0; i < 2; i++)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[i]);
+			glBindTexture(GL_TEXTURE_2D, pingpongBuffers[i]);
+			glTexImage2D(
+				GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, NULL
+			);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glFramebufferTexture2D(
+				GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pingpongBuffers[i], 0
+			);
+		}
 	}
 
     void RenderPipeline::draw(Scene* scene) {
@@ -214,7 +240,10 @@ namespace Engine {
 
 	void RenderPipeline::_drawMeshes(Scene* scene)
 	{
-		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		unsigned int width, height;
+		std::tie(width, height) = Settings::getInstance().getWindowSize();
+
+		glViewport(0, 0, width, height);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -280,12 +309,36 @@ namespace Engine {
 			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		}
 
+		bool horizontal = true, first_iteration = true;
+		int amount = 10;
+		_shaderBlur->use();
+		for (unsigned int i = 0; i < amount; i++)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[horizontal]);
+			_shaderBlur->setInt("horizontal", horizontal);
+			glBindTexture(
+				GL_TEXTURE_2D, first_iteration ? colorBuffers[1] : pingpongBuffers[!horizontal]
+			);
+			glBindVertexArray(quadVAOHDR);
+			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			glBindVertexArray(0);
+			horizontal = !horizontal;
+			if (first_iteration)
+				first_iteration = false;
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		unsigned int exposure = Settings::getInstance().getExposure();
 		_hdrShader->use();
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, pingpongBuffers[!horizontal]);
+
 		_hdrShader->setFloat("exposure", exposure);
 		_hdrShader->setInt("colorBuffer", 0);
+		_hdrShader->setInt("bloomBlur", 1);
 
 		glBindVertexArray(quadVAOHDR);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

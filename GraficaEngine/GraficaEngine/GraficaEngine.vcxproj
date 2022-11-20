@@ -277,11 +277,11 @@
     <ClInclude Include="Utils\UUID.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shaders\blur.fs" />
     <None Include="Assets\Shaders\depthTest.fs" />
     <None Include="Assets\Shaders\depthTest.gs" />
     <None Include="Assets\Shaders\depthTest.vs" />
     <None Include="Assets\Shaders\hdrDraw.fs" />
-    <None Include="Assets\Shaders\hdrDraw.vs" />
     <None Include="Assets\Shaders\skybox.fs" />
     <None Include="Assets\Shaders\skybox.vs" />
     <None Include="Assets\Shaders\test.fs" />

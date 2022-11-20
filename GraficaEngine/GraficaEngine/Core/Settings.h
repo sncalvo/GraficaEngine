@@ -26,6 +26,9 @@ namespace Engine
 		Settings();
 		float _exposure;
 		unsigned int _shadowResolution;
+		unsigned int _windowWidth;
+		unsigned int _windowHeight;
+		bool _fullscreen;
 
 	public:
 		static Settings &getInstance()
@@ -50,7 +53,11 @@ namespace Engine
 		void setExposure(float);
 		unsigned int getShadowResolution() const;
 		void setShadowResolution(unsigned int);
+		std::pair<unsigned int, unsigned int> getWindowSize() const;
+		void setWindowSize(unsigned int width, unsigned int height);
 		std::pair<float, float> getCameraNearAndFarPlane() const;
 		std::vector<float> getShadowCascadeLevels() const;
+		bool getFullscreen() const;
+		void setFullscreen(bool);
 	};
 }

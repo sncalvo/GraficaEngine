@@ -6,6 +6,8 @@
 #include <experimental/filesystem>
 #include <gl/glew.h>
 
+#include "Settings.h"
+
 constexpr auto SMALL_SIZE = 15;
 constexpr auto NORMAL_SIZE = 18;
 constexpr auto LARGE_SIZE = 36;
@@ -181,7 +183,9 @@ namespace Engine
         _fontsShader = new Shader("Assets/Shaders/font_shader.vs", "Assets/Shaders/font_shader.fs");
 
         // 2D projection
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(800), 0.0f, static_cast<float>(600), -5.0f, 5.0f); //TODO Configure with viewport's size
+        unsigned int width, height;
+        std::tie(width, height) = Settings::getInstance().getWindowSize();
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -5.0f, 5.0f); //TODO Configure with viewport's size
         _fontsShader->use();
         _fontsShader->setMatrix4f("projection", glm::value_ptr(projection));
     }

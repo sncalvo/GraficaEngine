@@ -1,5 +1,7 @@
 #include "PerspectiveCamera.h"
 
+#include "Settings.h"
+
 namespace Engine
 {
 	PerspectiveCamera::PerspectiveCamera(
@@ -26,6 +28,8 @@ namespace Engine
 
 	glm::mat4 PerspectiveCamera::getProjectionMatrixFor(const float near, const float far) const
 	{
-		return glm::perspective(glm::radians(getZoom()), 800.0f / 600.0f, near, far); // TODO: Change parameters
+		unsigned int width, height;
+		std::tie(width, height) = Settings::getInstance().getWindowSize();
+		return glm::perspective(glm::radians(getZoom()), (float)width / (float)height, near, far); // TODO: Change parameters
 	}
 }

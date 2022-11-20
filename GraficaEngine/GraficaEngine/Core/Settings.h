@@ -24,6 +24,8 @@ namespace Engine
 		float _cameraNear, _cameraFar;
 		GameSpeed _gameSpeed;
 		Settings();
+		float _exposure;
+		unsigned int _shadowResolution;
 
 	public:
 		static Settings &getInstance()
@@ -44,6 +46,10 @@ namespace Engine
 		void setShowColliders(bool);
 		DayTime getDayTime() const;
 		void setDayTime(DayTime);
+		float getExposure() const;
+		void setExposure(float);
+		unsigned int getShadowResolution() const;
+		void setShadowResolution(unsigned int);
 		std::pair<float, float> getCameraNearAndFarPlane() const;
 		std::vector<float> getShadowCascadeLevels() const;
 	};

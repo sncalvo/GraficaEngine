@@ -15,7 +15,12 @@ Engine::Shader* testShader = nullptr;
 unsigned int depthMap = 0;
 unsigned int depthMapFBO;
 unsigned int matricesUBO;
-const unsigned int SHADOW_RESOLUTION = 2048;
+
+unsigned int hdrFBO;
+unsigned int colorBuffers[2];
+
+unsigned int quadVAOHDR = 0;
+unsigned int quadVBOHDR = 0;
 
 namespace Engine {
 	RenderPipeline::RenderPipeline() : _defaultShader(nullptr), _shadowShader(nullptr)
@@ -23,10 +28,12 @@ namespace Engine {
 	}
 
 	void RenderPipeline::setup() {
+		unsigned int shadowResolution = Settings::getInstance().getShadowResolution();
 		glEnable(GL_DEPTH_TEST);
 		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_CULL_FACE);
 		testShader = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/test.fs");
+		_hdrShader = new Engine::Shader("Assets/Shaders/hdrDraw.vs", "Assets/Shaders/hdrDraw.fs");
 
 		glGenFramebuffers(1, &depthMapFBO);
 		// TODO: Change to shadow mapping resolution
@@ -36,8 +43,8 @@ namespace Engine {
 			GL_TEXTURE_2D_ARRAY,
 			0,
 			GL_DEPTH_COMPONENT32F,
-			SHADOW_RESOLUTION,
-			SHADOW_RESOLUTION,
+			shadowResolution,
+			shadowResolution,
 			// TODO: Probably not 3
 			int(3) + 1,
 			0,
@@ -78,6 +85,43 @@ namespace Engine {
 		glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4) * 16, nullptr, GL_STATIC_DRAW);
 		glBindBufferBase(GL_UNIFORM_BUFFER, 0, matricesUBO);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
+		glGenFramebuffers(1, &hdrFBO);
+
+		// create depth buffer (renderbuffer)
+		GLuint rboDepth;
+		glGenRenderbuffers(1, &rboDepth);
+		glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+		// attach buffers
+		glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+
+		glGenTextures(2, colorBuffers);
+		for (unsigned int i = 0; i < 2; i++)
+		{
+			glBindTexture(GL_TEXTURE_2D, colorBuffers[i]);
+			glTexImage2D(
+				GL_TEXTURE_2D, 0, GL_RGBA16F, SCREEN_WIDTH, SCREEN_HEIGHT, 0, GL_RGBA, GL_FLOAT, NULL
+			);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			// attach texture to framebuffer
+			glFramebufferTexture2D(
+				GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, colorBuffers[i], 0
+			);
+		}
+		unsigned int attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		glDrawBuffers(2, attachments);
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			std::cout << "Framebuffer not complete!" << std::endl;
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
     void RenderPipeline::draw(Scene* scene) {
@@ -90,11 +134,14 @@ namespace Engine {
 		_drawShadows(scene);
 		glCullFace(GL_BACK);
 
-		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		scene->drawSkybox(projection, view);
 		_drawMeshes(scene);
+
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+		_drawFrame();
+
+		glClear(GL_DEPTH_BUFFER_BIT);
+
 		renderQuad();
     }
 
@@ -106,8 +153,9 @@ namespace Engine {
 
 		// Important: auto does not infer references. So auto cannot be used here.
 		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>>& shadowRenderers = scene->getShadowRenderers();
-		
-		glViewport(0, 0, SHADOW_RESOLUTION, SHADOW_RESOLUTION);
+
+		unsigned int shadowResolution = Settings::getInstance().getShadowResolution();
+		glViewport(0, 0, shadowResolution, shadowResolution);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
@@ -150,27 +198,32 @@ namespace Engine {
 				glBufferSubData(GL_UNIFORM_BUFFER, i * sizeof(glm::mat4x4), sizeof(glm::mat4x4), &lightSpaceMatrices[i]);
 			}
 			glBindBuffer(GL_UNIFORM_BUFFER, 0);
-			//shader->setMatrix4f("lightSpaceMatrix", glm::value_ptr(lightSpaceMatrices));
 
 			for (auto& [key, value] : shadowRenderers)
 			{
 				for (auto shadowRenderer : value)
 				{
 					shadowRenderer->draw();
+
 				}
 			}
 		}
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		
-		// GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS is arbitrary. We should probably think of a way to track active textures
 	}
 
 	void RenderPipeline::_drawMeshes(Scene* scene)
 	{
+		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 		Camera* camera = scene->getActiveCamera();
 		glm::mat4 projection = camera->getProjectionMatrix();
 		glm::mat4 view = camera->getViewMatrix();
+
+		scene->drawSkybox(projection, view);
 
 		std::unordered_map<std::string, std::vector<std::shared_ptr<MeshRenderer>>>& meshRenderers = scene->getMeshRenderers();
 
@@ -191,10 +244,6 @@ namespace Engine {
 		}
 		meshShader->setVec3f("viewPos", glm::value_ptr(camera->transform.position));
 
-		/*glActiveTexture(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1);
-		glBindTexture(GL_TEXTURE_2D, depthMap);
-		meshShader->setInt("shadowMap", GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1);*/
-
 		for (auto& [key, value] : meshRenderers)
 		{
 			for (auto meshRenderer : value)
@@ -204,6 +253,43 @@ namespace Engine {
 		}
 
 		scene->draw(_defaultShader);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void RenderPipeline::_drawFrame()
+	{
+		if (quadVAOHDR == 0)
+		{
+			float quadVertices[] = {
+				// positions        // texture Coords
+				-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+				 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+				 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+			};
+			// setup plane VAO
+			glGenVertexArrays(1, &quadVAOHDR);
+			glGenBuffers(1, &quadVBOHDR);
+			glBindVertexArray(quadVAOHDR);
+			glBindBuffer(GL_ARRAY_BUFFER, quadVBOHDR);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		}
+
+		unsigned int exposure = Settings::getInstance().getExposure();
+		_hdrShader->use();
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
+		_hdrShader->setFloat("exposure", exposure);
+		_hdrShader->setInt("colorBuffer", 0);
+
+		glBindVertexArray(quadVAOHDR);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glBindVertexArray(0);
 	}
 }
 
@@ -214,9 +300,6 @@ void renderQuad()
 {
 	testShader->use();
 
-	glActiveTexture(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1);
-	glBindTexture(GL_TEXTURE_2D, depthMap);
-	testShader->setInt("shadowMap", GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS - 1);
 	float nearPlane = 1.0f, farPlane = 40.f;
 	testShader->setFloat("nearPlane", nearPlane);
 	testShader->setFloat("farPlane", farPlane);

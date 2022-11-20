@@ -1,5 +1,10 @@
 #include "Settings.h"
 
+constexpr float CAMERA_NEAR_DEFAULT = 0.1f;
+constexpr float CAMERA_FAR_DEFAULT = 50.f;
+constexpr float EXPOSURE_DEFAULT = 2.f;
+constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 2048;
+
 namespace Engine
 {
 	Settings::Settings() : _isWireframe(false),
@@ -8,7 +13,8 @@ namespace Engine
 						   _showColliders(false),
 						   _gameSpeed(GameSpeed::NORMAL),
 						   _dayTime(DayTime::MIDDAY),
-						   _cameraNear(0.1f), _cameraFar(50.f)
+						   _cameraNear(CAMERA_NEAR_DEFAULT), _cameraFar(CAMERA_FAR_DEFAULT),
+						   _exposure(EXPOSURE_DEFAULT), _shadowResolution(SHADOW_RESOLUTION_DEFAULT)
 	{
 	}
 
@@ -98,5 +104,25 @@ namespace Engine
 		std::vector<float> shadowCascadeLevels{ _cameraFar / 50.0f, _cameraFar / 25.0f, _cameraFar / 10.0f, _cameraFar / 2.0f };
 
 		return shadowCascadeLevels;
+	}
+
+	float Settings::getExposure() const
+	{
+		return _exposure;
+	}
+
+	void Settings::setExposure(float exposure)
+	{
+		_exposure = exposure;
+	}
+
+	unsigned int Settings::getShadowResolution() const
+	{
+		return _shadowResolution;
+	}
+
+	void Settings::setShadowResolution(unsigned int resolution)
+	{
+		_shadowResolution = resolution;
 	}
 }

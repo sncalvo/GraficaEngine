@@ -133,5 +133,7 @@
     <None Include="Assets\Shaders\test.fs" />
     <None Include="Assets\Shaders\test.vs" />
     <None Include="Assets\Shaders\depthTest.gs" />
+    <None Include="Assets\Shaders\hdrDraw.vs" />
+    <None Include="Assets\Shaders\hdrDraw.fs" />
   </ItemGroup>
 </Project>

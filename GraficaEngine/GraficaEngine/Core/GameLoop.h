@@ -15,7 +15,6 @@
 #include "Input.h"
 #include "Time.h"
 #include "Camera.h"
-#include "Animator.h"
 #include "../Platform/Window.h"
 #include "../Platform/MediaLayer.h"
 
@@ -46,7 +45,7 @@ namespace Engine
 			static GameLoop _instance;
 			return _instance;
 		}
-		void start(Animator *a);
+		void start();
 		void addWindow(Window *);
 	};
 }

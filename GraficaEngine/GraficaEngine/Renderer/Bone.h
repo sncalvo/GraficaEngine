@@ -3,6 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <string>
+#include <vector>
+#include <list>
 
 namespace Engine {
     struct KeyPosition
@@ -25,26 +28,8 @@ namespace Engine {
 
     class Bone
     {
-    private:
-        std::vector<KeyPosition> m_Positions;
-        std::vector<KeyRotation> m_Rotations;
-        std::vector<KeyScale> m_Scales;
-        int m_NumPositions;
-        int m_NumRotations;
-        int m_NumScalings;
-        
-        glm::mat4 m_LocalTransform;
-        std::string m_Name;
-        int m_ID;
-
     public:
-
-    /*reads keyframes from aiNodeAnim*/
-        Bone(const std::string& name, int ID, const aiNodeAnim* channel)
-            :
-            m_Name(name),
-            m_ID(ID),
-            m_LocalTransform(1.0f)
+        Bone(const std::string& name, int ID, const aiNodeAnim* channel) : m_Name(name), m_ID(ID), m_LocalTransform(1.0f)
         {
             m_NumPositions = channel->mNumPositionKeys;
 
@@ -81,9 +66,6 @@ namespace Engine {
             }
         }
         
-        /*interpolates  b/w positions,rotations & scaling keys based on the curren time of 
-        the animation and prepares the local transformation matrix by combining all keys 
-        tranformations*/
         void Update(float animationTime)
         {
             glm::mat4 translation = InterpolatePosition(animationTime);
@@ -91,14 +73,12 @@ namespace Engine {
             glm::mat4 scale = InterpolateScaling(animationTime);
             m_LocalTransform = translation * rotation * scale;
         }
-
         glm::mat4 GetLocalTransform() { return m_LocalTransform; }
         std::string GetBoneName() const { return m_Name; }
         int GetBoneID() { return m_ID; }
         
 
-        /* Gets the current index on mKeyPositions to interpolate to based on 
-        the current animation time*/
+
         int GetPositionIndex(float animationTime)
         {
             for (int index = 0; index < m_NumPositions - 1; ++index)
@@ -109,8 +89,6 @@ namespace Engine {
             assert(0);
         }
 
-        /* Gets the current index on mKeyRotations to interpolate to based on the 
-        current animation time*/
         int GetRotationIndex(float animationTime)
         {
             for (int index = 0; index < m_NumRotations - 1; ++index)
@@ -121,8 +99,6 @@ namespace Engine {
             assert(0);
         }
 
-        /* Gets the current index on mKeyScalings to interpolate to based on the 
-        current animation time */
         int GetScaleIndex(float animationTime)
         {
             for (int index = 0; index < m_NumScalings - 1; ++index)
@@ -133,9 +109,9 @@ namespace Engine {
             assert(0);
         }
 
+
     private:
 
-        /* Gets normalized value for Lerp & Slerp*/
         float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime)
         {
             float scaleFactor = 0.0f;
@@ -145,8 +121,6 @@ namespace Engine {
             return scaleFactor;
         }
 
-        /*figures out which position keys to interpolate b/w and performs the interpolation 
-        and returns the translation matrix*/
         glm::mat4 InterpolatePosition(float animationTime)
         {
             if (1 == m_NumPositions)
@@ -156,13 +130,11 @@ namespace Engine {
             int p1Index = p0Index + 1;
             float scaleFactor = GetScaleFactor(m_Positions[p0Index].timeStamp,
                 m_Positions[p1Index].timeStamp, animationTime);
-            glm::vec3 finalPosition = glm::mix(m_Positions[p0Index].position,
-                m_Positions[p1Index].position, scaleFactor);
+            glm::vec3 finalPosition = glm::mix(m_Positions[p0Index].position, m_Positions[p1Index].position
+                , scaleFactor);
             return glm::translate(glm::mat4(1.0f), finalPosition);
         }
 
-        /*figures out which rotations keys to interpolate b/w and performs the interpolation 
-        and returns the rotation matrix*/
         glm::mat4 InterpolateRotation(float animationTime)
         {
             if (1 == m_NumRotations)
@@ -175,14 +147,13 @@ namespace Engine {
             int p1Index = p0Index + 1;
             float scaleFactor = GetScaleFactor(m_Rotations[p0Index].timeStamp,
                 m_Rotations[p1Index].timeStamp, animationTime);
-            glm::quat finalRotation = glm::slerp(m_Rotations[p0Index].orientation,
-                m_Rotations[p1Index].orientation, scaleFactor);
+            glm::quat finalRotation = glm::slerp(m_Rotations[p0Index].orientation, m_Rotations[p1Index].orientation
+                , scaleFactor);
             finalRotation = glm::normalize(finalRotation);
             return glm::toMat4(finalRotation);
+
         }
 
-        /*figures out which scaling keys to interpolate b/w and performs the interpolation 
-        and returns the scale matrix*/
         glm::mat4 InterpolateScaling(float animationTime)
         {
             if (1 == m_NumScalings)
@@ -196,6 +167,16 @@ namespace Engine {
                 , scaleFactor);
             return glm::scale(glm::mat4(1.0f), finalScale);
         }
-        
+
+        std::vector<KeyPosition> m_Positions;
+        std::vector<KeyRotation> m_Rotations;
+        std::vector<KeyScale> m_Scales;
+        int m_NumPositions;
+        int m_NumRotations;
+        int m_NumScalings;
+
+        glm::mat4 m_LocalTransform;
+        std::string m_Name;
+        int m_ID;
     };
 }

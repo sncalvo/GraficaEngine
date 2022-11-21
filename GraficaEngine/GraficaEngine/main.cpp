@@ -26,7 +26,6 @@
 #include "Core/Canvas.h"
 #include "Core/Colors.h"
 #include "Core/Animation.h"
-#include "Core/Animator.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/JumpController.h"
@@ -53,7 +52,7 @@
 
 #include "Core/Settings.h"
 
-Engine::Scene *loadMainScene(Engine::Animator *);
+Engine::Scene *loadMainScene();
 void loadHUD(Engine::Scene *);
 
 int main(int argc, char *argv[])
@@ -71,20 +70,19 @@ int main(int argc, char *argv[])
 	Engine::Window *window = new Engine::Window(width, height, "Grafica Engine");
 	gameLoop.addWindow(window);
 
-    Engine::Animator* a = new Engine::Animator();
-	Engine::Scene *scene = loadMainScene(a);
+	Engine::Scene *scene = loadMainScene();
 	loadHUD(scene);
 
 	Engine::SceneManager &sceneManager = Engine::SceneManager::getInstance();
 	sceneManager.addScene("main", scene);
 	sceneManager.loadScene("main");
 
-	gameLoop.start(a);
+	gameLoop.start();
 
 	return 0;
 }
 
-Engine::Scene* loadMainScene(Engine::Animator* a)
+Engine::Scene* loadMainScene()
 {
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
@@ -125,7 +123,6 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
     Engine::Model* ourModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
 	Engine::Animation* danceAnimation = new Engine::Animation(_strdup("Assets/Models/dancing_vampire.dae"),
         ourModel);
-    a->setCurrentAnimation(danceAnimation);
 	Engine::GameObject* duck = new Engine::GameObject(
 		ourModel,
 		Engine::MaterialObject());

@@ -3,37 +3,48 @@
 #include <vector>
 #include <map>
 #include <string>
-#include "../Utils/AssimpGLMHelpers.h"
 #include "../Renderer/Model.h"
+#include "../Utils/AssimpGLMHelpers.h"
 #include "../Renderer/Bone.h"
 #include "../Renderer/BoneInfo.h"
 
 namespace Engine {
-    struct AssimpNodeData {
+    struct AssimpNodeData
+    {
         glm::mat4 transformation;
         std::string name;
         int childrenCount;
         std::vector<AssimpNodeData> children;
     };
 
-    class Animation {
+    class Animation
+    {
     public:
         Animation() = default;
 
-        Animation(const std::string& animationPath, Engine::Model* model) {
+        Animation(const std::string& animationPath, Model* model)
+        {
             Assimp::Importer importer;
             const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
             assert(scene && scene->mRootNode);
             auto animation = scene->mAnimations[0];
             m_Duration = animation->mDuration;
             m_TicksPerSecond = animation->mTicksPerSecond;
+            aiMatrix4x4 globalTransformation = scene->mRootNode->mTransformation;
+            globalTransformation = globalTransformation.Inverse();
             ReadHeirarchyData(m_RootNode, scene->mRootNode);
             ReadMissingBones(animation, *model);
         }
 
-        Engine::Bone* FindBone(const std::string& name) {
+        ~Animation()
+        {
+        }
+
+        Bone* FindBone(const std::string& name)
+        {
             auto iter = std::find_if(m_Bones.begin(), m_Bones.end(),
-                [&](const Engine::Bone& Bone) {
+                [&](const Bone& Bone)
+                {
                     return Bone.GetBoneName() == name;
                 }
             );
@@ -43,17 +54,16 @@ namespace Engine {
 
         
         inline float GetTicksPerSecond() { return m_TicksPerSecond; }
-
         inline float GetDuration() { return m_Duration;}
-
         inline const AssimpNodeData& GetRootNode() { return m_RootNode; }
-
-        inline const std::map<std::string,Engine::BoneInfo>& GetBoneIDMap() { 
+        inline const std::map<std::string,BoneInfo>& GetBoneIDMap() 
+        { 
             return m_BoneInfoMap;
         }
 
     private:
-        void ReadMissingBones(const aiAnimation* animation, Engine::Model& model) {
+        void ReadMissingBones(const aiAnimation* animation, Model& model)
+        {
             int size = animation->mNumChannels;
 
             auto& boneInfoMap = model.GetBoneInfoMap();//getting m_BoneInfoMap from Model class
@@ -70,21 +80,23 @@ namespace Engine {
                     boneInfoMap[boneName].id = boneCount;
                     boneCount++;
                 }
-                m_Bones.push_back(Engine::Bone(channel->mNodeName.data,
+                m_Bones.push_back(Bone(channel->mNodeName.data,
                     boneInfoMap[channel->mNodeName.data].id, channel));
             }
 
             m_BoneInfoMap = boneInfoMap;
         }
 
-        void ReadHeirarchyData(AssimpNodeData& dest, const aiNode* src) {
+        void ReadHeirarchyData(AssimpNodeData& dest, const aiNode* src)
+        {
             assert(src);
 
             dest.name = src->mName.data;
             dest.transformation = AssimpGLMHelpers::ConvertMatrixToGLMFormat(src->mTransformation);
             dest.childrenCount = src->mNumChildren;
 
-            for (int i = 0; i < src->mNumChildren; i++) {
+            for (int i = 0; i < src->mNumChildren; i++)
+            {
                 AssimpNodeData newData;
                 ReadHeirarchyData(newData, src->mChildren[i]);
                 dest.children.push_back(newData);
@@ -92,8 +104,8 @@ namespace Engine {
         }
         float m_Duration;
         int m_TicksPerSecond;
-        std::vector<Engine::Bone> m_Bones;
+        std::vector<Bone> m_Bones;
         AssimpNodeData m_RootNode;
-        std::map<std::string, Engine::BoneInfo> m_BoneInfoMap;
+        std::map<std::string, BoneInfo> m_BoneInfoMap;
     };
 }

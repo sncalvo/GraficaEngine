@@ -107,7 +107,7 @@ namespace Engine
 		}
 	}
 
-	void GameLoop::start(Animator* a)
+	void GameLoop::start()
 	{
 		srand((unsigned)time(0));
 
@@ -128,7 +128,6 @@ namespace Engine
 
 			Time::updateTime();
 			input.update();
-<<<<<<< Updated upstream
 			frameCounterUpdateThreshold += Time::getDeltaTime();
 			
 			if (frameCounterUpdateThreshold > 1.f)
@@ -140,9 +139,6 @@ namespace Engine
 				counter = 0;
 				frameCounterUpdateThreshold = 0.f;
 			}			
-=======
-			a->UpdateAnimation(0.01f);
->>>>>>> Stashed changes
 			
 			if (input.getKeyDown(KEY_Q))
 				break;
@@ -179,7 +175,7 @@ namespace Engine
 			activeScene->update();
 			activeScene->flushQueuedGameObjects();
 
-			_renderer.draw(activeScene, a);
+			_renderer.draw(activeScene);
 
 			_window->swap();
 		}

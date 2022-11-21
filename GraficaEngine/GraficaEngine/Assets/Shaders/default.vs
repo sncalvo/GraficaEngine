@@ -3,8 +3,8 @@
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTexCoords;
-layout(location = 3) in ivec4 boneIds; 
-layout(location = 4) in vec4 weights;
+layout (location = 3) in ivec4 boneIds; 
+layout (location = 4) in vec4 weights;
 
 out vec3 FragPos;
 out vec2 TexCoords;
@@ -28,8 +28,7 @@ void main() {
     {
         if(boneIds[i] == -1) 
             continue;
-        if(boneIds[i] >=MAX_BONES) 
-        {
+        if(boneIds[i] >=MAX_BONES) {
             totalPosition = vec4(aPos,1.0f);
             break;
         }
@@ -39,10 +38,19 @@ void main() {
     }
 
     TexCoords = aTexCoords;
+    TexCoords.y = 1.0 - TexCoords.y;
     FragPos = vec3(model * vec4(aPos, 1.0));
     Normal = mat3(transpose(inverse(model))) * aNormal;
 
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
     gl_Position = projection * view * model * vec4(aPos, 1.0);
     worldPosition = (model * totalPosition).xyz;
+
+/*     vec4 FragPos4 = model * totalPosition;
+    FragPos = FragPos4.xyz / FragPos4.w;
+    Normal = mat3(transpose(inverse(model))) * aNormal;
+
+    FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
+    gl_Position = projection * view * model * totalPosition;
+    worldPosition = (model * totalPosition).xyz; */
 }

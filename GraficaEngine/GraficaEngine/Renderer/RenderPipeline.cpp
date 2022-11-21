@@ -150,7 +150,7 @@ namespace Engine {
 		}
 	}
 
-    void RenderPipeline::draw(Scene* scene, Animator *a) {
+    void RenderPipeline::draw(Scene* scene) {
 		Camera* camera = scene->getActiveCamera();
 		glm::mat4 projection = camera->getProjectionMatrix();
 		glm::mat4 view = camera->getViewMatrix();
@@ -160,7 +160,6 @@ namespace Engine {
 		_drawShadows(scene);
 		glCullFace(GL_BACK);
 
-<<<<<<< Updated upstream
 		_drawMeshes(scene);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -169,13 +168,6 @@ namespace Engine {
 
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-=======
-		glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		scene->drawSkybox(projection, view);
-		_drawMeshes(scene, a);
->>>>>>> Stashed changes
 		renderQuad();
     }
 
@@ -246,7 +238,7 @@ namespace Engine {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
-	void RenderPipeline::_drawMeshes(Scene* scene, Animator *a)
+	void RenderPipeline::_drawMeshes(Scene* scene)
 	{
 		unsigned int width, height;
 		std::tie(width, height) = Settings::getInstance().getWindowSize();
@@ -268,10 +260,6 @@ namespace Engine {
 		meshShader->use();
 		meshShader->setMat4("projection", projection);
 		meshShader->setMat4("view", view);
-		auto transforms = a->GetFinalBoneMatrices();
-
-/*         for (int i = 0; i < transforms.size(); ++i)
-            meshShader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]); */
 
 		auto cameraRange = Settings::getInstance().getCameraNearAndFarPlane();
 		meshShader->setFloat("farPlane", cameraRange.second);

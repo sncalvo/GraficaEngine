@@ -286,6 +286,7 @@
     <None Include="Assets\Shaders\skybox.vs" />
     <None Include="Assets\Shaders\test.fs" />
     <None Include="Assets\Shaders\test.vs" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

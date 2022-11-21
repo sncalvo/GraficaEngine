@@ -35,6 +35,7 @@ namespace Engine {
                 m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
                 CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
             }
+            std::cout << m_CurrentTime << std::endl;
         }
         
         void PlayAnimation(Animation* pAnimation)

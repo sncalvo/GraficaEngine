@@ -44,5 +44,5 @@ void main() {
 
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
     gl_Position = projection * view * model * vec4(aPos, 1.0);
-    worldPosition = (model * vec4(aPos, 1.0)).xyz;
+    worldPosition = (model * totalPosition).xyz;
 }

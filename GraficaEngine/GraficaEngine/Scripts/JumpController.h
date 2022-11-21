@@ -7,7 +7,7 @@
 class JumpController : public Engine::Behaviour
 {
 private:
-	float _gravity = -9.8f;
+	float _gravity = 0.0f;
 	float _mass = 1.f;
 	float _jumpStrength = 1.f;
 	glm::vec3 _velocity = glm::vec3(0.f);

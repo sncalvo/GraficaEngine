@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	sceneManager.addScene("main", scene);
 	sceneManager.loadScene("main");
 
-	gameLoop.start();
+	gameLoop.start(a);
 
 	return 0;
 }
@@ -123,9 +123,9 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
 	scene->addGameObject(cameraManager);
 
     Engine::Model* ourModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	Engine::Animation danceAnimation(_strdup("Assets/Models/dancing_vampire.dae"),
+	Engine::Animation* danceAnimation = new Engine::Animation(_strdup("Assets/Models/dancing_vampire.dae"),
         ourModel);
-    a->setCurrentAnimation(&danceAnimation);
+    a->setCurrentAnimation(danceAnimation);
 	Engine::GameObject* duck = new Engine::GameObject(
 		ourModel,
 		Engine::MaterialObject());
@@ -148,7 +148,7 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
 		Engine::GameObject *newgrass = new Engine::GameObject(grass);
 		newgrass->transform.scale = glm::vec3(1.f, 1.f, .5f);
 		newgrass->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
-		scene->addGameObject(newgrass);
+/* 		scene->addGameObject(newgrass); */
 	}
 
 	Engine::GameObject* river = new Engine::GameObject(
@@ -203,12 +203,12 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
 	std::vector<Environment> environments{ grass, grass, river, road };
 
 	spawner->addBehaviour(new EndlessSpawner(environments));
-	scene->addGameObject(spawner);
+/* 	scene->addGameObject(spawner); */
 
 	Engine::GameObject* tree = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/tree.obj")),
 		Engine::MaterialObject());
-	scene->addGameObject(tree);
+/* 	scene->addGameObject(tree); */
 	tree->transform.position = glm::vec3(-4.0f, 0.f, 5.f);
 
 	Engine::GameObject* coin = new Engine::GameObject(
@@ -243,7 +243,7 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
 	hintText->setColor(Engine::BLACK);
 	hint->addChild(hintText);
 
-	scene->addGameObject(hint);
+/* 	scene->addGameObject(hint); */
 	hint->addBehaviour(new HintController(5.f, 300.f));
 
 	std::vector<std::string> faces {
@@ -266,7 +266,7 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
 	crossyRoad->transform.position = glm::vec3(1.f);
 	homeScreen->addChild(crossyRoad);
 	homeScreen->addBehaviour(new HomeScreenController());
-	scene->addGameObject(homeScreen);
+/* 	scene->addGameObject(homeScreen); */
 
 	Engine::Canvas* gameKeysBack = new Engine::Canvas(glm::vec2(298, 19));
 	gameKeysBack->setColor(Engine::BLACK);
@@ -278,7 +278,7 @@ Engine::Scene* loadMainScene(Engine::Animator* a)
 	gameKeys->addTag("text");
 	gameKeysBack->addChild(gameKeys);
 	gameKeysBack->addBehaviour(new GameKeysHomeController());
-	scene->addGameObject(gameKeysBack);
+/* 	scene->addGameObject(gameKeysBack); */
 
 	return scene;
 }

@@ -25,6 +25,8 @@
 #include "Physics/Collider.h"
 #include "Core/Canvas.h"
 #include "Core/Colors.h"
+#include "Core/Animation.h"
+#include "Core/Animator.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/JumpController.h"
@@ -51,7 +53,7 @@
 
 #include "Core/Settings.h"
 
-Engine::Scene *loadMainScene();
+Engine::Scene *loadMainScene(Engine::Animator *);
 void loadHUD(Engine::Scene *);
 
 int main(int argc, char *argv[])
@@ -69,7 +71,8 @@ int main(int argc, char *argv[])
 	Engine::Window *window = new Engine::Window(width, height, "Grafica Engine");
 	gameLoop.addWindow(window);
 
-	Engine::Scene *scene = loadMainScene();
+    Engine::Animator* a = new Engine::Animator();
+	Engine::Scene *scene = loadMainScene(a);
 	loadHUD(scene);
 
 	Engine::SceneManager &sceneManager = Engine::SceneManager::getInstance();
@@ -81,7 +84,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-Engine::Scene* loadMainScene()
+Engine::Scene* loadMainScene(Engine::Animator* a)
 {
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
@@ -119,16 +122,20 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
+    Engine::Model* ourModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	Engine::Animation danceAnimation(_strdup("Assets/Models/dancing_vampire.dae"),
+        ourModel);
+    a->setCurrentAnimation(&danceAnimation);
 	Engine::GameObject* duck = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/chicken.obj")),
+		ourModel,
 		Engine::MaterialObject());
 	duck->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
 	duck->addBehaviour(new PlayerController());
 	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
-	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f);
-	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
+/* 	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f); */
+	duck->transform.scale = glm::vec3(0.005f, 0.005f, 0.005f);
 
 	Engine::GameObject* grass = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/grass.obj")),

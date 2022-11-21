@@ -16,7 +16,6 @@ namespace Engine
 		Model *_model;
 		MaterialObject _material;
 		Collider *_collider;
-
 	public:
 		GameObject(Model *model, MaterialObject material);
 		GameObject(const GameObject *);

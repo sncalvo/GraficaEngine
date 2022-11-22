@@ -11,6 +11,7 @@ out vec2 TexCoords;
 out vec3 Normal;
 out vec3 worldPosition;
 out vec4 FragPosLightSpace;
+out vec4 totalPosition;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -23,7 +24,7 @@ uniform mat4 finalBonesMatrices[MAX_BONES];
 
 void main() {
     // Bones/animations stuff
-    vec4 totalPosition = vec4(0.0f);
+    totalPosition = vec4(0.0f);
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 
@@ -52,5 +53,6 @@ void main() {
 
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
     gl_Position = projection * view * model * totalPosition;
-    worldPosition = (model * totalPosition).xyz; */
+    vec4 lol = model * totalPosition;
+    worldPosition = lol.xyz / lol.w; */
 }

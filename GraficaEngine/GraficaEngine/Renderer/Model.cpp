@@ -148,12 +148,12 @@ namespace Engine
         // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         auto newMesh = std::make_shared<Mesh>(vertices, indices);
 
+        ExtractBoneWeightForVertices(vertices,mesh,scene);
         auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, material, textures);
         auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh);
 
         _meshRenderers.push_back(meshRenderer);
         _shadowRenderers.push_back(shadowRenderer);
-        ExtractBoneWeightForVertices(vertices,mesh,scene);
         return newMesh;
     }
 

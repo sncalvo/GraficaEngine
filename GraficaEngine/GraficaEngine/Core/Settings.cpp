@@ -7,18 +7,22 @@ constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 2048;
 constexpr unsigned int DEFAULT_WIDTH = 1900;
 constexpr unsigned int DEFAULT_HEIGHT = 1020;
 constexpr bool DEFAULT_FULLSCREEN = false;
+constexpr float FOG_MAX_DIST = 60.f;
+constexpr float FOG_MIN_DIST = 0.1f;
+constexpr glm::vec3 FOG_COLOR = glm::vec3(0.4f);
 
 namespace Engine
 {
 	Settings::Settings() : _isWireframe(false),
-						   _showTextures(true),
-						   _useInterpolation(false),
-						   _showColliders(false),
-						   _gameSpeed(GameSpeed::NORMAL),
-						   _dayTime(DayTime::MIDDAY),
-						   _cameraNear(CAMERA_NEAR_DEFAULT), _cameraFar(CAMERA_FAR_DEFAULT),
-						   _exposure(EXPOSURE_DEFAULT), _shadowResolution(SHADOW_RESOLUTION_DEFAULT),
-						   _windowWidth(DEFAULT_WIDTH), _windowHeight(DEFAULT_HEIGHT), _fullscreen(DEFAULT_FULLSCREEN)
+		_showTextures(true),
+		_useInterpolation(false),
+		_showColliders(false),
+		_gameSpeed(GameSpeed::NORMAL),
+		_dayTime(DayTime::MIDDAY),
+		_cameraNear(CAMERA_NEAR_DEFAULT), _cameraFar(CAMERA_FAR_DEFAULT),
+		_exposure(EXPOSURE_DEFAULT), _shadowResolution(SHADOW_RESOLUTION_DEFAULT),
+		_windowWidth(DEFAULT_WIDTH), _windowHeight(DEFAULT_HEIGHT), _fullscreen(DEFAULT_FULLSCREEN),
+		_fogMaxDist(FOG_MAX_DIST), _fogMinDist(FOG_MIN_DIST), _fogColor(FOG_COLOR)
 	{
 	}
 
@@ -149,5 +153,26 @@ namespace Engine
 	void Settings::setFullscreen(bool fullscreen)
 	{
 		_fullscreen = fullscreen;
+	}
+
+	std::pair<float, float> Settings::getFogRange() const
+	{
+		return { _fogMinDist, _fogMaxDist };
+	}
+
+	void Settings::setFog(float min, float max)
+	{
+		_fogMinDist = min;
+		_fogMaxDist = max;
+	}
+
+	glm::vec3 Settings::getFogColor() const
+	{
+		return _fogColor;
+	}
+
+	void Settings::setFogColor(glm::vec3 color)
+	{
+		_fogColor = color;
 	}
 }

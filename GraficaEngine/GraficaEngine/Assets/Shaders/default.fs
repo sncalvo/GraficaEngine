@@ -43,6 +43,9 @@ uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
 uniform vec2 texture_offset;
+uniform float fogMaxDist;
+uniform float fogMinDist; 
+uniform vec3 fogColor;
 
 float ShadowCalculationV2(vec3 normal, vec3 lightDir)
 {
@@ -147,6 +150,14 @@ void main()
 
     vec3 diffuseSpecular = (1.0 - shadow) * (diffuse + specular);
     vec3 result = (1.4 - shadow) * ambient + diffuseSpecular;
+    // Calculate fog
+    float dist = distance(viewPos.xyz, worldPosition);
+    float fogFactor = (fogMaxDist - dist) /
+                      (fogMaxDist - fogMinDist);
+    fogFactor = clamp(fogFactor, 0.0, 1.0);
+
+    result = mix(fogColor, result, fogFactor);
+
     FragColor = vec4(result, 1.0);
 
     float brightness = dot(FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));

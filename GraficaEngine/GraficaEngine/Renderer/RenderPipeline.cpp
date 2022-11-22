@@ -240,8 +240,12 @@ namespace Engine {
 
 	void RenderPipeline::_drawMeshes(Scene* scene)
 	{
+		Settings& settings = Settings::getInstance();
 		unsigned int width, height;
-		std::tie(width, height) = Settings::getInstance().getWindowSize();
+		float fogMin, fogMax;
+		std::tie(width, height) = settings.getWindowSize();
+		std::tie(fogMin, fogMax) = settings.getFogRange();
+		glm::vec3 fogColor = settings.getFogColor();
 
 		glViewport(0, 0, width, height);
 
@@ -260,6 +264,10 @@ namespace Engine {
 		meshShader->use();
 		meshShader->setMat4("projection", projection);
 		meshShader->setMat4("view", view);
+		meshShader->setFloat("fogMinDist", fogMin);
+		meshShader->setFloat("fogMaxDist", fogMax);
+		meshShader->setVec3f("fogColor", glm::value_ptr(fogColor));
+
 		auto cameraRange = Settings::getInstance().getCameraNearAndFarPlane();
 		meshShader->setFloat("farPlane", cameraRange.second);
 

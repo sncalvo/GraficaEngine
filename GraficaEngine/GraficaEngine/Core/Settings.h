@@ -29,6 +29,9 @@ namespace Engine
 		unsigned int _windowWidth;
 		unsigned int _windowHeight;
 		bool _fullscreen;
+		float _fogMaxDist;
+		float _fogMinDist;
+		glm::vec3 _fogColor;
 
 	public:
 		static Settings &getInstance()
@@ -59,5 +62,9 @@ namespace Engine
 		std::vector<float> getShadowCascadeLevels() const;
 		bool getFullscreen() const;
 		void setFullscreen(bool);
+		std::pair<float, float> getFogRange() const;
+		void setFog(float min, float max);
+		glm::vec3 getFogColor() const;
+		void setFogColor(glm::vec3 color);
 	};
 }

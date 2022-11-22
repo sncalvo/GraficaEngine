@@ -4,8 +4,8 @@ constexpr float CAMERA_NEAR_DEFAULT = 0.1f;
 constexpr float CAMERA_FAR_DEFAULT = 50.f;
 constexpr float EXPOSURE_DEFAULT = 2.f;
 constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 2048;
-constexpr unsigned int DEFAULT_WIDTH = 512;
-constexpr unsigned int DEFAULT_HEIGHT = 512;
+constexpr unsigned int DEFAULT_WIDTH = 1080;
+constexpr unsigned int DEFAULT_HEIGHT = 580;
 constexpr bool DEFAULT_FULLSCREEN = false;
 
 namespace Engine

@@ -14,6 +14,19 @@ namespace Engine
 		}
 	}
 
+	GameObject::GameObject(Model *model, MaterialObject material, Animation *animation) : GameObject(model, material)
+	{
+		_animator = new Engine::Animator(animation);
+		for (auto renderer : model->getMeshRenderers())
+		{
+			renderer->setAnimator(_animator);
+		}
+		for (auto renderer : model->getShadowRenderers())
+		{
+			renderer->setAnimator(_animator);
+		}
+	}
+
 	void GameObject::setCollider(Collider *collider)
 	{
 		collider->setGameObject(this);
@@ -38,6 +51,12 @@ namespace Engine
 		for (auto renderer : _model->getShadowRenderers())
 		{
 			renderer->setTransform(&transform);
+		}
+		if (_animator) {
+			for (auto renderer : _model->getMeshRenderers())
+			{
+				renderer->setAnimator(_animator);
+			}
 		}
 		Collider* otherCollider = otherGameObject->getCollider();
 		if (otherCollider != nullptr)

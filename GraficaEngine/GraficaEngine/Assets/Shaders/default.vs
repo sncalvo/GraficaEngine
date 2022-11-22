@@ -11,12 +11,12 @@ out vec2 TexCoords;
 out vec3 Normal;
 out vec3 worldPosition;
 out vec4 FragPosLightSpace;
-out vec4 totalPosition;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform mat4 lightSpaceMatrix;
+uniform bool isBony;
 
 const int MAX_BONES = 100;
 const int MAX_BONE_INFLUENCE = 4;
@@ -24,35 +24,34 @@ uniform mat4 finalBonesMatrices[MAX_BONES];
 
 void main() {
     // Bones/animations stuff
-    totalPosition = vec4(0.0f);
-    for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
-    {
-        if(boneIds[i] == -1) 
-            continue;
-        if(boneIds[i] >=MAX_BONES) {
-            totalPosition = vec4(aPos,1.0f);
-            break;
+    vec4 totalPosition = vec4(0.0f);
+
+    if (isBony) {
+        for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
+        {
+            if(boneIds[i] == -1) 
+                continue;
+            if(boneIds[i] >=MAX_BONES) {
+                totalPosition = vec4(aPos,1.0f);
+                break;
+            }
+            vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
+            totalPosition += localPosition * weights[i];
+            vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
         }
-        vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
-        totalPosition += localPosition * weights[i];
-        vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
+    } else {
+        totalPosition = vec4(aPos, 1.0);
     }
 
     TexCoords = aTexCoords;
     TexCoords.y = 1.0 - TexCoords.y;
-    FragPos = vec3(model * vec4(aPos, 1.0));
-    Normal = mat3(transpose(inverse(model))) * aNormal;
 
-    FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
-    gl_Position = projection * view * model * vec4(aPos, 1.0);
-    worldPosition = (model * totalPosition).xyz;
-
-/*     vec4 FragPos4 = model * totalPosition;
+    vec4 FragPos4 = model * totalPosition;
     FragPos = FragPos4.xyz / FragPos4.w;
     Normal = mat3(transpose(inverse(model))) * aNormal;
 
     FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0);
     gl_Position = projection * view * model * totalPosition;
-    vec4 lol = model * totalPosition;
-    worldPosition = lol.xyz / lol.w; */
+    vec4 worldPosition4 = model * totalPosition;
+    worldPosition = worldPosition4.xyz / worldPosition4.w;
 }

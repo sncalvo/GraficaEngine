@@ -4,7 +4,6 @@
 #include <map>
 #include <string>
 #include "AssimpNodeData.h"
-#include "../Renderer/Model.h"
 #include "../Utils/AssimpGLMHelpers.h"
 #include "../Renderer/Bone.h"
 #include "../Renderer/BoneInfo.h"

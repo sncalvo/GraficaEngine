@@ -3,8 +3,13 @@
 #include <glm/glm.hpp>
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include <string>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include <vector>
+#include <string>
+#include <iostream>
+#include <map>
 #include <list>
 
 namespace Engine {

@@ -146,9 +146,9 @@ namespace Engine
         textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
         Material material = _loadMaterial(meshMaterial);
         // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        auto newMesh = std::make_shared<Mesh>(vertices, indices);
 
         ExtractBoneWeightForVertices(vertices,mesh,scene);
+        auto newMesh = std::make_shared<Mesh>(vertices, indices);
         auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, material, textures);
         auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh);
 

@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 
-JumpController::JumpController() : _gravity(0.0f),
+JumpController::JumpController() : _gravity(-19.8f),
 								   _velocity(0.f),
 								   _mass(1.f),
 								   _jumpStrength(7.f),

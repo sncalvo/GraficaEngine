@@ -1,4 +1,5 @@
 #include "Model.h"
+#include "../Utils/AssimpGLMHelpers.h"
 
 #include <iostream>
 
@@ -52,8 +53,52 @@ namespace Engine
         }
     }
 
-    std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene)
-    {
+    void Model::SetVertexBoneData(Vertex& vertex, int boneID, float weight) {
+        for (int i = 0; i < MAX_BONE_WEIGHTS; ++i)
+        {
+            if (vertex.m_BoneIDs[i] < 0)
+            {
+                vertex.m_Weights[i] = weight;
+                vertex.m_BoneIDs[i] = boneID;
+                break;
+            }
+        }
+    }
+
+    void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene) {
+        for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
+        {
+            int boneID = -1;
+            std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
+            if (m_BoneInfoMap.find(boneName) == m_BoneInfoMap.end())
+            {
+                BoneInfo newBoneInfo;
+                newBoneInfo.id = m_BoneCounter;
+                newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
+                    mesh->mBones[boneIndex]->mOffsetMatrix);
+                m_BoneInfoMap[boneName] = newBoneInfo;
+                boneID = m_BoneCounter;
+                m_BoneCounter++;
+            }
+            else
+            {
+                boneID = m_BoneInfoMap[boneName].id;
+            }
+            assert(boneID != -1);
+            auto weights = mesh->mBones[boneIndex]->mWeights;
+            int numWeights = mesh->mBones[boneIndex]->mNumWeights;
+
+            for (int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+            {
+                int vertexId = weights[weightIndex].mVertexId;
+                float weight = weights[weightIndex].mWeight;
+                assert(vertexId <= vertices.size());
+                SetVertexBoneData(vertices[vertexId], boneID, weight);
+            }
+        }
+    }
+
+    std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene) {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
         std::vector<Texture> textures;
@@ -61,6 +106,8 @@ namespace Engine
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
             Vertex vertex;
+            SetVertexBoneDataToDefault(vertex);
+
             glm::vec3 vector;
             vector.x = mesh->mVertices[i].x;
             vector.y = mesh->mVertices[i].y;
@@ -99,14 +146,14 @@ namespace Engine
         textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
         Material material = _loadMaterial(meshMaterial);
         // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        auto newMesh = std::make_shared<Mesh>(vertices, indices);
 
+        ExtractBoneWeightForVertices(vertices,mesh,scene);
+        auto newMesh = std::make_shared<Mesh>(vertices, indices);
         auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, material, textures);
         auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh);
 
         _meshRenderers.push_back(meshRenderer);
         _shadowRenderers.push_back(shadowRenderer);
-    
         return newMesh;
     }
 

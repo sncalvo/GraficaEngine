@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "Animation.h"
 #include "../Utils/DebugLog.h"
 
 #include <glm/gtc/type_ptr.hpp>

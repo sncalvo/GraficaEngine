@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <map>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -12,6 +13,9 @@
 #include "Texture.h"
 #include "MeshRenderer.h"
 #include "ShadowRenderer.h"
+#include "BoneInfo.h"
+
+#define MAX_BONE_WEIGHTS 4
 
 namespace Engine
 {
@@ -31,6 +35,20 @@ namespace Engine
             std::string typeName);
 
         Material _loadMaterial(aiMaterial* material);
+
+        // Boney stuff (animations data)
+        std::map<std::string, BoneInfo> m_BoneInfoMap; //
+        int m_BoneCounter = 0;
+        void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
+        void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
+        void SetVertexBoneDataToDefault(Vertex& vertex)
+            {
+                for (int i = 0; i < MAX_BONE_WEIGHTS; i++)
+                {
+                    vertex.m_BoneIDs[i] = -1;
+                    vertex.m_Weights[i] = 0.0f;
+                }
+            }
     public:
         Model(char* path);
         Model(Model*);
@@ -42,5 +60,9 @@ namespace Engine
         std::vector<std::shared_ptr<ShadowRenderer>> getShadowRenderers() const {
             return _shadowRenderers;
         }
+
+        // Boney stuff (animations data)
+        auto& GetBoneInfoMap() { return m_BoneInfoMap; }
+        int& GetBoneCount() { return m_BoneCounter; }    
     };
 }

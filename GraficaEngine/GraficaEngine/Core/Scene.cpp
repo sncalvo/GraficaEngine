@@ -206,6 +206,14 @@ namespace Engine
 		_gameObjectsToDelete.clear();
 	}
 
+	void Scene::animationsUpdate(float deltaTime) {
+		for (auto& [key, value] : _meshRenderers) {
+			for (auto renderer : value) {
+				renderer->updateAnimation(deltaTime);
+			}
+		}
+	}
+
 	void Scene::physicsUpdate()
 	{
 		for (Collider *collider : _colliders)

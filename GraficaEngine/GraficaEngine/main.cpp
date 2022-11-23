@@ -25,6 +25,8 @@
 #include "Physics/Collider.h"
 #include "Core/Canvas.h"
 #include "Core/Colors.h"
+#include "Core/AnimationBuilder.h"
+#include "Core/Animator.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/JumpController.h"
@@ -83,6 +85,7 @@ int main(int argc, char *argv[])
 
 Engine::Scene* loadMainScene()
 {
+	Engine::AnimationBuilder animationBuilder;
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
 		glm::vec3(0.f, 1.f, 0.f),
@@ -119,109 +122,45 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-	Engine::GameObject* duck = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/chicken.obj")),
+    Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
+		vampireModel);
+	Engine::Animation* danceAnimation = animationBuilder.getAnimation();
+	Engine::GameObject* vampire = new Engine::GameObject(
+		vampireModel,
+		Engine::MaterialObject(),
+		danceAnimation);
+	vampire->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
+	vampire->addBehaviour(new PlayerController());
+	vampire->addBehaviour(new JumpController());
+	vampire->addTag("player");
+	scene->addGameObject(vampire);
+
+    Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	Engine::GameObject* vampire2 = new Engine::GameObject(
+		vampireModel2,
+		Engine::MaterialObject(),
+		danceAnimation);
+	vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
+	scene->addGameObject(vampire2);
+
+    Engine::Model* cityModel = new Engine::Model(_strdup("Assets/Models/City.obj"));
+	Engine::GameObject* city = new Engine::GameObject(
+		cityModel,
 		Engine::MaterialObject());
-	duck->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
-	duck->addBehaviour(new PlayerController());
-	duck->addBehaviour(new JumpController());
-	scene->addGameObject(duck);
-	duck->addTag("player");
-	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f);
-	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
+	scene->addGameObject(city);
 
-	Engine::GameObject* grass = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/grass.obj")),
-		Engine::MaterialObject());
-	grass->addTag("ground");
-	grass->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.0f, -3.f), glm::vec3(24.f, 0.0f, 3.f)));
-
-	for (int index = -5; index < 5; index++)
-	{
-		Engine::GameObject *newgrass = new Engine::GameObject(grass);
-		newgrass->transform.scale = glm::vec3(1.f, 1.f, .5f);
-		newgrass->transform.position = glm::vec3(0.f, 0.f, index * SPACE_BETWEEN_ROWS);
-		scene->addGameObject(newgrass);
-	}
-
-	Engine::GameObject* river = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/river.obj")),
-		Engine::MaterialObject());
-	river->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -2.5f), glm::vec3(24.f, 0.f, 2.5f)));
-	river->addBehaviour(new Hazard());
-	river->addBehaviour(new RiverMover(-0.5f));
-
-	Engine::GameObject* road = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/road.obj")),
-		Engine::MaterialObject());
-	road->setCollider(new Engine::Collider(glm::vec3(-24.f, 0.f, -3.f), glm::vec3(24.f, 0.f, 3.f)));
-	road->addTag("ground");
-
-	Engine::GameObject* log = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/log.obj")),
-		Engine::MaterialObject());
-	log->setCollider(new Engine::Collider(glm::vec3(-3.0, -.7f, -.5f), glm::vec3(3.0f, .7f, .5f)));
-	log->addBehaviour(new Boundary(-30.f, 30.f));
-	log->addTag("ground");
-
-	river->addBehaviour(new ObstacleSpawner(Obstacles{ log }));
-
-	Engine::GameObject* car = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/lowpolycar.obj")),
-		Engine::MaterialObject());
-	car->setCollider(new Engine::Collider(glm::vec3(-2.f, 0, -1.f), glm::vec3(2.f, 3.f, 1.f)));
-	car->addBehaviour(new Hazard());
-	car->addBehaviour(new Boundary(-30.f, 30.f));
-	car->addTag("hazard");
-
-	Engine::GameObject* truck = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/truck.obj")),
-		Engine::MaterialObject());
-	truck->setCollider(new Engine::Collider(glm::vec3(-2.5f, 0, -1.f), glm::vec3(2.5f, 3.5f, 1.f)));
-	truck->addBehaviour(new Hazard());
-	truck->addBehaviour(new Boundary(-30.f, 30.f));
-	truck->addTag("hazard");
-
-	Engine::GameObject* pickuptruck = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/pickuptruck.obj")),
-		Engine::MaterialObject());
-	pickuptruck->setCollider(new Engine::Collider(glm::vec3(-2.f, 0, -1.f), glm::vec3(2.f, 3.0f, 1.f)));
-	pickuptruck->addBehaviour(new Hazard());
-	pickuptruck->addBehaviour(new Boundary(-30.f, 30.f));
-	pickuptruck->addTag("hazard");
-
-	road->addBehaviour(new ObstacleSpawner(Obstacles{car, pickuptruck, truck}));
-
-	Engine::BaseGameObject* spawner = new Engine::BaseGameObject();
-	std::vector<Environment> environments{ grass, grass, river, road };
-
-	spawner->addBehaviour(new EndlessSpawner(environments));
-	scene->addGameObject(spawner);
-
-	Engine::GameObject* tree = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/tree.obj")),
-		Engine::MaterialObject());
-	scene->addGameObject(tree);
-	tree->transform.position = glm::vec3(-4.0f, 0.f, 5.f);
-
-	Engine::GameObject* coin = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/coin.obj")),
-		Engine::MaterialObject());
-	coin->setCollider(new Engine::Collider(glm::vec3(-.5f, 0, -.5f), glm::vec3(.5f, 0.f, .5f)));
-	coin->addBehaviour(new CoinController());
-	coin->transform.rotateX(90.0f);
-	coin->transform.scale = glm::vec3(.4f);
-	coin->addTag("coin");
-
-	Engine::GameObject* spanwableTree = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/tree.obj")),
-		Engine::MaterialObject());
-	spanwableTree->addTag("tree");
-
-	grass->addBehaviour(new StaticSpawner(coin));
-	grass->addBehaviour(new TreeSpawner(spanwableTree));
-
-	road->addBehaviour(new StaticSpawner(coin));
+/*     Engine::Model* ourModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
+		ourModel);
+	Engine::Animation* danceAnimation2 = animationBuilder.getAnimation();
+	Engine::GameObject* duck2 = new Engine::GameObject(
+		ourModel,
+		Engine::MaterialObject(),
+		danceAnimation2);
+	scene->addGameObject(duck2);
+ 	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f); 
+	duck->transform.scale = glm::vec3(0.005f, 0.005f, 0.005f); */
 
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
@@ -236,7 +175,7 @@ Engine::Scene* loadMainScene()
 	hintText->setColor(Engine::BLACK);
 	hint->addChild(hintText);
 
-	scene->addGameObject(hint);
+/* 	scene->addGameObject(hint); */
 	hint->addBehaviour(new HintController(5.f, 300.f));
 
 	std::vector<std::string> faces {
@@ -259,7 +198,7 @@ Engine::Scene* loadMainScene()
 	crossyRoad->transform.position = glm::vec3(1.f);
 	homeScreen->addChild(crossyRoad);
 	homeScreen->addBehaviour(new HomeScreenController());
-	scene->addGameObject(homeScreen);
+/* 	scene->addGameObject(homeScreen); */
 
 	Engine::Canvas* gameKeysBack = new Engine::Canvas(glm::vec2(298, 19));
 	gameKeysBack->setColor(Engine::BLACK);
@@ -271,7 +210,7 @@ Engine::Scene* loadMainScene()
 	gameKeys->addTag("text");
 	gameKeysBack->addChild(gameKeys);
 	gameKeysBack->addBehaviour(new GameKeysHomeController());
-	scene->addGameObject(gameKeysBack);
+/* 	scene->addGameObject(gameKeysBack); */
 
 	return scene;
 }

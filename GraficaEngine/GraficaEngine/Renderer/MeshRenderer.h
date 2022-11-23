@@ -7,14 +7,18 @@
 #include "Shader.h"
 
 #include "../Core/Transform.h"
+#include "../Core/Animator.h"
 
 namespace Engine {
     class MeshRenderer
     {
     public:
         MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture> textures);
+        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture> textures, Animator *animator);
         void draw(unsigned int depthMap);
         void setTransform(Transform* transform) { _transform = transform; }
+        void setAnimator(Animator* animator) { _animator = animator; };
+        void updateAnimation(float deltaTime);
         static std::shared_ptr<Shader> getShader()
         {
             if (!_shader)
@@ -26,17 +30,14 @@ namespace Engine {
 
             return _shader;
         }
-        std::shared_ptr<MeshRenderer> clone()
-        {
-            return std::make_shared<MeshRenderer>(_mesh, _material, _textures);
-        }
-
+        std::shared_ptr<MeshRenderer> clone();
     private:
         static std::shared_ptr<Shader> _shader;
         std::shared_ptr<Mesh> _mesh;
         Material _material;
         std::vector<Texture> _textures;
         Transform* _transform;
+        Animator* _animator;
 
         void _setMaterialValues(unsigned int depthMap);
     };

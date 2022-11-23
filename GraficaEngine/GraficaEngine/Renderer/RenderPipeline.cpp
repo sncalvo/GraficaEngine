@@ -260,6 +260,7 @@ namespace Engine {
 		meshShader->use();
 		meshShader->setMat4("projection", projection);
 		meshShader->setMat4("view", view);
+
 		auto cameraRange = Settings::getInstance().getCameraNearAndFarPlane();
 		meshShader->setFloat("farPlane", cameraRange.second);
 

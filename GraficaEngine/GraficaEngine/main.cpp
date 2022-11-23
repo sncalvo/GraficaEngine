@@ -133,8 +133,8 @@ Engine::Scene* loadMainScene()
 	Engine::GameObject* level = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/City.obj")),
 		Engine::MaterialObject());
+	level->setCollider(new Engine::Collider(glm::vec3(-100.f, 0.0f, -100.f), glm::vec3(100.f, 0.0f, 100.f)));
 	scene->addGameObject(level);
-	level->transform.scale = glm::vec3(0.1f);
 
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();

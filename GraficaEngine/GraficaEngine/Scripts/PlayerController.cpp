@@ -50,20 +50,6 @@ void PlayerController::update()
 			transform.position += movementDirection * _speed * Engine::Time::getDeltaTime();
 		}
 	}
-
-	if (transform.position.x <= -14.f)
-	{
-		transform.position.x = -14.f;
-	}
-	else if (transform.position.x >= 14.f)
-	{
-		transform.position.x = 14.f;
-	}
-
-	if (transform.position.z >= 5.f)
-	{
-		transform.position.z = 5.f;
-	}
 }
 
 void PlayerController::die()

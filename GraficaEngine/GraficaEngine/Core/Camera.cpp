@@ -48,7 +48,7 @@ namespace Engine
     std::vector<glm::vec4> Camera::getFrustumCornersWorldSpace(const float near, const float far) const
     {
         auto view = getViewMatrix();
-        auto projection = getProjectionMatrix();
+        auto projection = getProjectionMatrixFor(near, far);
 
         const auto inv = glm::inverse(projection * view);
 

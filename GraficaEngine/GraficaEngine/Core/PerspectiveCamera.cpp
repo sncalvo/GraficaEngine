@@ -23,13 +23,17 @@ namespace Engine
 
 	glm::mat4 PerspectiveCamera::getProjectionMatrix() const
 	{
-		return getProjectionMatrixFor(0.1f, 500.f); // TODO: Change parameters
+		float near, far;
+
+		std::tie(near, far) = Settings::getInstance().getCameraNearAndFarPlane();
+
+		return getProjectionMatrixFor(near, far);
 	}
 
 	glm::mat4 PerspectiveCamera::getProjectionMatrixFor(const float near, const float far) const
 	{
 		unsigned int width, height;
 		std::tie(width, height) = Settings::getInstance().getWindowSize();
-		return glm::perspective(glm::radians(getZoom()), (float)width / (float)height, near, far); // TODO: Change parameters
+		return glm::perspective(glm::radians(getZoom()), (float)width / (float)height, near, far);
 	}
 }

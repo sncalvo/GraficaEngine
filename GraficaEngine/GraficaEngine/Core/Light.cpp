@@ -84,7 +84,7 @@ namespace Engine
 		center /= corners.size();
 
 		const auto lightView = glm::lookAt(
-			center + _direction,
+			center - _direction,
 			center,
 			glm::vec3(0.0f, 1.0f, 0.0f)
 		);
@@ -106,7 +106,7 @@ namespace Engine
 			maxZ = std::max(maxZ, trf.z);
 		}
 		// Tune this parameter according to the scene
-		constexpr float zMult = 5.f;
+		constexpr float zMult = 10.f;
 		if (minZ < 0)
 		{
 			minZ *= zMult;
@@ -168,10 +168,10 @@ namespace Engine
 		{
 			DayTime::MIDDAY,
 			new Light(
-				glm::vec3(0.4f, 0.8f, 0.8f),
-				glm::vec3(0.8f, 1.f, 1.f),
-				glm::vec3(1.f),
-				glm::normalize(glm::vec3(0.1f, -0.9f, 0.f))
+				glm::vec3(0.3f, 0.6f, 0.6f),
+				glm::vec3(0.7f, 0.8f, 0.8f),
+				glm::vec3(0.9f),
+				glm::normalize(glm::vec3(0.2f, -0.9f, -0.1f))
 			),
 		},
 		{

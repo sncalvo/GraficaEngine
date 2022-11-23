@@ -29,6 +29,7 @@ namespace Engine
 		unsigned int _windowWidth;
 		unsigned int _windowHeight;
 		bool _fullscreen;
+		bool _debugShadowMap = false;
 
 	public:
 		static Settings &getInstance()
@@ -59,5 +60,7 @@ namespace Engine
 		std::vector<float> getShadowCascadeLevels() const;
 		bool getFullscreen() const;
 		void setFullscreen(bool);
+		bool getDebugShadowMap() const;
+		void setDebugShadowMap(bool);
 	};
 }

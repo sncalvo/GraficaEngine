@@ -5,8 +5,10 @@ layout (location = 1) in vec2 aTexCoords;
 
 out vec2 TexCoords;
 
+uniform vec3 offset;
+
 void main()
 {
     TexCoords = aTexCoords;
-    gl_Position = vec4(aPos, 1.0);
+    gl_Position = vec4(aPos + offset, 1.0);
 }

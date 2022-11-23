@@ -43,14 +43,14 @@ namespace Engine {
 		// TODO: Change to shadow mapping resolution
 		glGenTextures(1, &depthMap);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, depthMap);
+		std::vector<float> shadowCascadeLevels = Settings::getInstance().getShadowCascadeLevels();
 		glTexImage3D(
 			GL_TEXTURE_2D_ARRAY,
 			0,
 			GL_DEPTH_COMPONENT32F,
 			shadowResolution,
 			shadowResolution,
-			// TODO: Probably not 3
-			int(3) + 1,
+			int(shadowCascadeLevels.size()) + 1,
 			0,
 			GL_DEPTH_COMPONENT,
 			GL_FLOAT,
@@ -156,9 +156,8 @@ namespace Engine {
 		glm::mat4 view = camera->getViewMatrix();
 
 		// Inverting faces since to avoid shadow bias
-		glCullFace(GL_FRONT);
 		_drawShadows(scene);
-		glCullFace(GL_BACK);
+
 
 		_drawMeshes(scene);
 
@@ -168,7 +167,10 @@ namespace Engine {
 
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		renderQuad();
+		if (Settings::getInstance().getDebugShadowMap())
+		{
+			renderQuad();
+		}
     }
 
 	void RenderPipeline::_drawShadows(Scene* scene)
@@ -181,9 +183,10 @@ namespace Engine {
 		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>>& shadowRenderers = scene->getShadowRenderers();
 
 		unsigned int shadowResolution = Settings::getInstance().getShadowResolution();
-		glViewport(0, 0, shadowResolution, shadowResolution);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+		glViewport(0, 0, shadowResolution, shadowResolution);
+
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		std::vector<Light*> lights = scene->getLights();
@@ -215,13 +218,15 @@ namespace Engine {
 		}
 
 		// TODO: We are assumming only one light for now. We should create a map for each light
+		glCullFace(GL_FRONT);
 		for (Light* light : lights)
 		{
 			auto lightSpaceMatrices = light->getLightSpaceMatrices(corners);
 			glBindBuffer(GL_UNIFORM_BUFFER, matricesUBO);
 			for (size_t i = 0; i < lightSpaceMatrices.size(); ++i)
 			{
-				glBufferSubData(GL_UNIFORM_BUFFER, i * sizeof(glm::mat4x4), sizeof(glm::mat4x4), &lightSpaceMatrices[i]);
+				glm::mat4& lightSpaceMatrix = lightSpaceMatrices[i];
+				glBufferSubData(GL_UNIFORM_BUFFER, i * sizeof(glm::mat4x4), sizeof(glm::mat4x4), glm::value_ptr(lightSpaceMatrix));
 			}
 			glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
@@ -233,14 +238,16 @@ namespace Engine {
 				}
 			}
 		}
+		glCullFace(GL_BACK);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void RenderPipeline::_drawMeshes(Scene* scene)
 	{
+		Settings& settings = Settings::getInstance();
 		unsigned int width, height;
-		std::tie(width, height) = Settings::getInstance().getWindowSize();
+		std::tie(width, height) = settings.getWindowSize();
 
 		glViewport(0, 0, width, height);
 
@@ -259,7 +266,7 @@ namespace Engine {
 		meshShader->use();
 		meshShader->setMat4("projection", projection);
 		meshShader->setMat4("view", view);
-		auto cameraRange = Settings::getInstance().getCameraNearAndFarPlane();
+		auto cameraRange = settings.getCameraNearAndFarPlane();
 		meshShader->setFloat("farPlane", cameraRange.second);
 
 		std::vector<Light*> lights = scene->getLights();
@@ -267,10 +274,16 @@ namespace Engine {
 		for (Light* light : lights)
 		{
 			light->apply(*meshShader);
-			auto lightSpaceMatrix = light->getLightSpaceMatrix();
-			meshShader->setMatrix4f("lightSpaceMatrix", glm::value_ptr(lightSpaceMatrix));
 		}
 		meshShader->setVec3f("viewPos", glm::value_ptr(camera->transform.position));
+
+		std::vector<float> shadowCascadeLevels = settings.getShadowCascadeLevels();
+		meshShader->setInt("cascadeCount", shadowCascadeLevels.size());
+		meshShader->setBool("debugLayers", settings.getDebugShadowMap());
+		for (size_t i = 0; i < shadowCascadeLevels.size(); ++i)
+		{
+			meshShader->setFloat("cascadePlaneDistances[" + std::to_string(i) + "]", shadowCascadeLevels[i]);
+		}
 
 		for (auto& [key, value] : meshRenderers)
 		{
@@ -355,28 +368,39 @@ void renderQuad()
 	float nearPlane = 1.0f, farPlane = 40.f;
 	testShader->setFloat("nearPlane", nearPlane);
 	testShader->setFloat("farPlane", farPlane);
+	unsigned int lastTexture = 2;
 
-	if (quadVAO == 0)
+	glActiveTexture(GL_TEXTURE0 + lastTexture);
+	glBindTexture(GL_TEXTURE_2D_ARRAY, depthMap);
+	testShader->setInt("shadowMap", lastTexture);
+
+	for (float i = 0.f; i < 5.f; i += 1.f)
 	{
-		float quadVertices[] = {
-			// positions        // texture Coords
-			-1.0f, -0.4f, 0.0f,  0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
-			-0.4f, -0.4f, 0.0f,  1.0f, 1.0f,
-			-0.4f, -1.0f, 0.0f,  1.0f, 0.0f,
-		};
-		// setup plane VAO
-		glGenVertexArrays(1, &quadVAO);
-		glGenBuffers(1, &quadVBO);
+		if (quadVAO == 0)
+		{
+			float quadVertices[] = {
+				// positions        // texture Coords
+				-1.0f, -0.6f, 0.0f,  0.0f, 1.0f,
+				-1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+				-0.6f, -0.6f, 0.0f,  1.0f, 1.0f,
+				-0.6f, -1.0f, 0.0f,  1.0f, 0.0f,
+			};
+			// setup plane VAO
+			glGenVertexArrays(1, &quadVAO);
+			glGenBuffers(1, &quadVBO);
+			glBindVertexArray(quadVAO);
+			glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		}
+		testShader->setFloat("map", i);
+		glm::vec3 offset{ 0.4f * i, 0.4f * i, 0.f };
+		testShader->setVec3f("offset", glm::value_ptr(offset));
 		glBindVertexArray(quadVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glBindVertexArray(0);
 	}
-	glBindVertexArray(quadVAO);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
 }

@@ -39,15 +39,14 @@ uniform sampler2DArray shadowMap;
 uniform sampler2D texture_diffuse1;
 uniform bool has_texture;
 uniform bool is_flat;
+uniform bool debugLayers;
 uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
 uniform vec2 texture_offset;
 
-float ShadowCalculationV2(vec3 normal, vec3 lightDir)
+int GetLayer(float depthValue)
 {
-    vec4 fragPosViewSpace = view * vec4(FragPos, 1.0);
-    float depthValue = abs(fragPosViewSpace.z);
     int layer = -1;
     for (int i = 0; i < cascadeCount; ++i)
     {
@@ -62,6 +61,15 @@ float ShadowCalculationV2(vec3 normal, vec3 lightDir)
         layer = cascadeCount;
     }
 
+    return layer;
+}
+
+float ShadowCalculationV2(vec3 normal, vec3 lightDir)
+{
+    vec4 fragPosViewSpace = view * vec4(FragPos, 1.0);
+    float depthValue = abs(fragPosViewSpace.z);
+    int layer = GetLayer(depthValue);
+
     vec4 fragPosLightSpace = lightSpaceMatrices[layer] * vec4(FragPos, 1.0);
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5;
@@ -70,7 +78,7 @@ float ShadowCalculationV2(vec3 normal, vec3 lightDir)
     {
         return 0.0;
     }
-    float bias = max(0.01 * (1.0 - dot(normal, lightDir)), 0.003);
+    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
     const float biasModifier = 0.5f;
     if (layer == cascadeCount)
     {
@@ -147,6 +155,21 @@ void main()
 
     vec3 diffuseSpecular = (1.0 - shadow) * (diffuse + specular);
     vec3 result = (1.4 - shadow) * ambient + diffuseSpecular;
+
+    vec4 fragPosViewSpace = view * vec4(FragPos, 1.0);
+    float depthValue = abs(fragPosViewSpace.z);
+    int layer = GetLayer(depthValue);
+
+    if (debugLayers) {
+        if (layer < 1.f) {
+            result.x += 0.2;
+        } else if (layer < 2.0) {
+            result.y += 0.2;
+        } else {
+            result.z += 0.2;
+        }
+    }
+
     FragColor = vec4(result, 1.0);
 
     float brightness = dot(FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));

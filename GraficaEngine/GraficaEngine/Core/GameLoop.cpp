@@ -132,6 +132,7 @@ namespace Engine
 
 		float frameCounterUpdateThreshold = 0.f;
 		unsigned int counter = 0;
+		float deltaTimeAcc = 0.f;
 
 		while (true)
 		{
@@ -184,6 +185,12 @@ namespace Engine
 			}
 
 			activeScene->physicsUpdate();
+			if (counter % 2 == 0) {
+				activeScene->animationsUpdate(deltaTimeAcc);
+				deltaTimeAcc = 0.f;
+			} else {
+				deltaTimeAcc += Time::getDeltaTime();
+			}
 			activeScene->update();
 			activeScene->flushQueuedGameObjects();
 

@@ -25,6 +25,8 @@
 #include "Physics/Collider.h"
 #include "Core/Canvas.h"
 #include "Core/Colors.h"
+#include "Core/AnimationBuilder.h"
+#include "Core/Animator.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/JumpController.h"
@@ -83,6 +85,7 @@ int main(int argc, char *argv[])
 
 Engine::Scene* loadMainScene()
 {
+	Engine::AnimationBuilder animationBuilder;
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
 		glm::vec3(0.f, 1.f, 0.f),
@@ -119,22 +122,38 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-	Engine::GameObject* duck = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/chicken.obj")),
-		Engine::MaterialObject());
-	duck->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
-	duck->addBehaviour(new PlayerController());
-	duck->addBehaviour(new JumpController());
-	scene->addGameObject(duck);
-	duck->addTag("player");
-	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f);
-	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
+    Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
+		vampireModel);
+	Engine::Animation* danceAnimation = animationBuilder.getAnimation();
+	Engine::GameObject* vampire = new Engine::GameObject(
+		vampireModel,
+		Engine::MaterialObject(),
+		danceAnimation);
+	vampire->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
+	vampire->addBehaviour(new PlayerController());
+	vampire->addBehaviour(new JumpController());
+	vampire->addTag("player");
+	scene->addGameObject(vampire);
+
+    Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	Engine::GameObject* vampire2 = new Engine::GameObject(
+		vampireModel2,
+		Engine::MaterialObject(),
+		danceAnimation);
+	vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
+	scene->addGameObject(vampire2);
 
 	Engine::GameObject* level = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/City.obj")),
 		Engine::MaterialObject());
 	level->setCollider(new Engine::Collider(glm::vec3(-100.f, 0.0f, -100.f), glm::vec3(100.f, 0.0f, 100.f)));
 	scene->addGameObject(level);
+
+	Engine::GameObject* buildings = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/Building.obj")),
+		Engine::MaterialObject());
+	scene->addGameObject(buildings);
 
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
@@ -149,7 +168,7 @@ Engine::Scene* loadMainScene()
 	hintText->setColor(Engine::BLACK);
 	hint->addChild(hintText);
 
-	scene->addGameObject(hint);
+/* 	scene->addGameObject(hint); */
 	hint->addBehaviour(new HintController(5.f, 300.f));
 
 	std::vector<std::string> faces {
@@ -172,7 +191,7 @@ Engine::Scene* loadMainScene()
 	crossyRoad->transform.position = glm::vec3(1.f);
 	homeScreen->addChild(crossyRoad);
 	homeScreen->addBehaviour(new HomeScreenController());
-	scene->addGameObject(homeScreen);
+/* 	scene->addGameObject(homeScreen); */
 
 	Engine::Canvas* gameKeysBack = new Engine::Canvas(glm::vec2(298, 19));
 	gameKeysBack->setColor(Engine::BLACK);
@@ -184,7 +203,7 @@ Engine::Scene* loadMainScene()
 	gameKeys->addTag("text");
 	gameKeysBack->addChild(gameKeys);
 	gameKeysBack->addBehaviour(new GameKeysHomeController());
-	scene->addGameObject(gameKeysBack);
+/* 	scene->addGameObject(gameKeysBack); */
 
 	return scene;
 }

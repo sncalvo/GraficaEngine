@@ -7,6 +7,7 @@
 
 #include "BaseGameObject.h"
 #include "Scene.h"
+#include "Animator.h"
 
 namespace Engine
 {
@@ -16,9 +17,10 @@ namespace Engine
 		Model *_model;
 		MaterialObject _material;
 		Collider *_collider;
-
+		Animator *_animator;
 	public:
 		GameObject(Model *model, MaterialObject material);
+		GameObject(Model *model, MaterialObject material, Animation *animation);
 		GameObject(const GameObject *);
 		GameObject *clone() const override;
 		~GameObject();

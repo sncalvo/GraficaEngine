@@ -5,7 +5,8 @@
 namespace Engine {
     std::shared_ptr<Shader> ShadowRenderer::_shader{};
 
-    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh) : _mesh(mesh), _transform(nullptr) {}
+    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh) : _mesh(mesh), _transform(nullptr), _animator(NULL) {}
+    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh, Animator *animator) : _mesh(mesh), _transform(nullptr), _animator(animator) {}
 
     void ShadowRenderer::draw()
     {
@@ -17,6 +18,16 @@ namespace Engine {
         auto shader = getShader();
         glm::mat4 model = _transform->getTransformedModel();
         shader->setMatrix4f("model", glm::value_ptr(model));
+        if(_animator) {
+            shader->setBool("isBony", true);
+            auto transforms = _animator->GetFinalBoneMatrices();
+            for (int i = 0; i < transforms.size(); ++i)
+                shader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+
+
+        } else {
+            shader->setBool("isBony", false);
+        }
 
         _mesh->draw();
     }

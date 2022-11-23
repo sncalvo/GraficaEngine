@@ -15,6 +15,17 @@ namespace Engine {
         _mesh = mesh;
         _material = material;
         _textures = textures;
+        _animator = NULL;
+    }
+
+    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures, Animator *animator) : MeshRenderer(mesh, material, textures) {
+        _animator = animator;
+    }
+
+    void MeshRenderer::updateAnimation(float deltaTime) {
+        if (_animator) {
+          _animator->UpdateAnimation(deltaTime);
+        }
     }
 
     void MeshRenderer::draw(unsigned int depthMap) {
@@ -22,6 +33,16 @@ namespace Engine {
 
         glm::mat4 model = _transform->getTransformedModel();
         shader->setMatrix4f("model", glm::value_ptr(model));
+        if(_animator) {
+            shader->setBool("isBony", true);
+            auto transforms = _animator->GetFinalBoneMatrices();
+            for (int i = 0; i < transforms.size(); ++i)
+                shader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+
+
+        } else {
+            shader->setBool("isBony", false);
+        }
 
         _setMaterialValues(depthMap);
 
@@ -39,7 +60,7 @@ namespace Engine {
 
         unsigned int diffuseNr = 1;
         unsigned int specularNr = 1;
-        
+
         for (unsigned int i = 0; i < _textures.size(); i++)
         {
             glActiveTexture(GL_TEXTURE0 + lastTexture);
@@ -71,5 +92,9 @@ namespace Engine {
         _shader->setVec3f("material.diffuse", glm::value_ptr(_material.diffuse));
         _shader->setVec3f("material.specular", glm::value_ptr(_material.specular));
         _shader->setFloat("material.shininess", _material.shininess);
+    }
+
+    std::shared_ptr<MeshRenderer> MeshRenderer::clone() {
+        return std::make_shared<MeshRenderer>(_mesh, _material, _textures, _animator);
     }
 }

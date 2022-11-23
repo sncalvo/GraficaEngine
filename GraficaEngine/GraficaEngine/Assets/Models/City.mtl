@@ -1,5 +1,5 @@
 # Blender MTL File: 'City.blend'
-# Material Count: 73
+# Material Count: 68
 
 newmtl Blinds_Roman_Hobbled_Blue
 Ns 179.999996
@@ -192,16 +192,6 @@ newmtl ConstructionSignMetal
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.439657 0.351533 0.174647
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl FrontCol
-Ns 143.999983
-Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -489,17 +479,6 @@ d 1.000000
 illum 1
 map_Kd Assets/Models/Road-2-Lane-X-jpg.jpg
 
-newmtl Roof2
-Ns 143.999983
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd Assets/Models/Image_3.jpg
-
 newmtl SignLegs
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
@@ -529,7 +508,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Bump Assets/Models/Stainless Steel normal.jpg
 map_Kd Assets/Models/Stainless Steel.jpg
+map_Ns Assets/Models/Stainless Steel roughness.jpg
 
 newmtl Wheek
 Ns 18.000005
@@ -606,7 +587,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Bump Assets/Models/Wood normal.jpg
 map_Kd Assets/Models/Wood.jpg
+map_Ns Assets/Models/Wood roughness.jpg
 
 newmtl b_hotr04_W2W7_t2_l1
 Ns 18.000005
@@ -617,7 +600,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
+map_Bump Assets/Models/AIT01W2W7_n.png
 map_Kd Assets/Models/AIT01W2W7_d.png
+map_Ks Assets/Models/AIT01W2W7_s.png
 
 newmtl fence_plate_po-2
 Ns 225.000000
@@ -628,6 +613,8 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Bump Assets/Models/Image_2.png
+map_Kd Assets/Models/Image_0.png
 
 newmtl glass
 Ns 179.999996
@@ -669,36 +656,6 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd Assets/Models/lambert1_albedo.jpeg
-
-newmtl material
-Ns 143.999983
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl material_1.001
-Ns 143.999983
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-
-newmtl material_2.001
-Ns 143.999983
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
 
 newmtl rams
 Ns 179.999996

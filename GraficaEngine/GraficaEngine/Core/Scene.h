@@ -57,6 +57,7 @@ namespace Engine
 		void start();
 		void update();
 		void physicsUpdate();
+		void animationsUpdate(float deltaTime);
 		void addRenderers(BaseGameObject* gameObject);
 		void removeRenderers(BaseGameObject* gameObject);
 

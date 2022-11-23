@@ -135,5 +135,6 @@
     <None Include="Assets\Shaders\depthTest.gs" />
     <None Include="Assets\Shaders\hdrDraw.fs" />
     <None Include="Assets\Shaders\blur.fs" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

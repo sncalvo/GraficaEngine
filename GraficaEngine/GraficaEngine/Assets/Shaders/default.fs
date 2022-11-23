@@ -47,6 +47,7 @@ uniform vec2 texture_offset;
 uniform float fogMaxDist;
 uniform float fogMinDist;
 uniform vec3 fogColor;
+uniform bool useFog;
 
 int GetLayer(float depthValue)
 {
@@ -159,13 +160,16 @@ void main()
     vec3 diffuseSpecular = (1.0 - shadow) * (diffuse + specular);
     vec3 result = (1.4 - shadow) * ambient + diffuseSpecular;
     // Calculate fog
-    float dist = distance(viewPos.xyz, worldPosition);
-    float fogFactor = (fogMaxDist - dist) /
-                      (fogMaxDist - fogMinDist);
-    fogFactor = clamp(fogFactor, 0.0, 1.0);
+    if (useFog)
+    {
+        float dist = distance(viewPos.xyz, worldPosition);
+        float fogFactor = (fogMaxDist - dist) /
+                          (fogMaxDist - fogMinDist);
+        fogFactor = clamp(fogFactor, 0.0, 1.0);
 
-    result = mix(fogColor, result, fogFactor);
-
+        result = mix(fogColor, result, fogFactor);
+    }
+    
     FragColor = vec4(result, 1.0);
 
     vec4 fragPosViewSpace = view * vec4(FragPos, 1.0);

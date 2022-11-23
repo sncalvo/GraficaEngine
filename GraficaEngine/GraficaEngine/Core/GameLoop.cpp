@@ -118,6 +118,34 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleFogToggle() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_COMMA))
+		{
+			bool fog = settings.getFog();
+			settings.setFog(!fog);
+
+			std::cout << "Toggled fog " << !fog << std::endl;
+		}
+	}
+
+	void GameLoop::_handleBloomToggle() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_M))
+		{
+			bool bloom = settings.getBloom();
+			settings.setBloom(!bloom);
+
+			std::cout << "Toggled bloom " << !bloom << std::endl;
+		}
+	}
+
 	void GameLoop::start()
 	{
 		srand((unsigned)time(0));
@@ -176,6 +204,8 @@ namespace Engine
 			_handleInterpolationToggle();
 			_handleDayTime();
 			_handleShadowMapDebug();
+			_handleFogToggle();
+			_handleBloomToggle();
 
 			if (sceneManager.getShouldRestart())
 			{

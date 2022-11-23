@@ -272,6 +272,7 @@ namespace Engine {
 		meshShader->setFloat("fogMinDist", fogMin);
 		meshShader->setFloat("fogMaxDist", fogMax);
 		meshShader->setVec3f("fogColor", glm::value_ptr(fogColor));
+		meshShader->setBool("useFog", settings.getFog());
 
 		auto cameraRange = settings.getCameraNearAndFarPlane();
 		meshShader->setFloat("farPlane", cameraRange.second);
@@ -358,6 +359,8 @@ namespace Engine {
 		_hdrShader->setFloat("exposure", exposure);
 		_hdrShader->setInt("colorBuffer", 0);
 		_hdrShader->setInt("bloomBlur", 1);
+		float useBloom = (float)Settings::getInstance().getBloom();
+		_hdrShader->setFloat("useBloom", useBloom);
 
 		glBindVertexArray(quadVAOHDR);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

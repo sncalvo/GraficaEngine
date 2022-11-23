@@ -185,4 +185,24 @@ namespace Engine
 	{
 		_fogColor = color;
 	}
+
+	bool Settings::getBloom() const
+	{
+		return _bloom;
+	}
+
+	void Settings::setBloom(bool bloom)
+	{
+		_bloom = bloom;
+	}
+
+	bool Settings::getFog() const
+	{
+		return _fog;
+	}
+
+	void Settings::setFog(bool fog)
+	{
+		_fog = fog;
+	}
 }

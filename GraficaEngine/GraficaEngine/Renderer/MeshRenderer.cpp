@@ -11,7 +11,7 @@
 namespace Engine {
     std::shared_ptr<Shader> MeshRenderer::_shader{};
 
-    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture> textures) {
+    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures) {
         _mesh = mesh;
         _material = material;
         _textures = textures;
@@ -45,7 +45,7 @@ namespace Engine {
             glActiveTexture(GL_TEXTURE0 + lastTexture);
 
             std::string number;
-            std::string name = _textures[i].getType();
+            std::string name = _textures[i]->getType();
             if (name == "texture_diffuse")
                 number = std::to_string(diffuseNr++);
             else if (name == "texture_specular")
@@ -53,7 +53,7 @@ namespace Engine {
 
             _shader->setBool("has_texture", true);
             _shader->setInt((name + number).c_str(), lastTexture);
-            glBindTexture(GL_TEXTURE_2D, _textures[i].ID);
+            glBindTexture(GL_TEXTURE_2D, _textures[i]->ID);
             lastTexture += 1;
         }
 

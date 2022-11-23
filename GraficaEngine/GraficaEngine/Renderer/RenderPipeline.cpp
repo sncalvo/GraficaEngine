@@ -230,7 +230,6 @@ namespace Engine {
 				for (auto shadowRenderer : value)
 				{
 					shadowRenderer->draw();
-
 				}
 			}
 		}

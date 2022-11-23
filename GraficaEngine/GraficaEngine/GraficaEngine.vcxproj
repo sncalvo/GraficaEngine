@@ -165,6 +165,7 @@
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderPipeline.cpp" />
     <ClCompile Include="Renderer\Skybox.cpp" />
+    <ClCompile Include="Renderer\ResourceManager.cpp" />
     <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
     <ClCompile Include="Scripts\HomeScreenController.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderPipeline.h" />
     <ClInclude Include="Renderer\Skybox.h" />
+    <ClInclude Include="Renderer\ResourceManager.h" />
     <ClInclude Include="Scripts\GameKeysHomeController.h" />
     <ClInclude Include="Scripts\HintController.h" />
     <ClInclude Include="Scripts\HomeScreenController.h" />

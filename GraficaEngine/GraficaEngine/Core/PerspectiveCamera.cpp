@@ -23,7 +23,7 @@ namespace Engine
 
 	glm::mat4 PerspectiveCamera::getProjectionMatrix() const
 	{
-		return getProjectionMatrixFor(0.1f, 100.f); // TODO: Change parameters
+		return getProjectionMatrixFor(0.1f, 500.f); // TODO: Change parameters
 	}
 
 	glm::mat4 PerspectiveCamera::getProjectionMatrixFor(const float near, const float far) const

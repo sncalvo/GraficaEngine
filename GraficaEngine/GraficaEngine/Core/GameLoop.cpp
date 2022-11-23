@@ -107,6 +107,10 @@ namespace Engine
 		}
 	}
 
+    float parabola(float t, float initial_height) {
+	  return - 0.1f * t * t + initial_height;
+	}
+
 	void GameLoop::start()
 	{
 		srand((unsigned)time(0));
@@ -114,13 +118,27 @@ namespace Engine
 		Input &input = Input::getInstance();
 		SceneManager &sceneManager = SceneManager::getInstance();
 
-		_renderer.setup();
-
-		Scene *activeScene = sceneManager.getActiveScene();
-		activeScene->start();
-
 		float frameCounterUpdateThreshold = 0.f;
 		unsigned int counter = 0;
+		float initial_height = 1.0;
+		float vertices[] = {
+			0.0f,  initial_height, 0.5f
+		};  
+
+		unsigned int VAO;
+		glGenVertexArrays(1, &VAO); 
+		glBindVertexArray(VAO);
+
+		unsigned int VBO;
+		glGenBuffers(1, &VBO);  
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);  
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);  
+		Engine::Shader shader("Assets/Shaders/particles.vs", "Assets/Shaders/particles.gs", "Assets/Shaders/particles.fs");
+		Engine::Texture texture("Assets/Models/shape-white.png", "lol");
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable( GL_BLEND );
 
 		while (true)
 		{
@@ -128,55 +146,27 @@ namespace Engine
 
 			Time::updateTime();
 			input.update();
+			float new_height = parabola(frameCounterUpdateThreshold, initial_height);
+			std::cout << new_height << std::endl;
+			vertices[1] = new_height;
+			vertices[2] = new_height;
+			glBindBuffer(GL_ARRAY_BUFFER, VBO);  
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
 			frameCounterUpdateThreshold += Time::getDeltaTime();
-			
-			if (frameCounterUpdateThreshold > 1.f)
-			{
-				std::string FPS = std::to_string((1.f / frameCounterUpdateThreshold) * counter);
-				std::string ms = std::to_string((frameCounterUpdateThreshold / counter) * 100);
-				std::string title = "GraficaEngine - " + FPS + " FPS / " + ms + " ms";
-				_window->setTitle(title);
-				counter = 0;
-				frameCounterUpdateThreshold = 0.f;
-			}			
 			
 			if (input.getKeyDown(KEY_Q))
 				break;
 
-			if (input.getKeyDown(PAUSE_KEY))
-			{
-				_gamePaused = !_gamePaused;
-			}
-
-			if (_gamePaused || !activeScene)
-			{
-				continue;
-			}
-
+			glClearColor(0.0,0.0,0.0,1.0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			glPolygonMode(GL_FRONT_AND_BACK, Settings::getInstance().getIsWireframe() ? GL_LINE : GL_FILL);
 
-			_handleGameSpeed();
-			_handleTexturesToggle();
-			_handleShowCollidersToggle();
-			_handleWireframeToggle();
-			_handleInterpolationToggle();
-			_handleDayTime();
-
-			if (sceneManager.getShouldRestart())
-			{
-				sceneManager.loadScene("main");
-				sceneManager.setShouldRestart(false);
-				activeScene = sceneManager.getActiveScene();
-			}
-
-			activeScene->physicsUpdate();
-			activeScene->update();
-			activeScene->flushQueuedGameObjects();
-
-			_renderer.draw(activeScene);
-
+            shader.use();
+			texture.activateTextureAs(0);
+			glBindVertexArray(VAO);
+			glDrawArrays(GL_POINTS, 0, 1);
 			_window->swap();
 		}
 

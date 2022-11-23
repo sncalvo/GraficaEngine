@@ -23,14 +23,14 @@ namespace Engine
 		// load and generate the texture
 		FREE_IMAGE_FORMAT format = FreeImage_GetFIFFromFilename(path);
 		FIBITMAP* bitmap = FreeImage_Load(format, path);
-		bitmap = FreeImage_ConvertTo24Bits(bitmap);
+		bitmap = FreeImage_ConvertTo32Bits(bitmap);
 		int width = FreeImage_GetWidth(bitmap);
 		int height = FreeImage_GetHeight(bitmap);
 		void* data = FreeImage_GetBits(bitmap);
 
 		if (data)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR,
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA,
 				GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}

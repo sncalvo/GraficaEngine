@@ -69,13 +69,6 @@ int main(int argc, char *argv[])
 	Engine::Window *window = new Engine::Window(width, height, "Grafica Engine");
 	gameLoop.addWindow(window);
 
-	Engine::Scene *scene = loadMainScene();
-	loadHUD(scene);
-
-	Engine::SceneManager &sceneManager = Engine::SceneManager::getInstance();
-	sceneManager.addScene("main", scene);
-	sceneManager.loadScene("main");
-
 	gameLoop.start();
 
 	return 0;

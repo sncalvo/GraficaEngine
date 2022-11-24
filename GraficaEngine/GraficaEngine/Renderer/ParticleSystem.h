@@ -1,21 +1,15 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <string>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Particle.h"
-
-float parabola(float t) {
-    return - 0.2f * t * t;
-}
-
-float rand11() {
-    return (rand() / (float)RAND_MAX) * 2 - 1;
-}
-
-float rand01() {
-    return ((double)rand() / RAND_MAX) * 1.01 + 0.01;
-}
+#include "Texture.h"
+#include "Shader.h"
 
 namespace Engine {
     class ParticleSystem {
@@ -28,5 +22,8 @@ namespace Engine {
         unsigned int VAO;
         unsigned int VBO;
         int particle_amount = 1000;
+        glm::mat4 projection;
+        Shader *shader;
+        Texture *texture;
     };
 }

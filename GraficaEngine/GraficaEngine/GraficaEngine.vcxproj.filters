@@ -59,7 +59,6 @@
     <ClCompile Include="Renderer\ShadowRenderer.cpp" />
     <ClCompile Include="Utils\UUID.cpp" />
     <ClCompile Include="Renderer\ParticleSystem.cpp" />
-    <ClCompile Include="Renderer\ParticleSystem2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -128,7 +127,6 @@
     <ClInclude Include="Utils\UUID.h" />
     <ClInclude Include="Renderer\ParticleSystem.h" />
     <ClInclude Include="Renderer\Particle.h" />
-    <ClInclude Include="Renderer\ParticleSystem2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\skybox.vs" />

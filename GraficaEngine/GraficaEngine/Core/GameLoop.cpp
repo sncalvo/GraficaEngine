@@ -131,9 +131,9 @@ namespace Engine
 
 			glClearColor(0.0,0.0,0.0,1.0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			ps.update();
 
 			glPolygonMode(GL_FRONT_AND_BACK, Settings::getInstance().getIsWireframe() ? GL_LINE : GL_FILL);
+			ps.update();
 			_window->swap();
 		}
 

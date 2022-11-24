@@ -144,23 +144,16 @@ Engine::Scene* loadMainScene()
 	vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
 	scene->addGameObject(vampire2);
 
-    Engine::Model* cityModel = new Engine::Model(_strdup("Assets/Models/City.obj"));
-	Engine::GameObject* city = new Engine::GameObject(
-		cityModel,
+	Engine::GameObject* level = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/City.obj")),
 		Engine::MaterialObject());
-	scene->addGameObject(city);
+	level->setCollider(new Engine::Collider(glm::vec3(-100.f, 0.0f, -100.f), glm::vec3(100.f, 0.0f, 100.f)));
+	scene->addGameObject(level);
 
-/*     Engine::Model* ourModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
-		ourModel);
-	Engine::Animation* danceAnimation2 = animationBuilder.getAnimation();
-	Engine::GameObject* duck2 = new Engine::GameObject(
-		ourModel,
-		Engine::MaterialObject(),
-		danceAnimation2);
-	scene->addGameObject(duck2);
- 	duck->transform.position = glm::vec3(0.0f, 1.f, 0.f); 
-	duck->transform.scale = glm::vec3(0.005f, 0.005f, 0.005f); */
+	Engine::GameObject* buildings = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/Building.obj")),
+		Engine::MaterialObject());
+	scene->addGameObject(buildings);
 
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();

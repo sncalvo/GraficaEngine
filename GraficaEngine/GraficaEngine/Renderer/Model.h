@@ -29,7 +29,7 @@ namespace Engine
         void _loadModel(std::string path);
         void _processNode(aiNode* node, const aiScene* scene);
         std::shared_ptr<Mesh> _processMesh(aiMesh* mesh, const aiScene* scene);
-        std::vector<Texture> _loadMaterialTextures(
+        std::vector<Texture*> _loadMaterialTextures(
             aiMaterial* mat,
             aiTextureType type,
             std::string typeName);

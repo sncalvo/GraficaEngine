@@ -53,6 +53,11 @@ void JumpController::update()
 	}
 
 	_updatePosition();
+
+	if (transform.position.y < 0.f)
+	{
+		transform.position.y = 0.f;
+	}
 }
 
 void JumpController::_updateGrounded()

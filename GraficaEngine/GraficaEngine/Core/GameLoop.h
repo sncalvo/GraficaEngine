@@ -38,6 +38,7 @@ namespace Engine
 		void _handleTexturesToggle() const;
 		void _handleShowCollidersToggle() const;
 		void _handleInterpolationToggle() const;
+		void _handleShadowMapDebug() const;
 
 	public:
 		static GameLoop getInstance()

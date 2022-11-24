@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "ResourceManager.h"
+
 namespace Engine
 {
     Model::Model(char* path)
@@ -101,7 +103,7 @@ namespace Engine
     std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene) {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<Texture> textures;
+        std::vector<Texture*> textures;
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
@@ -157,16 +159,17 @@ namespace Engine
         return newMesh;
     }
 
-    std::vector<Texture> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+    std::vector<Texture*> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
     {
-        std::vector<Texture> textures;
+        std::vector<Texture*> textures;
         aiString texturePath;
 
         mat->GetTexture(type, 0, &texturePath);
 
         if (texturePath.length > 0)
         {
-            Texture texture(texturePath.C_Str(), typeName);
+            Texture* texture = ResourceManager::getInstance().createTexture(texturePath.C_Str(), typeName);
+            // Texture texture(texturePath.C_Str(), typeName);
             textures.push_back(texture);
         }
 

@@ -40,6 +40,17 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleShadowMapDebug() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_LEFT_SHIFT))
+		{
+			settings.setDebugShadowMap(!settings.getDebugShadowMap());
+		}
+	}
+
 	void GameLoop::_handleGameSpeed() const
 	{
 		Input &input = Input::getInstance();
@@ -164,6 +175,7 @@ namespace Engine
 			_handleWireframeToggle();
 			_handleInterpolationToggle();
 			_handleDayTime();
+			_handleShadowMapDebug();
 
 			if (sceneManager.getShouldRestart())
 			{

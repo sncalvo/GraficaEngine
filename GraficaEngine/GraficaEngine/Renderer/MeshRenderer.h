@@ -13,8 +13,8 @@ namespace Engine {
     class MeshRenderer
     {
     public:
-        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture> textures);
-        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture> textures, Animator *animator);
+        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures);
+        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures, Animator *animator);
         void draw(unsigned int depthMap);
         void setTransform(Transform* transform) { _transform = transform; }
         void setAnimator(Animator* animator) { _animator = animator; };
@@ -35,7 +35,7 @@ namespace Engine {
         static std::shared_ptr<Shader> _shader;
         std::shared_ptr<Mesh> _mesh;
         Material _material;
-        std::vector<Texture> _textures;
+        std::vector<Texture*> _textures;
         Transform* _transform;
         Animator* _animator;
 

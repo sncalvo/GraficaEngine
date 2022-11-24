@@ -1,18 +1,18 @@
 #include "Settings.h"
 
 constexpr float CAMERA_NEAR_DEFAULT = 0.1f;
-constexpr float CAMERA_FAR_DEFAULT = 50.f;
+constexpr float CAMERA_FAR_DEFAULT = 500.f;
 constexpr float EXPOSURE_DEFAULT = 2.f;
-constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 2048;
-constexpr unsigned int DEFAULT_WIDTH = 1080;
-constexpr unsigned int DEFAULT_HEIGHT = 580;
+constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 1024;
+constexpr unsigned int DEFAULT_WIDTH = 1900;
+constexpr unsigned int DEFAULT_HEIGHT = 1020;
 constexpr bool DEFAULT_FULLSCREEN = false;
 
 namespace Engine
 {
 	Settings::Settings() : _isWireframe(false),
 						   _showTextures(true),
-						   _useInterpolation(false),
+						   _useInterpolation(true),
 						   _showColliders(false),
 						   _gameSpeed(GameSpeed::NORMAL),
 						   _dayTime(DayTime::MIDDAY),
@@ -149,5 +149,15 @@ namespace Engine
 	void Settings::setFullscreen(bool fullscreen)
 	{
 		_fullscreen = fullscreen;
+	}
+
+	bool Settings::getDebugShadowMap() const
+	{
+		return _debugShadowMap;
+	}
+
+	void Settings::setDebugShadowMap(bool debugShadowMap)
+	{
+		_debugShadowMap = debugShadowMap;
 	}
 }

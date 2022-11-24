@@ -58,6 +58,8 @@ void loadHUD(Engine::Scene *);
 
 int main(int argc, char *argv[])
 {
+	srand((unsigned)time(0));
+
 	if (!Engine::MediaLayer::init())
 	{
 		return 1;

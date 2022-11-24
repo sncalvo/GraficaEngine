@@ -1,4 +1,5 @@
 #include "FlyingCameraController.h"
+#include <iostream>
 
 FlyingCameraController *FlyingCameraController::clone() const
 {
@@ -30,5 +31,13 @@ void FlyingCameraController::update()
 	if (input.getKey(Engine::KEY_RIGHT) || input.getKey(Engine::KEY_D))
 	{
 		camera->processKeyboard(Engine::Camera_Movement::RIGHT, Engine::Time::getDeltaTime());
+	}
+	if (input.getKey(Engine::KEY_RIGHT_SHIFT))
+	{
+		camera->processKeyboard(Engine::Camera_Movement::UP, Engine::Time::getDeltaTime());
+	}
+	if (input.getKey(Engine::KEY_RIGHT_CTRL))
+	{
+		camera->processKeyboard(Engine::Camera_Movement::DOWN, Engine::Time::getDeltaTime());
 	}
 }

@@ -36,4 +36,11 @@ namespace Engine
 		std::tie(width, height) = Settings::getInstance().getWindowSize();
 		return glm::perspective(glm::radians(getZoom()), (float)width / (float)height, near, far);
 	}
+
+	glm::mat4 PerspectiveCamera::getProjectionMatrixFov(const float fov) const
+	{
+		unsigned int width, height;
+		std::tie(width, height) = Settings::getInstance().getWindowSize();
+		return glm::perspective(glm::radians(fov), (float)width / (float)height, 0.1f, 100.f); // TODO: Change parameters
+	}
 }

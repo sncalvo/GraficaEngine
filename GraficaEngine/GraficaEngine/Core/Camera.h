@@ -17,7 +17,9 @@ namespace Engine
         FORWARD,
         BACKWARD,
         LEFT,
-        RIGHT
+        RIGHT,
+        UP,
+        DOWN
     };
 
     const float YAW = -90.0f;
@@ -33,8 +35,10 @@ namespace Engine
         Camera(const Camera *);
         Camera *clone() const;
         glm::mat4 getViewMatrix() const;
+        glm::mat4 getBoxMatrix();
         virtual glm::mat4 getProjectionMatrix() const;
         virtual glm::mat4 getProjectionMatrixFor(const float near, const float far) const;
+        virtual glm::mat4 getProjectionMatrixFov(const float fov) const;
         std::vector<glm::vec4> getFrustumCornersWorldSpace(const float near, const float far) const;
         void apply(Shader &shader) const;
         void processKeyboard(Camera_Movement direction, float deltaTime);

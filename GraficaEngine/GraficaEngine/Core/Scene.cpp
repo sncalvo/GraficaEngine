@@ -126,10 +126,10 @@ namespace Engine
 	{
 		_activeCamera->update();
 
-		for (BaseGameObject *gameObject : _gameObjects)
+/* 		for (BaseGameObject *gameObject : _gameObjects)
 		{
 			gameObject->update();
-		}
+		} */
 	}
 
 	void Scene::addCollider(Collider *collider)
@@ -254,6 +254,19 @@ namespace Engine
 		if (_skybox != nullptr)
 		{
 			_skybox->draw(projection, view, *Light::lightPresets[Settings::getInstance().getDayTime()]);
+		}
+	}
+
+	void Scene::setParticleSystem(ParticleSystem *ps)
+	{
+		_ps = ps;
+	}
+
+	void Scene::drawParticles()
+	{
+		if (_ps != nullptr)
+		{
+			_ps->draw(getActiveCamera());
 		}
 	}
 

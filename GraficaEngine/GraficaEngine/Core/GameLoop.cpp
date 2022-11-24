@@ -5,6 +5,7 @@
 #include "Settings.h"
 #include <stdlib.h>
 #include <time.h>
+#include "../Renderer/ParticleSystem.h"
 
 namespace Engine
 {
@@ -148,8 +149,6 @@ namespace Engine
 
 	void GameLoop::start()
 	{
-		srand((unsigned)time(0));
-
 		Input &input = Input::getInstance();
 		SceneManager &sceneManager = SceneManager::getInstance();
 
@@ -162,6 +161,9 @@ namespace Engine
 		unsigned int counter = 0;
 		float deltaTimeAcc = 0.f;
 
+        glm::vec3 camera_position = activeScene->getActiveCamera()->transform.position;
+        Engine::ParticleSystem *ps = new Engine::ParticleSystem(camera_position);
+		activeScene->setParticleSystem(ps);
 		while (true)
 		{
 			counter++;
@@ -169,7 +171,9 @@ namespace Engine
 			Time::updateTime();
 			input.update();
 			frameCounterUpdateThreshold += Time::getDeltaTime();
-			
+
+			ps->update();
+
 			if (frameCounterUpdateThreshold > 1.f)
 			{
 				std::string FPS = std::to_string((1.f / frameCounterUpdateThreshold) * counter);
@@ -178,8 +182,8 @@ namespace Engine
 				_window->setTitle(title);
 				counter = 0;
 				frameCounterUpdateThreshold = 0.f;
-			}			
-			
+			}		
+
 			if (input.getKeyDown(KEY_Q))
 				break;
 
@@ -192,6 +196,7 @@ namespace Engine
 			{
 				continue;
 			}
+
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

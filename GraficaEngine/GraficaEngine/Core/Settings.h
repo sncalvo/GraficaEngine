@@ -33,6 +33,8 @@ namespace Engine
 		float _fogMaxDist;
 		float _fogMinDist;
 		glm::vec3 _fogColor;
+		bool _bloom = true;
+		bool _fog = true;
 
 	public:
 		static Settings &getInstance()
@@ -69,5 +71,9 @@ namespace Engine
 		void setFog(float min, float max);
 		glm::vec3 getFogColor() const;
 		void setFogColor(glm::vec3 color);
+		bool getBloom() const;
+		void setBloom(bool);
+		bool getFog() const;
+		void setFog(bool);
 	};
 }

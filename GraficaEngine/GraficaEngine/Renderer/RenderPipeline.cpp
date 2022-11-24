@@ -234,7 +234,7 @@ namespace Engine {
 			{
 				for (auto shadowRenderer : value)
 				{
-					shadowRenderer->draw();
+					shadowRenderer->draw(scene->getActiveCamera()->transform.position);
 				}
 			}
 		}
@@ -297,7 +297,7 @@ namespace Engine {
 		{
 			for (auto meshRenderer : value)
 			{
-				meshRenderer->draw(depthMap);
+				meshRenderer->draw(depthMap, scene->getActiveCamera()->transform.position);
 			}
 		}
 

@@ -113,6 +113,8 @@ namespace Engine
             return nullptr;
         }
 
+        std::cout << "ASSIMP VERSION: " << aiGetVersionMajor() << "." << aiGetVersionMinor() << std::endl;
+
         if (scene->mRootNode->mNumChildren > 0)
         {
             aiNode* node = scene->mRootNode->mChildren[0];

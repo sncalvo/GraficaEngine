@@ -49,6 +49,7 @@ namespace Engine
                     vertex.m_Weights[i] = 0.0f;
                 }
             }
+        std::shared_ptr<Mesh> _processLOW(std::string name);
     public:
         Model(char* path);
         Model(Model*);

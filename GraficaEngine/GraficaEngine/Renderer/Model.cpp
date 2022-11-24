@@ -123,52 +123,11 @@ namespace Engine
             }
 
             aiMesh* mesh = scene->mMeshes[node->mMeshes[0]];
-            std::vector<Vertex> vertices;
-            std::vector<unsigned int> indices;
-            std::vector<Texture*> textures;
 
             std::cout << "Processing Mesh " << mesh->mName.C_Str() << std::endl;
 
-            for (unsigned int i = 0; i < mesh->mNumVertices; i++)
-            {
-                Vertex vertex;
-                SetVertexBoneDataToDefault(vertex);
-
-                glm::vec3 vector;
-                vector.x = mesh->mVertices[i].x;
-                vector.y = mesh->mVertices[i].y;
-                vector.z = mesh->mVertices[i].z;
-                vertex.position = vector;
-                if (mesh->HasNormals())
-                {
-                    vector.x = mesh->mNormals[i].x;
-                    vector.y = mesh->mNormals[i].y;
-                    vector.z = mesh->mNormals[i].z;
-                    vertex.normal = vector;
-                }
-                if (mesh->mTextureCoords[0])
-                {
-                    glm::vec2 vec;
-                    vec.x = mesh->mTextureCoords[0][i].x;
-                    vec.y = mesh->mTextureCoords[0][i].y;
-                    vertex.textureCoordinates = vec;
-                }
-                else
-                {
-                    vertex.textureCoordinates = glm::vec2(0.0f, 0.0f);
-                }
-                vertices.push_back(vertex);
-            }
-            for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-            {
-                aiFace face = mesh->mFaces[i];
-                for (unsigned int j = 0; j < face.mNumIndices; j++)
-                {
-                    indices.push_back(face.mIndices[j]);
-                }
-            }
-
-            auto newMesh = std::make_shared<Mesh>(vertices, indices);
+            auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
+            auto newMesh = std::make_shared<Mesh>(vertices, indices, center);
 
             return newMesh;
         }
@@ -177,12 +136,37 @@ namespace Engine
     }
 
     std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene) {
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
         std::vector<Texture*> textures;
-
+        
         std::cout << "Processing Mesh " << mesh->mName.C_Str() << std::endl;
         
+        auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
+        aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
+
+        textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
+        Material material = _loadMaterial(meshMaterial);
+        // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+
+        ExtractBoneWeightForVertices(vertices, mesh, scene);
+
+        // Check if LOW version exists and load it
+        auto meshLow = _processLOW(mesh->mName.C_Str());
+
+        auto newMesh = std::make_shared<Mesh>(vertices, indices, center);
+        auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, meshLow, material, textures);
+        auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh, meshLow);
+
+        _meshRenderers.push_back(meshRenderer);
+        _shadowRenderers.push_back(shadowRenderer);
+        return newMesh;
+    }
+
+    std::tuple< std::vector<Vertex>, std::vector<unsigned int>, glm::vec3> Model::_processMeshBuffers(aiMesh* mesh, const aiScene* scene)
+    {
+        std::vector<Vertex> vertices;
+        std::vector<unsigned int> indices;
+        glm::vec3 center;
+
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
             Vertex vertex;
@@ -193,6 +177,8 @@ namespace Engine
             vector.y = mesh->mVertices[i].y;
             vector.z = mesh->mVertices[i].z;
             vertex.position = vector;
+            center = vector;
+
             if (mesh->HasNormals())
             {
                 vector.x = mesh->mNormals[i].x;
@@ -221,24 +207,8 @@ namespace Engine
                 indices.push_back(face.mIndices[j]);
             }
         }
-        aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-        textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
-        Material material = _loadMaterial(meshMaterial);
-        // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-        ExtractBoneWeightForVertices(vertices,mesh,scene);
-
-        // Check if LOW version exists and load it
-        auto meshLow = _processLOW(mesh->mName.C_Str());
-
-        auto newMesh = std::make_shared<Mesh>(vertices, indices);
-        auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, meshLow, material, textures);
-        auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh, meshLow);
-
-        _meshRenderers.push_back(meshRenderer);
-        _shadowRenderers.push_back(shadowRenderer);
-        return newMesh;
+        return { vertices, indices, center };
     }
 
     std::vector<Texture*> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)

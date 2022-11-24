@@ -30,7 +30,7 @@ namespace Engine {
             shader->setBool("isBony", false);
         }
 
-        bool useLow = glm::distance(cameraPos, _transform->position) > 10.f;
+        bool useLow = glm::distance(cameraPos, _transform->position + _mesh->center) > 50.f;
 
         if (_meshLow != nullptr && useLow)
         {

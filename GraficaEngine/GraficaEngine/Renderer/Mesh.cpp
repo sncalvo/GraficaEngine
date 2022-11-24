@@ -11,10 +11,12 @@ namespace Engine
 {
     Mesh::Mesh(
         std::vector<Vertex> vertices,
-        std::vector<unsigned int> indices
+        std::vector<unsigned int> indices,
+        glm::vec3 center
     ):
         _vertices(vertices),
-        _indices(indices)
+        _indices(indices),
+        center(center)
     {
         setupMesh();
     }

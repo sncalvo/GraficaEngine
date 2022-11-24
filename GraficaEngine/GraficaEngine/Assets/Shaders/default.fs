@@ -44,6 +44,9 @@ uniform Material material;
 uniform Light light;
 uniform vec3 viewPos;
 uniform vec2 texture_offset;
+uniform float fogMaxDist;
+uniform float fogMinDist;
+uniform vec3 fogColor;
 
 int GetLayer(float depthValue)
 {
@@ -97,7 +100,7 @@ float ShadowCalculationV2(vec3 normal, vec3 lightDir)
         for(int y = -2; y <= 2; ++y)
         {
             float pcfDepth = texture(shadowMap, vec3(projCoords.xy + vec2(x, y) * texelSize, layer)).r;
-            shadow += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;        
+            shadow += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;
         }
     }
     shadow /= 25.0;
@@ -155,6 +158,15 @@ void main()
 
     vec3 diffuseSpecular = (1.0 - shadow) * (diffuse + specular);
     vec3 result = (1.4 - shadow) * ambient + diffuseSpecular;
+    // Calculate fog
+    float dist = distance(viewPos.xyz, worldPosition);
+    float fogFactor = (fogMaxDist - dist) /
+                      (fogMaxDist - fogMinDist);
+    fogFactor = clamp(fogFactor, 0.0, 1.0);
+
+    result = mix(fogColor, result, fogFactor);
+
+    FragColor = vec4(result, 1.0);
 
     vec4 fragPosViewSpace = view * vec4(FragPos, 1.0);
     float depthValue = abs(fragPosViewSpace.z);

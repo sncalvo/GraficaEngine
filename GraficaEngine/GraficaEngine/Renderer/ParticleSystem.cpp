@@ -1,6 +1,6 @@
 #include "ParticleSystem.h"
 
-float BOX_SIDE = 5.f;
+float BOX_SIDE = 20.f;
 
 namespace Engine {
     float rand11() {
@@ -167,7 +167,7 @@ namespace Engine {
         glBindBuffer(GL_ARRAY_BUFFER, 0);  
         glBindVertexArray(0);
 /*         glDisable( GL_BLEND ); */
-        glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
+        glEnable(GL_DEPTH_TEST);
     }
 }

@@ -10,6 +10,6 @@ namespace Engine {
         float     life;
 
         Particle(int position_id) 
-        : position_id(position_id), velocity(glm::vec3(-0.000005f, -0.000010f, 0.f)), color(1.f), life(0.f) { }
+        : position_id(position_id), velocity(glm::vec3(-0.005f, -0.010f, 0.f)), color(1.f), life(0.f) { }
     };  
 }

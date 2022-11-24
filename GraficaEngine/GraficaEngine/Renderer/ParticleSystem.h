@@ -25,7 +25,7 @@ namespace Engine {
         std::vector<float> vertices;
         unsigned int VAO;
         unsigned int VBO;
-        int particle_amount = 1000;
+        int particle_amount = 10000;
         Shader *shader;
         Texture *texture;
         glm::vec3 _position;

@@ -164,6 +164,7 @@ namespace Engine
         glm::vec3 camera_position = activeScene->getActiveCamera()->transform.position;
         Engine::ParticleSystem *ps = new Engine::ParticleSystem(camera_position);
 		activeScene->setParticleSystem(ps);
+
 		while (true)
 		{
 			counter++;

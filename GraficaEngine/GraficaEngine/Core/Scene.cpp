@@ -126,10 +126,10 @@ namespace Engine
 	{
 		_activeCamera->update();
 
-/* 		for (BaseGameObject *gameObject : _gameObjects)
+		for (BaseGameObject *gameObject : _gameObjects)
 		{
 			gameObject->update();
-		} */
+		}
 	}
 
 	void Scene::addCollider(Collider *collider)

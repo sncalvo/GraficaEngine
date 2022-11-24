@@ -113,7 +113,7 @@ Engine::Scene* loadMainScene()
 		-45.f);
 	flyingCamera->addBehaviour(new FlyingCameraController());
 
-	Engine::Scene* scene = new Engine::Scene(thirdPersonCamera);
+	Engine::Scene* scene = new Engine::Scene(flyingCamera);
 
 	scene->addCamera("flying", flyingCamera);
 	scene->addCamera("centeredFixed", centeredFixedCamera);

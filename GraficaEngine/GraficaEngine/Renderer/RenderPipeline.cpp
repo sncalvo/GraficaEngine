@@ -301,8 +301,8 @@ namespace Engine {
 			}
 		}
 
-		scene->draw(_defaultShader);
 		scene->drawParticles();
+		scene->draw(_defaultShader);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}

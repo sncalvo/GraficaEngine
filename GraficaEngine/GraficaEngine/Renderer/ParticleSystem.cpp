@@ -1,10 +1,14 @@
 #include "ParticleSystem.h"
 
-float BOX_SIDE = 20.f;
+float BOX_SIDE = 10.f;
 
 namespace Engine {
+    int rand12() {
+        return floor((rand() / (float)RAND_MAX) * 2.99f) - 1;
+    }
+
     float rand11() {
-        return (rand() / (float)RAND_MAX) * 2 * BOX_SIDE - BOX_SIDE;
+        return (rand() / (float)RAND_MAX) * 2.f * BOX_SIDE - BOX_SIDE;
     }
 
     float rand01() {
@@ -12,8 +16,16 @@ namespace Engine {
     }
 
     ParticleSystem::ParticleSystem(glm::vec3 intial_position) : _position(intial_position) {
+        _speed = 0.3f;
+        particle_amount = 50000;
         vertices.reserve(3 * particle_amount);
         particles.reserve(particle_amount);
+        for (int i = 0; i < 10; i++) {
+          velocities[i] = _defaultVelocity;
+        }
+        for (int i = 0; i < 11; i++) {
+          speedMods[i] = glm::vec3(0.f);
+        }
 
         for(int i = 0; i < particle_amount; i++) {
             int position_id = i * 3;
@@ -21,18 +33,25 @@ namespace Engine {
             vertices.push_back(rand11());
             vertices.push_back(rand11());
             vertices.push_back(rand11());
+            types.push_back(rand12());
         }
 
 
         glGenVertexArrays(1, &VAO); 
         glBindVertexArray(VAO);
 
-        glGenBuffers(1, &VBO);  
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);  
+        glGenBuffers(2, VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);  
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);  
+
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(int) * types.size(), &types[0], GL_STATIC_DRAW);
+        glVertexAttribPointer(1, 1, GL_INT, GL_FALSE, sizeof(int), (void*) 0);
+        glEnableVertexAttribArray(1);
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);  
         glBindVertexArray(0);
 
@@ -40,22 +59,93 @@ namespace Engine {
         texture = new Texture("Assets/Models/shape-white.png", "lol");
     }
 
+   int antiSign(float f) {
+     return (f > 0) ? -1 : ((f < 0) ? 1 : 0);
+   }
 
-    void ParticleSystem::update() {
-        for(auto particle : particles) {
-            int vertices_position = particle.position_id;
+   void newGlobalVelocity(float *velocity, float current_x) {
+      float rand = rand11();
+      if(rand > current_x) {
+        *velocity = 5.f;
+      } else if (rand < current_x) {
+        *velocity = -5.f;
+      } else {
+        *velocity = 0.f;
+      }
+   }
+
+   void newVelocity(float *velocity) {
+      float rand = rand01();
+      if(rand > 0.6f) {
+        *velocity = 0.1f;
+      } else if (rand > 0.4f) {
+        *velocity = -0.1f;
+      } else {
+        *velocity = 0.f;
+      }
+   }
+
+    void ParticleSystem::update(float deltaTime) {
+        if (deltaTime > 0.1f) {
+          return;
+        }
+
+        _timeAcc += deltaTime;
+        _timeAcc2 += deltaTime;
+
+        if (_timeAcc2 > 0.5f) {
+            _timeAcc2 = 0.f;
+            for(int i = 0; i < 10; i++) {
+                newVelocity(&speedMods[i].x);
+                newVelocity(&speedMods[i].y);
+                newVelocity(&speedMods[i].z);
+            }
+        }
+
+        if (_timeAcc > 5.0f) {
+            _timeAcc = 0.f;
+            newGlobalVelocity(&speedMods[10].x, particles[0].velocity.x);
+            newGlobalVelocity(&speedMods[10].z, particles[0].velocity.z);
+        }
+
+        // Represents wind
+        glm::vec3 globalSpeedMod = speedMods[10];
+
+        for(int i = 0; i < 10; i++) {
+            velocities[i].x = std::clamp(velocities[i].x + globalSpeedMod.x * deltaTime * _speed, -0.8f, 0.8f);
+            velocities[i].z = std::clamp(velocities[i].z + globalSpeedMod.z * deltaTime * _speed, -0.8f, 0.8f);
+        }
+
+        for(int i = 0; i < particle_amount; i++) {
+            int vertices_position = particles[i].position_id;
+            // Represents wind turbulence, particles dont go in a straight line
+            glm::vec3 speedMod = speedMods[i % 10];
+
+            glm::vec3 velocity = (velocities[i % 10] + speedMod) * deltaTime * _speed;
             // Particles x position
-            vertices[vertices_position] += particle.velocity.x;
-            // Particles z position
-            vertices[vertices_position + 2] += particle.velocity.z;
-
+            float x = vertices[vertices_position] + velocity.x;
             // Particles y position
-            float y = vertices[vertices_position + 1] + particle.velocity.y;
-            // If a particle falls bellow what player sees, thorw it to the top
-            if (y <= -BOX_SIDE) {
-                vertices[vertices_position + 1] = BOX_SIDE;
+            float y = vertices[vertices_position + 1] + velocity.y;
+            // Particles z position
+            float z = vertices[vertices_position + 2] + velocity.z;
+
+            // Cycle particles
+            if (BOX_SIDE < x || x < -BOX_SIDE) {
+                vertices[vertices_position] = antiSign(x) * BOX_SIDE;
+            } else {
+                vertices[vertices_position] = x;
+            }
+
+            if (BOX_SIDE < y || y < -BOX_SIDE) {
+                vertices[vertices_position + 1] = antiSign(y) * BOX_SIDE;
             } else {
                 vertices[vertices_position + 1] = y;
+            }
+
+            if (BOX_SIDE < z || z < -BOX_SIDE) {
+                vertices[vertices_position + 2] = antiSign(z) * BOX_SIDE;
+            } else {
+                vertices[vertices_position + 2] = z;
             }
         }
     }
@@ -73,19 +163,27 @@ namespace Engine {
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_CULL_FACE);
 
+        shader->use();
+        texture->activateTextureAs(0);
+
         glBindVertexArray(VAO);
 
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);  
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);  
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
-        shader->use();
+        glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);  
+        glBufferData(GL_ARRAY_BUFFER, sizeof(int) * types.size(), &types[0], GL_STATIC_DRAW);
 
 		glm::mat4 projection = camera->getProjectionMatrixFor(0.f, 0.5f);
 		glm::mat4 view = camera->getViewMatrix();
+        glm::vec3 camera_position = camera->transform.position;
         float full_side = BOX_SIDE * 2.f;
 
+        if (glm::distance(camera_position, _position) > full_side) {
+          _position = camera_position;
+        }
+
 		glm::mat4 model = glm::mat4(1.0f);
-        glm::vec3 camera_position = camera->transform.position;
         glm::vec3 position_diff = camera_position - _position;
         if (position_diff.x > BOX_SIDE) {
           _position.x += full_side;

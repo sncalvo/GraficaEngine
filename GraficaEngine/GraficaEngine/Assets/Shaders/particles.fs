@@ -1,6 +1,7 @@
 #version 460 core
 
 in float quad_side;
+in flat int type;
 in vec2 tex_coords;
 out vec4 FragColor;
 
@@ -11,8 +12,19 @@ float sqr2 = 1.41421356237;
 void main()
 {
     float distance_from_center = abs(distance(tex_coords, vec2(0.5))) * 2.0;
+    if (type > 0) {
+        FragColor = vec4(vec3(1.0), int(distance_from_center < 1) * 0.3);
+    } else if (type < 0) {
+        vec4 tex = texture(particle_tex, tex_coords);
+        FragColor = tex;
+    } else {
+        FragColor = vec4(vec3(1.1), (1.0 - distance_from_center));
+    }
 
-    FragColor = vec4(vec3(0.5), (1.0 - distance_from_center));
+    // Avoid z-buffer writes on fully transparent (prevents black squares)
+    if (FragColor.a < 0.0001) {
+        discard;
+    }
 
 /*     FragColor = vec4(vec3(5.0), (1.0 - normalized_distance)); */
 

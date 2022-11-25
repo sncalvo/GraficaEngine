@@ -146,17 +146,6 @@ Engine::Scene* loadMainScene()
 	vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
 	scene->addGameObject(vampire2);
 
-	Engine::GameObject* level = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/City.obj")),
-		Engine::MaterialObject());
-	level->setCollider(new Engine::Collider(glm::vec3(-100.f, 0.0f, -100.f), glm::vec3(100.f, 0.0f, 100.f)));
-	scene->addGameObject(level);
-
-	Engine::GameObject* buildings = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/Building.obj")),
-		Engine::MaterialObject());
-	scene->addGameObject(buildings);
-
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
 

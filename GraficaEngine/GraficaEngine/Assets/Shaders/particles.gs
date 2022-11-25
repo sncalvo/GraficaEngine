@@ -3,15 +3,24 @@
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
+in int typegs[];
+
 out vec2 tex_coords;
 out float quad_side;
+out int type;
 
 uniform mat4 projection;
 uniform mat4 view;
 
 void main() {
+    type = typegs[0];
     mat4 to_cdn_matrix = projection * view;
-    quad_side = 0.10;
+    quad_side = 0.2;
+    if (type < 0) {
+        quad_side /= 10.0;
+    } else if (type > 0) {
+        quad_side /= 5.0;
+    }
     vec4 position = gl_in[0].gl_Position;
     vec4 cdn = to_cdn_matrix * gl_in[0].gl_Position;
     vec4 vx = vec4(quad_side, 0.0, 0.0, 0.0);

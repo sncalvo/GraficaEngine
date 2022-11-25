@@ -35,6 +35,7 @@ namespace Engine
 		}
 
 		setSkybox(otherScene->_skybox);
+		setParticleSystem(otherScene->_ps);
 
 		setActiveCamera("default"); // TODO: Make generic
 	}
@@ -129,6 +130,14 @@ namespace Engine
 		for (BaseGameObject *gameObject : _gameObjects)
 		{
 			gameObject->update();
+		}
+	}
+
+	void Scene::particleSystemUpdate(float deltaTime) {
+		if (_ps != nullptr) {
+			_ps->update(deltaTime);
+		} else {
+			std::cout << "MAMA MIA" << std::endl;
 		}
 	}
 

@@ -173,8 +173,6 @@ namespace Engine
 			input.update();
 			frameCounterUpdateThreshold += Time::getDeltaTime();
 
-			ps->update();
-
 			if (frameCounterUpdateThreshold > 1.f)
 			{
 				std::string FPS = std::to_string((1.f / frameCounterUpdateThreshold) * counter);
@@ -228,6 +226,7 @@ namespace Engine
 				deltaTimeAcc += Time::getDeltaTime();
 			}
 			activeScene->update();
+			activeScene->particleSystemUpdate(Time::getDeltaTime());
 			activeScene->flushQueuedGameObjects();
 
 			_renderer.draw(activeScene);

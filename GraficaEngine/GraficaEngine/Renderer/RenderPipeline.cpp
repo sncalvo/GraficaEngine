@@ -30,7 +30,7 @@ namespace Engine {
 	void RenderPipeline::setup() {
 		unsigned int shadowResolution = Settings::getInstance().getShadowResolution();
 		glEnable(GL_DEPTH_TEST);
-		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glEnable(GL_CULL_FACE);
 		testShader = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/test.fs");
 		_hdrShader = new Engine::Shader("Assets/Shaders/test.vs", "Assets/Shaders/hdrDraw.fs");

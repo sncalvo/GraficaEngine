@@ -16,7 +16,7 @@ namespace Engine {
     }
 
     ParticleSystem::ParticleSystem(glm::vec3 intial_position) : _position(intial_position) {
-        _speed = 0.3f;
+        _speed = 0.8f;
         particle_amount = 50000;
         vertices.reserve(3 * particle_amount);
         particles.reserve(particle_amount);
@@ -66,9 +66,9 @@ namespace Engine {
    void newGlobalVelocity(float *velocity, float current_x) {
       float rand = rand11();
       if(rand > current_x) {
-        *velocity = 5.f;
+        *velocity = 2.f;
       } else if (rand < current_x) {
-        *velocity = -5.f;
+        *velocity = -2.f;
       } else {
         *velocity = 0.f;
       }
@@ -77,9 +77,9 @@ namespace Engine {
    void newVelocity(float *velocity) {
       float rand = rand01();
       if(rand > 0.6f) {
-        *velocity = 0.1f;
-      } else if (rand > 0.4f) {
-        *velocity = -0.1f;
+        *velocity = 0.05f;
+      } else if (rand > 0.2f) {
+        *velocity = -0.05f;
       } else {
         *velocity = 0.f;
       }
@@ -112,8 +112,8 @@ namespace Engine {
         glm::vec3 globalSpeedMod = speedMods[10];
 
         for(int i = 0; i < 10; i++) {
-            velocities[i].x = std::clamp(velocities[i].x + globalSpeedMod.x * deltaTime * _speed, -0.8f, 0.8f);
-            velocities[i].z = std::clamp(velocities[i].z + globalSpeedMod.z * deltaTime * _speed, -0.8f, 0.8f);
+            velocities[i].x = std::clamp(velocities[i].x + globalSpeedMod.x * deltaTime * 0.3f, -1.2f, 1.2f);
+            velocities[i].z = std::clamp(velocities[i].z + globalSpeedMod.z * deltaTime * 0.3f, -1.2f, 1.2f);
         }
 
         for(int i = 0; i < particle_amount; i++) {

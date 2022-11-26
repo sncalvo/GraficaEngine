@@ -24,6 +24,7 @@ namespace Engine {
     private:
         float _timeAcc = 0.f;
         float _timeAcc2 = 0.f;
+        float _timeAcc3 = 0.f;
         int _acc = 0;
         glm::vec3 speedMods[11];
         glm::vec3 velocities[10];

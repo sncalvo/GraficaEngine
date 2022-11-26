@@ -69,7 +69,7 @@ namespace Engine
 		std::unordered_map<std::string, std::vector<std::shared_ptr<MeshRenderer>>>& getMeshRenderers() { return _meshRenderers; };
 		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>>& getShadowRenderers() { return _shadowRenderers; };
 		std::unordered_map<std::string, std::vector<std::shared_ptr<TextRenderer>>>& getTextRenderers() { return _textRenderers; };
-
+		  
 		~Scene();
 	};
 }

@@ -13,12 +13,12 @@ void main()
 {
     float distance_from_center = abs(distance(tex_coords, vec2(0.5))) * 2.0;
     if (type > 0) {
-        FragColor = vec4(vec3(1.0), int(distance_from_center < 1) * 0.3);
+        FragColor = vec4(vec3(156.0/255.0, 211.0/255.0, 219.0/255.0), int(distance_from_center < 1) * 0.2);
     } else if (type < 0) {
-        vec4 tex = texture(particle_tex, tex_coords);
-        FragColor = tex;
+        FragColor = texture(particle_tex, tex_coords);
+        FragColor.rgb *= 0.7;
     } else {
-        FragColor = vec4(vec3(1.1), (1.0 - distance_from_center));
+        FragColor = vec4(vec3(0.8), (1.0 - distance_from_center) * 0.6);
     }
 
     // Avoid z-buffer writes on fully transparent (prevents black squares)

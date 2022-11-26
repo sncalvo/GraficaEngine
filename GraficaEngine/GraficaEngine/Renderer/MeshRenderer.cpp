@@ -11,14 +11,15 @@
 namespace Engine {
     std::shared_ptr<Shader> MeshRenderer::_shader{};
 
-    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures) {
+    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Mesh> meshLow, Material material, std::vector<Texture*> textures) {
         _mesh = mesh;
         _material = material;
         _textures = textures;
         _animator = NULL;
+        _meshLow = meshLow;
     }
 
-    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures, Animator *animator) : MeshRenderer(mesh, material, textures) {
+    MeshRenderer::MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Mesh> meshLow, Material material, std::vector<Texture*> textures, Animator *animator) : MeshRenderer(mesh, meshLow, material, textures) {
         _animator = animator;
     }
 
@@ -28,12 +29,12 @@ namespace Engine {
         }
     }
 
-    void MeshRenderer::draw(unsigned int depthMap) {
+    void MeshRenderer::draw(unsigned int depthMap, glm::vec3 cameraPos) {
         auto shader = getShader();
 
         glm::mat4 model = _transform->getTransformedModel();
         shader->setMatrix4f("model", glm::value_ptr(model));
-        if(_animator) {
+        if (_animator) {
             shader->setBool("isBony", true);
             auto transforms = _animator->GetFinalBoneMatrices();
             for (int i = 0; i < transforms.size(); ++i)
@@ -46,7 +47,16 @@ namespace Engine {
 
         _setMaterialValues(depthMap);
 
-        _mesh->draw();
+        bool useLow = glm::distance(cameraPos, _transform->position + _mesh->center) > 50.f;
+
+        if (_meshLow != nullptr && useLow)
+        {
+            _meshLow->draw();
+        }
+        else
+        {
+            _mesh->draw();
+        }
     }
 
     void MeshRenderer::_setMaterialValues(unsigned int depthMap) {
@@ -95,6 +105,6 @@ namespace Engine {
     }
 
     std::shared_ptr<MeshRenderer> MeshRenderer::clone() {
-        return std::make_shared<MeshRenderer>(_mesh, _material, _textures, _animator);
+        return std::make_shared<MeshRenderer>(_mesh, _meshLow, _material, _textures, _animator);
     }
 }

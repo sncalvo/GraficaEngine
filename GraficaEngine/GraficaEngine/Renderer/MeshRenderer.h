@@ -13,9 +13,9 @@ namespace Engine {
     class MeshRenderer
     {
     public:
-        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures);
-        MeshRenderer(std::shared_ptr<Mesh> mesh, Material material, std::vector<Texture*> textures, Animator *animator);
-        void draw(unsigned int depthMap);
+        MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Mesh> meshLow, Material material, std::vector<Texture*> textures);
+        MeshRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Mesh> meshLow, Material material, std::vector<Texture*> textures, Animator *animator);
+        void draw(unsigned int depthMap, glm::vec3 cameraPos);
         void setTransform(Transform* transform) { _transform = transform; }
         void setAnimator(Animator* animator) { _animator = animator; };
         void updateAnimation(float deltaTime);
@@ -34,6 +34,7 @@ namespace Engine {
     private:
         static std::shared_ptr<Shader> _shader;
         std::shared_ptr<Mesh> _mesh;
+        std::shared_ptr<Mesh> _meshLow;
         Material _material;
         std::vector<Texture*> _textures;
         Transform* _transform;

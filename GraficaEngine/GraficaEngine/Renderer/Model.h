@@ -49,6 +49,9 @@ namespace Engine
                     vertex.m_Weights[i] = 0.0f;
                 }
             }
+        std::shared_ptr<Mesh> _processLOW(std::string name);
+        std::tuple< std::vector<Vertex>, std::vector<unsigned int>, glm::vec3> _processMeshBuffers(aiMesh* mesh, const aiScene* scene);
+
     public:
         Model(char* path);
         Model(Model*);

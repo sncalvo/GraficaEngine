@@ -44,7 +44,9 @@ namespace Engine
 		void setupMesh();
 
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, glm::vec3 center);
 		void draw() const;
+
+		glm::vec3 center;
 	};
 }

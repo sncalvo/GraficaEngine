@@ -5,10 +5,11 @@
 namespace Engine {
     std::shared_ptr<Shader> ShadowRenderer::_shader{};
 
-    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh) : _mesh(mesh), _transform(nullptr), _animator(NULL) {}
-    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh, Animator *animator) : _mesh(mesh), _transform(nullptr), _animator(animator) {}
+    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh) : ShadowRenderer(mesh, nullptr, nullptr) {}
+    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Mesh> meshLow) : ShadowRenderer(mesh, meshLow, nullptr) {}
+    ShadowRenderer::ShadowRenderer(std::shared_ptr<Mesh> mesh, std::shared_ptr<Mesh> meshLow, Animator *animator) : _mesh(mesh), _meshLow(meshLow), _transform(nullptr), _animator(animator) {}
 
-    void ShadowRenderer::draw()
+    void ShadowRenderer::draw(glm::vec3 cameraPos)
     {
         if (!_transform)
         {
@@ -29,7 +30,16 @@ namespace Engine {
             shader->setBool("isBony", false);
         }
 
-        _mesh->draw();
+        bool useLow = glm::distance(cameraPos, _transform->position + _mesh->center) > 50.f;
+
+        if (_meshLow != nullptr && useLow)
+        {
+            _meshLow->draw();
+        }
+        else
+        {
+            _mesh->draw();
+        }
     }
 
     std::shared_ptr<Shader> ShadowRenderer::getShader()

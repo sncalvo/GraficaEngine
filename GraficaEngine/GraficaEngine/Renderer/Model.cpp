@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include <assimp/version.h>
+
 #include "ResourceManager.h"
 
 namespace Engine
@@ -42,7 +44,6 @@ namespace Engine
 
     void Model::_processNode(aiNode* node, const aiScene* scene)
     {
-
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -100,10 +101,71 @@ namespace Engine
         }
     }
 
+    std::shared_ptr<Mesh> Model::_processLOW(std::string modelName)
+    {
+        std::string fileName = "Assets/Models/" + modelName + "_LOW.obj";
+        Assimp::Importer import;
+        const aiScene* scene = import.ReadFile(fileName, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+        if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+        {
+            DebugLog::error("ERROR::LOW::ASSIMP::" + std::string(import.GetErrorString()));
+            return nullptr;
+        }
+
+        if (scene->mRootNode->mNumChildren > 0)
+        {
+            aiNode* node = scene->mRootNode->mChildren[0];
+
+            if (node->mNumMeshes == 0)
+            {
+                return nullptr;
+            }
+
+            aiMesh* mesh = scene->mMeshes[node->mMeshes[0]];
+
+            std::cout << "Processing Mesh " << mesh->mName.C_Str() << std::endl;
+
+            auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
+            auto newMesh = std::make_shared<Mesh>(vertices, indices, center);
+
+            return newMesh;
+        }
+
+        return nullptr;
+    }
+
     std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene) {
+        std::vector<Texture*> textures;
+        
+        std::cout << "Processing Mesh " << mesh->mName.C_Str() << std::endl;
+        
+        auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
+        aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
+
+        textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
+        Material material = _loadMaterial(meshMaterial);
+        // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+
+        ExtractBoneWeightForVertices(vertices, mesh, scene);
+
+        // Check if LOW version exists and load it
+        auto meshLow = _processLOW(mesh->mName.C_Str());
+
+        auto newMesh = std::make_shared<Mesh>(vertices, indices, center);
+        auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, meshLow, material, textures);
+        auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh, meshLow);
+
+        _meshRenderers.push_back(meshRenderer);
+        _shadowRenderers.push_back(shadowRenderer);
+        return newMesh;
+    }
+
+    std::tuple< std::vector<Vertex>, std::vector<unsigned int>, glm::vec3> Model::_processMeshBuffers(aiMesh* mesh, const aiScene* scene)
+    {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<Texture*> textures;
+        glm::vec3 center;
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
@@ -115,6 +177,8 @@ namespace Engine
             vector.y = mesh->mVertices[i].y;
             vector.z = mesh->mVertices[i].z;
             vertex.position = vector;
+            center = vector;
+
             if (mesh->HasNormals())
             {
                 vector.x = mesh->mNormals[i].x;
@@ -143,20 +207,8 @@ namespace Engine
                 indices.push_back(face.mIndices[j]);
             }
         }
-        aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-        textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
-        Material material = _loadMaterial(meshMaterial);
-        // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-        ExtractBoneWeightForVertices(vertices,mesh,scene);
-        auto newMesh = std::make_shared<Mesh>(vertices, indices);
-        auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, material, textures);
-        auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh);
-
-        _meshRenderers.push_back(meshRenderer);
-        _shadowRenderers.push_back(shadowRenderer);
-        return newMesh;
+        return { vertices, indices, center };
     }
 
     std::vector<Texture*> Model::_loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)

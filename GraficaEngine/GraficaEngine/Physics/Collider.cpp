@@ -157,6 +157,6 @@ namespace Engine
             glm::vec3{0.4f, 1.f, 0.4f},
             1.f};
 
-        return Mesh(vertices, indices);
+        return Mesh(vertices, indices, glm::vec3{0.f});
     }
 }

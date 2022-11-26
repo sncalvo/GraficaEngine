@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "TextObject.h"
+#include "Time.h"
 
 #include "../Renderer/Skybox.h"
 #include "../Physics/Collider.h"

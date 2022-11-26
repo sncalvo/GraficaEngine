@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Core\BaseGameObject.cpp" />
@@ -53,12 +53,14 @@
     <ClCompile Include="Utils\SmoothAcceleratedPosition.cpp" />
     <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
     <ClCompile Include="Renderer\RenderPipeline.cpp" />
-    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\MeshRenderer.cpp" />
     <ClCompile Include="Renderer\TextRenderer.cpp" />
     <ClCompile Include="Renderer\ShadowRenderer.cpp" />
     <ClCompile Include="Utils\UUID.cpp" />
     <ClCompile Include="Renderer\ParticleSystem.cpp" />
+    <ClCompile Include="Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Physics\DebugDrawer.cpp" />
+    <ClCompile Include="Renderer\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -76,7 +78,6 @@
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\TextObject.h" />
-    <ClInclude Include="Scripts\CameraController.h" />
     <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\GameLoop.h" />
@@ -127,6 +128,9 @@
     <ClInclude Include="Utils\UUID.h" />
     <ClInclude Include="Renderer\ParticleSystem.h" />
     <ClInclude Include="Renderer\Particle.h" />
+    <ClInclude Include="Physics\PhysicsManager.h" />
+    <ClInclude Include="Physics\DebugDrawer.h" />
+    <ClInclude Include="Renderer\ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\skybox.vs" />
@@ -138,6 +142,7 @@
     <None Include="Assets\Shaders\depthTest.gs" />
     <None Include="Assets\Shaders\hdrDraw.fs" />
     <None Include="Assets\Shaders\blur.fs" />
-    <None Include="ClassDiagram.cd" />
+    <None Include="Assets\Shaders\line.vs" />
+    <None Include="Assets\Shaders\line.fs" />
   </ItemGroup>
 </Project>

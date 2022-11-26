@@ -5,6 +5,7 @@
 #include "../Core/Camera.h"
 #include "../Core/Input.h"
 #include "../Core/Time.h"
+#include "../Physics/PhysicsManager.h"
 
 class SwapCameras : public Engine::Behaviour
 {

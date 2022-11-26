@@ -4,6 +4,7 @@
 
 #include "../Renderer/Model.h"
 #include "../Renderer/Material.h"
+#include "../Physics/PhysicsManager.h"
 
 #include "BaseGameObject.h"
 #include "Scene.h"
@@ -18,12 +19,16 @@ namespace Engine
 		MaterialObject _material;
 		Collider *_collider;
 		Animator *_animator;
+		btRigidBody* _rigidBody;
 	public:
 		GameObject(Model *model, MaterialObject material);
 		GameObject(Model *model, MaterialObject material, Animation *animation);
 		GameObject(const GameObject *);
 		GameObject *clone() const override;
 		~GameObject();
+		btRigidBody* getRigidBody() const;
+		void setRigidBody(btRigidBody*);
+		void syncTransformWithRigidBody() override;
 		void setCollider(Collider *collider);
 		Collider *getCollider() const;
 		void draw(Shader *shader) const;

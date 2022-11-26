@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	GameObject::GameObject(Model *model, MaterialObject material) : _model(model), _material(material), _collider(nullptr)
+	GameObject::GameObject(Model *model, MaterialObject material) : _model(model), _material(material), _collider(nullptr), _rigidBody(nullptr)
 	{
 		for (auto renderer : model->getMeshRenderers())
 		{
@@ -25,6 +25,31 @@ namespace Engine
 		{
 			renderer->setAnimator(_animator);
 		}
+	}
+
+	void GameObject::setRigidBody(btRigidBody* rigidBody)
+	{
+		_rigidBody = rigidBody;
+	}
+
+	btRigidBody* GameObject::getRigidBody() const
+	{
+		return _rigidBody;
+	}
+
+	void GameObject::syncTransformWithRigidBody()
+	{
+		if (_rigidBody == nullptr)
+		{
+			return;
+		}
+
+		btTransform rigidBodyTransform = _rigidBody->getWorldTransform();
+		transform.position = glm::vec3(
+			rigidBodyTransform.getOrigin().getX(),
+			rigidBodyTransform.getOrigin().getY(),
+			rigidBodyTransform.getOrigin().getZ()
+		);
 	}
 
 	void GameObject::setCollider(Collider *collider)
@@ -57,6 +82,11 @@ namespace Engine
 			{
 				renderer->setAnimator(_animator);
 			}
+		}
+		btRigidBody* otherRigidBody = otherGameObject->getRigidBody();
+		if (otherRigidBody != nullptr)
+		{
+			setRigidBody(otherRigidBody);
 		}
 		Collider* otherCollider = otherGameObject->getCollider();
 		if (otherCollider != nullptr)

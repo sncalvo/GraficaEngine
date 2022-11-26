@@ -52,6 +52,7 @@ namespace Engine
 		void addTag(std::string tag);
 		bool hasTag(std::string tag) const;
 		BaseGameObject *getChildWithTag(std::string tag) const;
+		virtual void syncTransformWithRigidBody();
 
 		template<class BehaviourType> BehaviourType* getComponent() const
 		{

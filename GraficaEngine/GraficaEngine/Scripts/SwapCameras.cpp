@@ -17,6 +17,7 @@ SwapCameras *SwapCameras::clone() const
 void SwapCameras::update()
 {
 	Engine::Input& input = Engine::Input::getInstance();
+	Engine::PhysicsManager& physicsManager = Engine::PhysicsManager::getInstance();
 
 	Engine::Scene* scene = gameObject->getScene();
 
@@ -43,5 +44,6 @@ void SwapCameras::update()
 		}
 
 		scene->setActiveCamera(newCameraName);
+		physicsManager.setCamera(scene->getActiveCamera());
 	}
 }

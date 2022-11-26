@@ -302,6 +302,9 @@ namespace Engine {
 		}
 
 		scene->drawParticles();
+		PhysicsManager& physicsManager = PhysicsManager::getInstance();
+		physicsManager.renderDebug();
+
 		scene->draw(_defaultShader);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

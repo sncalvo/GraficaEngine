@@ -42,7 +42,7 @@ namespace Engine
 	void Scene::addGameObject(BaseGameObject *gameObject)
 	{
 		gameObject->setScene(this);
-		_queuedGameObjects.push_back(gameObject);
+		_queuedGameObjects.push_back(gameObject);	
 
 		if (gameObject->getCollider() != nullptr)
 		{
@@ -116,6 +116,9 @@ namespace Engine
 
 	void Scene::start()
 	{
+		PhysicsManager& physicsManager = PhysicsManager::getInstance();
+		physicsManager.setCamera(_activeCamera);
+
 		for (BaseGameObject* gameObject : _gameObjects)
 		{
 			gameObject->start();
@@ -216,6 +219,14 @@ namespace Engine
 
 	void Scene::physicsUpdate()
 	{
+		PhysicsManager& physicsManager = PhysicsManager::getInstance();
+		physicsManager.stepSimulation(Time::getDeltaTime());
+
+		for (BaseGameObject* gameObject : _gameObjects)
+		{
+			gameObject->syncTransformWithRigidBody();
+		}
+
 		for (Collider *collider : _colliders)
 		{
 			collider->resetCollisions();

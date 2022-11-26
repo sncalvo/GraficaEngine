@@ -96,6 +96,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,6 +162,8 @@
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
+    <ClCompile Include="Physics\DebugDrawer.cpp" />
+    <ClCompile Include="Physics\PhysicsManager.cpp" />
     <ClCompile Include="Renderer\MeshRenderer.cpp" />
     <ClCompile Include="Renderer\ParticleSystem.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
@@ -224,6 +227,8 @@
     <ClInclude Include="Core\SceneManager.h" />
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
+    <ClInclude Include="Physics\DebugDrawer.h" />
+    <ClInclude Include="Physics\PhysicsManager.h" />
     <ClInclude Include="Renderer\MeshRenderer.h" />
     <ClInclude Include="Renderer\Particle.h" />
     <ClInclude Include="Renderer\ParticleSystem.h" />
@@ -243,7 +248,6 @@
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\TextObject.h" />
-    <ClInclude Include="Scripts\CameraController.h" />
     <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\GameLoop.h" />
@@ -287,11 +291,12 @@
     <None Include="Assets\Shaders\depthTest.gs" />
     <None Include="Assets\Shaders\depthTest.vs" />
     <None Include="Assets\Shaders\hdrDraw.fs" />
+    <None Include="Assets\Shaders\line.fs" />
+    <None Include="Assets\Shaders\line.vs" />
     <None Include="Assets\Shaders\skybox.fs" />
     <None Include="Assets\Shaders\skybox.vs" />
     <None Include="Assets\Shaders\test.fs" />
     <None Include="Assets\Shaders\test.vs" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

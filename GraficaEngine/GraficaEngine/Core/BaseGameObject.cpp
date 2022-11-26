@@ -205,4 +205,6 @@ namespace Engine
 
 		return { meshRenderers, shadowRenderers, textRenderers };
 	}
+
+	void BaseGameObject::syncTransformWithRigidBody() {}
 }

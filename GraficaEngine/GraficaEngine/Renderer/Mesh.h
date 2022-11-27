@@ -46,6 +46,7 @@ namespace Engine
 	public:
 		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, glm::vec3 center);
 		void draw() const;
+		std::vector<glm::vec3> getVertexPositions() const;
 
 		glm::vec3 center;
 	};

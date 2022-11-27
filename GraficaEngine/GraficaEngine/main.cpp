@@ -154,7 +154,6 @@ Engine::Scene* loadMainScene()
 	Engine::GameObject* level = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/City.obj")),
 		Engine::MaterialObject());
-	level->setCollider(new Engine::Collider(glm::vec3(-100.f, 0.0f, -100.f), glm::vec3(100.f, 0.0f, 100.f)));
 	scene->addGameObject(level);
 
 	btBoxShape* levelColliderShape = new btBoxShape(btVector3(
@@ -174,8 +173,18 @@ Engine::Scene* loadMainScene()
 	duck->addTag("player");
 	duck->transform.position = glm::vec3(0.0f, 10.f, 0.f);
 	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
-	btBoxShape* duckColliderShape = new btBoxShape(btVector3(btScalar(0.5), btScalar(0.5), btScalar(0.5)));
-	btRigidBody* duckRigidBody = physicsManager.createRigidBody(1.0, duck->transform.position, duckColliderShape);
+	duck->calculateAabb();
+	auto aabbBox = duck->getAabb()->getLargestContainingBox();
+	btBoxShape* aabbColliderShape = new btBoxShape(btVector3(
+		aabbBox.x,
+		aabbBox.y,
+		aabbBox.z
+	));
+	auto* duckRigidBody = physicsManager.createRigidBody(
+		1.0,
+		duck->transform.position + glm::vec3(0.f, 10.f, 0.f), // TODO: Figure out why this doesn't offset the collider
+		aabbColliderShape
+	);
 	duck->setRigidBody(duckRigidBody);
 
 	Engine::GameObject* buildings = new Engine::GameObject(

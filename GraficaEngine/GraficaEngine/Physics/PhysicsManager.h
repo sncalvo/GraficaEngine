@@ -6,6 +6,7 @@
 #include <Bullet/btBulletDynamicsCommon.h>
 
 #include "../Core/Camera.h"
+#include "../Utils/Aabb.h"
 #include "DebugDrawer.h"
 
 namespace Engine {
@@ -32,9 +33,8 @@ namespace Engine {
 		void setCamera(Camera*);
 		btRigidBody* createRigidBody(
 			float mass,
-			const glm::vec3& transform,
-			btCollisionShape* shape,
-			const btVector4& color = btVector4(1, 0, 0, 1)
+			const glm::vec3& position,
+			btCollisionShape* shape
 		);
 	};
 }

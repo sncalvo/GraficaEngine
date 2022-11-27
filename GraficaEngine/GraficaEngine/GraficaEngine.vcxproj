@@ -216,6 +216,7 @@
     <ClCompile Include="Platform\Window.cpp" />
     <ClCompile Include="Utils\SmoothAcceleratedPosition.cpp" />
     <ClCompile Include="Utils\UUID.cpp" />
+    <ClCompile Include="Utils\Aabb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -284,6 +285,7 @@
     <ClInclude Include="Platform\Window.h" />
     <ClInclude Include="Utils\SmoothAcceleratedPosition.h" />
     <ClInclude Include="Utils\UUID.h" />
+    <ClInclude Include="Utils\Aabb.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\blur.fs" />

@@ -21,6 +21,18 @@ namespace Engine
         setupMesh();
     }
 
+    std::vector<glm::vec3> Mesh::getVertexPositions() const
+    {
+        std::vector<glm::vec3> result;
+
+        for (const auto& vertex : _vertices)
+        {
+            result.push_back(vertex.position);
+        }
+
+        return result;
+    }
+
     void Mesh::setupMesh()
     {
         glGenVertexArrays(1, &VAO);

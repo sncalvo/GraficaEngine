@@ -62,8 +62,7 @@ namespace Engine
 	btRigidBody* PhysicsManager::createRigidBody(
 		float mass,
 		const glm::vec3& position,
-		btCollisionShape* shape,
-		const btVector4& color
+		btCollisionShape* shape
 	)
 	{
 		btTransform rigidBodyTransform;
@@ -75,7 +74,7 @@ namespace Engine
 		));
 		btVector3 localInertia(0, 0, 0);
 		shape->calculateLocalInertia(mass, localInertia);
-		btRigidBody* rigidBody = new btRigidBody(mass, 0, shape, localInertia);
+		auto* rigidBody = new btRigidBody(mass, 0, shape, localInertia);
 		rigidBody->setWorldTransform(rigidBodyTransform);
 		_collisionShapes.push_back(shape);
 		_dynamicsWorld->addRigidBody(rigidBody);

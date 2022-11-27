@@ -126,10 +126,26 @@ namespace Engine
 		BaseGameObject::draw(shader);*/
 	}
 
+	void GameObject::calculateAabb()
+	{
+		auto mesh = _model->getMeshes()[0];
+		_aabb = new Aabb(mesh->getVertexPositions());
+	}
+
+	Aabb* GameObject::getAabb() const
+	{
+		return _aabb;
+	}
+
 	GameObject::~GameObject()
 	{
 
 		BaseGameObject::~BaseGameObject();
+
+		if (_aabb != nullptr)
+		{
+			delete _aabb;
+		}
 
 		if (_collider != nullptr)
 		{

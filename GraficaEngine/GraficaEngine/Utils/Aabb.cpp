@@ -2,11 +2,11 @@
 
 namespace Engine
 {
-    Aabb::Aabb(std::vector<glm::vec3> vertices)
+    Aabb::Aabb(std::vector<glm::vec3> vertices) : position(glm::vec3(0.f))
     {
         auto constexpr infinity = std::numeric_limits<float>::infinity();
-        minVertex = glm::vec3(infinity);
-        maxVertex = glm::vec3(-infinity);
+        _minVertex = glm::vec3(infinity);
+        _maxVertex = glm::vec3(-infinity);
 
         for (const auto& vertex : vertices)
         {
@@ -16,37 +16,23 @@ namespace Engine
 
     void Aabb::processVertex(const glm::vec3& vertex)
     {
-        minVertex.x = glm::min(minVertex.x, vertex.x);
-        minVertex.y = glm::min(minVertex.y, vertex.y);
-        minVertex.z = glm::min(minVertex.z, vertex.z);
+        _minVertex.x = glm::min(_minVertex.x, vertex.x);
+        _minVertex.y = glm::min(_minVertex.y, vertex.y);
+        _minVertex.z = glm::min(_minVertex.z, vertex.z);
 
-        maxVertex.x = glm::max(maxVertex.x, vertex.x);
-        maxVertex.y = glm::max(maxVertex.y, vertex.y);
-        maxVertex.z = glm::max(maxVertex.z, vertex.z);
+        _maxVertex.x = glm::max(_maxVertex.x, vertex.x);
+        _maxVertex.y = glm::max(_maxVertex.y, vertex.y);
+        _maxVertex.z = glm::max(_maxVertex.z, vertex.z);
     }
 
     glm::vec3 Aabb::calculateMiddlePoint()
     {
-        return (minVertex + maxVertex) / 2.f;
+        return (_minVertex + _maxVertex) / 2.f;
     }
 
-    glm::vec3 Aabb::getLargestContainingBox()
+    glm::vec3 Aabb::getHalfExtents() const
     {
-        auto differenceVector = maxVertex - minVertex;
-        
-        if (differenceVector.x > glm::max(differenceVector.y, differenceVector.z))
-        {
-            return glm::vec3(differenceVector.x / 2.f);
-        }
-
-        if (differenceVector.y > glm::max(differenceVector.x, differenceVector.z))
-        {
-            return glm::vec3(differenceVector.y / 2.f);
-        }
-
-        if (differenceVector.z > glm::max(differenceVector.x, differenceVector.y))
-        {
-            return glm::vec3(differenceVector.z / 2.f);
-        }
+        auto difference = _maxVertex - _minVertex;
+        return difference / 2.f;
     }
 }

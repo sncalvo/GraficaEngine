@@ -8,7 +8,7 @@
 
 #include "../Utils/DebugLog.h"
 
-PlayerController::PlayerController(): _speed(7.f), _canMove(true)
+PlayerController::PlayerController(): _speed(50.f), _canMove(true)
 {
 	_score = 0;
 }
@@ -20,34 +20,42 @@ PlayerController *PlayerController::clone() const
 
 void PlayerController::update()
 {
-	Engine::Input& input = Engine::Input::getInstance();
-	Engine::Transform& transform = gameObject->transform;
+	auto& input = Engine::Input::getInstance();
+	auto& transform = gameObject->transform;
+	auto* rigidBody = ((Engine::GameObject*)gameObject)->getRigidBody();
 
 	if (_canMove)
 	{
-		glm::vec3 movement(0.f);
+		glm::vec3 velocity(0.f);
 		if (input.getKey(Engine::KEY_UP) || input.getKey(Engine::KEY_W))
 		{
-			movement += transform.getForward();
+			velocity += transform.getForward();
 		}
 		if (input.getKey(Engine::KEY_DOWN) || input.getKey(Engine::KEY_S))
 		{
-			movement -= transform.getForward();
+			velocity -= transform.getForward();
 		}
 		if (input.getKey(Engine::KEY_LEFT) || input.getKey(Engine::KEY_A))
 		{
-			movement -= transform.getRight();
+			velocity -= transform.getRight();
 		}
 		if (input.getKey(Engine::KEY_RIGHT) || input.getKey(Engine::KEY_D))
 		{
-			movement += transform.getRight();
+			velocity += transform.getRight();
 		}
 
-		glm::vec3 movementDirection = glm::normalize(movement);
+		glm::vec3 normalizedVelocity = glm::normalize(velocity);
 
-		if (!glm::all(glm::isnan(movementDirection)))
+		auto existingVelocity = rigidBody->getLinearVelocity();
+		if (!glm::all(glm::isnan(normalizedVelocity)))
 		{
-			transform.position += movementDirection * _speed * Engine::Time::getDeltaTime();
+			auto totalVelocity = normalizedVelocity * _speed;
+			auto newVelocity = btVector3(totalVelocity.x, existingVelocity.getY(), totalVelocity.z);
+			rigidBody->setLinearVelocity(newVelocity);
+		}
+		else
+		{
+			rigidBody->setLinearVelocity(btVector3(0.f, existingVelocity.getY(), 0.f));
 		}
 	}
 }

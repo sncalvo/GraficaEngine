@@ -156,12 +156,25 @@ Engine::Scene* loadMainScene()
 		Engine::MaterialObject());
 	scene->addGameObject(level);
 
-	btBoxShape* levelColliderShape = new btBoxShape(btVector3(
+	auto aabbs = level->getModel()->getAabbs();
+	auto* shape = new btCompoundShape();
+
+	for (const auto& aabb : aabbs)
+	{
+		auto halfExtents = aabb->getHalfExtents();
+		auto childShape = new btBoxShape(btVector3(halfExtents.x, halfExtents.y, halfExtents.z));
+		btTransform childTransform;
+		childTransform.setIdentity();
+		childTransform.setOrigin(btVector3(aabb->position.x, aabb->position.y, aabb->position.z));
+		shape->addChildShape(childTransform, childShape);
+	}
+
+	/*btBoxShape* levelColliderShape = new btBoxShape(btVector3(
 		btScalar(50.),
 		btScalar(1.),
 		btScalar(50.)
-	));
-	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0., level->transform.position, levelColliderShape);
+	));*/
+	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0., level->transform.position, shape);
 	level->setRigidBody(levelRigidBody);
 
 	Engine::GameObject* duck = new Engine::GameObject(
@@ -169,22 +182,24 @@ Engine::Scene* loadMainScene()
 		Engine::MaterialObject()
 	);
 	duck->addBehaviour(new PlayerController());
+	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
 	duck->transform.position = glm::vec3(0.0f, 10.f, 0.f);
 	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
 	duck->calculateAabb();
-	auto aabbBox = duck->getAabb()->getLargestContainingBox();
+	auto aabbBox = duck->getAabb()->getHalfExtents();
 	btBoxShape* aabbColliderShape = new btBoxShape(btVector3(
 		aabbBox.x,
 		aabbBox.y,
 		aabbBox.z
 	));
 	auto* duckRigidBody = physicsManager.createRigidBody(
-		1.0,
+		4.0,
 		duck->transform.position,
 		aabbColliderShape
 	);
+	duckRigidBody->setAngularFactor(btVector3(0.f, 0.f, 0.f));
 	duck->setRigidBody(duckRigidBody);
 	duck->setRigidBodyCenterOffset(glm::vec3(0.f, -1.f, 0.f));
 

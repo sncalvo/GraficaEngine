@@ -18,7 +18,7 @@ void main()
         FragColor = texture(particle_tex, tex_coords);
         FragColor.rgb *= 0.7;
     } else {
-        FragColor = vec4(vec3(0.8), (1.0 - distance_from_center) * 0.6);
+        FragColor = vec4(vec3(1.0), (1.0 - distance_from_center) * 0.8);
     }
 
     // Avoid z-buffer writes on fully transparent (prevents black squares)

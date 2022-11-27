@@ -162,6 +162,7 @@
     <ClCompile Include="Core\SceneManager.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
     <ClCompile Include="Renderer\MeshRenderer.cpp" />
+    <ClCompile Include="Renderer\ParticleSystem.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\RenderPipeline.cpp" />
     <ClCompile Include="Renderer\Skybox.cpp" />
@@ -224,6 +225,8 @@
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
     <ClInclude Include="Renderer\MeshRenderer.h" />
+    <ClInclude Include="Renderer\Particle.h" />
+    <ClInclude Include="Renderer\ParticleSystem.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\RenderPipeline.h" />
     <ClInclude Include="Renderer\Skybox.h" />

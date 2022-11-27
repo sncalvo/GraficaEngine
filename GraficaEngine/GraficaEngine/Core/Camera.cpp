@@ -17,6 +17,8 @@ namespace Engine
         transform.setRotationX(pitch);
         transform.setRotationY(yaw);
         transform.position = position;
+        _up = glm::vec3(0.f,1.f,0.f);
+        _front = glm::vec3(0.f,0.f,1.f);
     }
 
     Camera::Camera(const Camera *otherCamera) :
@@ -40,10 +42,15 @@ namespace Engine
 
     glm::mat4 Camera::getViewMatrix() const
     {
+        glm::vec3 forward = transform.getForward();
+        glm::vec3 up = transform.getUp();
+        glm::vec3 position = transform.position;
+
         return glm::lookAt(
-            transform.position,
-            transform.position + transform.getForward(),
-            transform.getUp());
+            position,
+            position + forward,
+            up
+        );
     }
 
     std::vector<glm::vec4> Camera::getFrustumCornersWorldSpace(const float near, const float far) const
@@ -90,6 +97,10 @@ namespace Engine
             transform.position -= transform.getRight() * velocity;
         if (direction == Camera_Movement::RIGHT)
             transform.position += transform.getRight() * velocity;
+        if (direction == Camera_Movement::UP)
+            transform.position += transform.getUp() * velocity;
+        if (direction == Camera_Movement::DOWN)
+            transform.position -= transform.getUp() * velocity;
     }
 
     void Camera::processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
@@ -129,6 +140,11 @@ namespace Engine
     }
 
     glm::mat4 Camera::getProjectionMatrixFor(const float near, const float far) const
+    {
+        return glm::mat4(0.f);
+    }
+
+    glm::mat4 Camera::getProjectionMatrixFov(const float fov) const
     {
         return glm::mat4(0.f);
     }

@@ -58,6 +58,8 @@ void loadHUD(Engine::Scene *);
 
 int main(int argc, char *argv[])
 {
+	srand((unsigned)time(0));
+
 	if (!Engine::MediaLayer::init())
 	{
 		return 1;
@@ -111,7 +113,7 @@ Engine::Scene* loadMainScene()
 		-45.f);
 	flyingCamera->addBehaviour(new FlyingCameraController());
 
-	Engine::Scene* scene = new Engine::Scene(thirdPersonCamera);
+	Engine::Scene* scene = new Engine::Scene(flyingCamera);
 
 	scene->addCamera("flying", flyingCamera);
 	scene->addCamera("centeredFixed", centeredFixedCamera);

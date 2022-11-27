@@ -16,6 +16,7 @@
 #include "../Renderer/MeshRenderer.h"
 #include "../Renderer/ShadowRenderer.h"
 #include "../Renderer/TextRenderer.h"
+#include "../Renderer/ParticleSystem.h"
 
 namespace Engine
 {
@@ -31,6 +32,7 @@ namespace Engine
 		std::vector<Collider *> _colliders;
 		std::vector<Light *> _lights;
 		Skybox *_skybox;
+		ParticleSystem *_ps;
 
 		std::unordered_map<std::string, std::vector<std::shared_ptr<MeshRenderer>>> _meshRenderers = {};
 		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>> _shadowRenderers = {};
@@ -53,18 +55,21 @@ namespace Engine
 		std::vector<Light *> getLights();
 		void drawSkybox(glm::mat4 projection, glm::mat4 view);
 		void setSkybox(Skybox *);
+		void setParticleSystem(ParticleSystem *ps);
+		void drawParticles();
 		void draw(Shader *);
 		void start();
 		void update();
 		void physicsUpdate();
 		void animationsUpdate(float deltaTime);
+		void particleSystemUpdate(float deltaTime);
 		void addRenderers(BaseGameObject* gameObject);
 		void removeRenderers(BaseGameObject* gameObject);
 
 		std::unordered_map<std::string, std::vector<std::shared_ptr<MeshRenderer>>>& getMeshRenderers() { return _meshRenderers; };
 		std::unordered_map<std::string, std::vector<std::shared_ptr<ShadowRenderer>>>& getShadowRenderers() { return _shadowRenderers; };
 		std::unordered_map<std::string, std::vector<std::shared_ptr<TextRenderer>>>& getTextRenderers() { return _textRenderers; };
-
+		  
 		~Scene();
 	};
 }

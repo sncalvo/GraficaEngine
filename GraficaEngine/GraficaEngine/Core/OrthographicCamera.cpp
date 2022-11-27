@@ -28,4 +28,9 @@ namespace Engine
 	{
 		return glm::ortho(-8.0f, 8.0f, -6.0f, 6.0f, near, far); // TODO: Change parameters
 	}
+
+	glm::mat4 OrthographicCamera::getProjectionMatrixFov(const float fov) const
+	{
+	  return getProjectionMatrix();
+	}
 }

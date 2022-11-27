@@ -257,6 +257,27 @@ namespace Engine
 		}
 	}
 
+	void Scene::setParticleSystem(ParticleSystem *ps)
+	{
+		_ps = ps;
+	}
+
+	void Scene::particleSystemUpdate(float deltaTime)
+	{
+		if (_ps != nullptr)
+		{
+			_ps->update(deltaTime);
+		}
+	}
+
+	void Scene::drawParticles()
+	{
+		if (_ps != nullptr)
+		{
+			_ps->draw(getActiveCamera());
+		}
+	}
+
 	void Scene::setSkybox(Skybox *skybox)
 	{
 		_skybox = skybox;

@@ -20,6 +20,7 @@ namespace Engine
 		Collider *_collider;
 		Animator *_animator;
 		btRigidBody* _rigidBody;
+		glm::vec3 _rigidBodyCenterOffset;
 		Aabb* _aabb;
 	public:
 		GameObject(Model *model, MaterialObject material);
@@ -37,6 +38,7 @@ namespace Engine
 		MaterialObject &getMaterial();
 		void calculateAabb();
 		Aabb* getAabb() const;
+		void setRigidBodyCenterOffset(glm::vec3 offset);
 		std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers() override;
 	};
 }

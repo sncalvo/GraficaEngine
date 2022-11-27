@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	GameObject::GameObject(Model *model, MaterialObject material) : _model(model), _material(material), _collider(nullptr), _rigidBody(nullptr)
+	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material), _rigidBody(nullptr), _rigidBodyCenterOffset(glm::vec3(0.f))
 	{
 		for (auto renderer : model->getMeshRenderers())
 		{
@@ -37,6 +37,11 @@ namespace Engine
 		return _rigidBody;
 	}
 
+	void GameObject::setRigidBodyCenterOffset(glm::vec3 offset)
+	{
+		_rigidBodyCenterOffset = offset;
+	}
+
 	void GameObject::syncTransformWithRigidBody()
 	{
 		if (_rigidBody == nullptr)
@@ -46,9 +51,9 @@ namespace Engine
 
 		btTransform rigidBodyTransform = _rigidBody->getWorldTransform();
 		transform.position = glm::vec3(
-			rigidBodyTransform.getOrigin().getX(),
-			rigidBodyTransform.getOrigin().getY(),
-			rigidBodyTransform.getOrigin().getZ()
+			rigidBodyTransform.getOrigin().getX() + _rigidBodyCenterOffset.x,
+			rigidBodyTransform.getOrigin().getY() + _rigidBodyCenterOffset.y,
+			rigidBodyTransform.getOrigin().getZ() + _rigidBodyCenterOffset.z
 		);
 	}
 
@@ -93,6 +98,7 @@ namespace Engine
 		{
 			setCollider(new Collider(otherGameObject->getCollider()));
 		}
+		setRigidBodyCenterOffset(otherGameObject->_rigidBodyCenterOffset);
 	}
 
 	GameObject *GameObject::clone() const

@@ -182,10 +182,11 @@ Engine::Scene* loadMainScene()
 	));
 	auto* duckRigidBody = physicsManager.createRigidBody(
 		1.0,
-		duck->transform.position + glm::vec3(0.f, 10.f, 0.f), // TODO: Figure out why this doesn't offset the collider
+		duck->transform.position,
 		aabbColliderShape
 	);
 	duck->setRigidBody(duckRigidBody);
+	duck->setRigidBodyCenterOffset(glm::vec3(0.f, -1.f, 0.f));
 
 	Engine::GameObject* buildings = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/Building.obj")),

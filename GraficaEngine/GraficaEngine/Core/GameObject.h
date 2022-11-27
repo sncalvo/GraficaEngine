@@ -17,7 +17,6 @@ namespace Engine
 	private:
 		Model *_model;
 		MaterialObject _material;
-		Collider *_collider;
 		Animator *_animator;
 		btRigidBody* _rigidBody;
 		glm::vec3 _rigidBodyCenterOffset;
@@ -31,8 +30,6 @@ namespace Engine
 		btRigidBody* getRigidBody() const;
 		void setRigidBody(btRigidBody*);
 		void syncTransformWithRigidBody() override;
-		void setCollider(Collider *collider);
-		Collider *getCollider() const;
 		void draw(Shader *shader) const;
 		Model *getModel() const;
 		MaterialObject &getMaterial();

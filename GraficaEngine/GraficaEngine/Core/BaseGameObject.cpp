@@ -64,10 +64,6 @@ namespace Engine
 	void BaseGameObject::addChild(BaseGameObject *child)
 	{
 		child->setScene(_scene);
-		if (child->getCollider() != nullptr)
-		{
-			_scene->addCollider(child->getCollider());
-		}
 		child->setParent(this);
 		_children.push_back(child);
 		child->start();
@@ -139,11 +135,6 @@ namespace Engine
 	void BaseGameObject::setScene(Scene *scene)
 	{
 		_scene = scene;
-	}
-
-	Collider *BaseGameObject::getCollider() const
-	{
-		return nullptr;
 	}
 
 	Scene *BaseGameObject::getScene() const

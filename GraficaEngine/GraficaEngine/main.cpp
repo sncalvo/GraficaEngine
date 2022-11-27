@@ -28,7 +28,6 @@
 #include "Core/Animator.h"
 #include "Core/Settings.h"
 
-#include "Physics/Collider.h"
 #include "Physics/PhysicsManager.h"
 
 #include "Scripts/PlayerController.h"
@@ -38,18 +37,9 @@
 #include "Scripts/OffsetPlayer.h"
 #include "Scripts/FirstPersonCameraController.h"
 #include "Scripts/ThirdPersonCameraController.h"
-#include "Scripts/Mover.h"
-#include "Scripts/Hazard.h"
-#include "Scripts/Boundary.h"
-#include "Scripts/EndlessSpawner.h"
-#include "Scripts/ObstacleSpawner.h"
-#include "Scripts/CoinController.h"
-#include "Scripts/StaticSpawner.h"
 #include "Scripts/TimeController.h"
 #include "Scripts/HudController.h"
 #include "Scripts/HintController.h"
-#include "Scripts/RiverMover.h"
-#include "Scripts/TreeSpawner.h"
 #include "Scripts/HomeScreenController.h"
 #include "Scripts/MoveDownOnStart.h"
 #include "Scripts/GameKeysHomeController.h"
@@ -137,8 +127,6 @@ Engine::Scene* loadMainScene()
 	//	vampireModel,
 	//	Engine::MaterialObject(),
 	//	danceAnimation);
-	//vampire->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
-	//vampire->addBehaviour(new PlayerController());
 	//vampire->addBehaviour(new JumpController());
 	//vampire->addTag("player");
 	//scene->addGameObject(vampire);
@@ -157,7 +145,7 @@ Engine::Scene* loadMainScene()
 	scene->addGameObject(level);
 
 	auto aabbs = level->getModel()->getAabbs();
-	auto* shape = new btCompoundShape();
+	auto* levelShape = new btCompoundShape();
 
 	for (const auto& aabb : aabbs)
 	{
@@ -166,15 +154,10 @@ Engine::Scene* loadMainScene()
 		btTransform childTransform;
 		childTransform.setIdentity();
 		childTransform.setOrigin(btVector3(aabb->position.x, aabb->position.y, aabb->position.z));
-		shape->addChildShape(childTransform, childShape);
+		levelShape->addChildShape(childTransform, childShape);
 	}
 
-	/*btBoxShape* levelColliderShape = new btBoxShape(btVector3(
-		btScalar(50.),
-		btScalar(1.),
-		btScalar(50.)
-	));*/
-	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0., level->transform.position, shape);
+	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0., level->transform.position, levelShape);
 	level->setRigidBody(levelRigidBody);
 
 	Engine::GameObject* duck = new Engine::GameObject(
@@ -185,19 +168,19 @@ Engine::Scene* loadMainScene()
 	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
-	duck->transform.position = glm::vec3(0.0f, 10.f, 0.f);
+	duck->transform.position = glm::vec3(0.f, 10.f, -5.f);
 	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
 	duck->calculateAabb();
 	auto aabbBox = duck->getAabb()->getHalfExtents();
-	btBoxShape* aabbColliderShape = new btBoxShape(btVector3(
+	btBoxShape* duckShape = new btBoxShape(btVector3(
 		aabbBox.x,
 		aabbBox.y,
 		aabbBox.z
 	));
 	auto* duckRigidBody = physicsManager.createRigidBody(
-		4.0,
+		10.0,
 		duck->transform.position,
-		aabbColliderShape
+		duckShape
 	);
 	duckRigidBody->setAngularFactor(btVector3(0.f, 0.f, 0.f));
 	duck->setRigidBody(duckRigidBody);

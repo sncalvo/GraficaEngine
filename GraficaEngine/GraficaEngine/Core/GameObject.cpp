@@ -57,17 +57,6 @@ namespace Engine
 		);
 	}
 
-	void GameObject::setCollider(Collider *collider)
-	{
-		collider->setGameObject(this);
-		_collider = collider;
-	}
-
-	Collider *GameObject::getCollider() const
-	{
-		return _collider;
-	}
-
 	GameObject::GameObject(const GameObject *otherGameObject):
 		BaseGameObject::BaseGameObject(otherGameObject)
 	{
@@ -92,11 +81,6 @@ namespace Engine
 		if (otherRigidBody != nullptr)
 		{
 			setRigidBody(otherRigidBody);
-		}
-		Collider* otherCollider = otherGameObject->getCollider();
-		if (otherCollider != nullptr)
-		{
-			setCollider(new Collider(otherGameObject->getCollider()));
 		}
 		setRigidBodyCenterOffset(otherGameObject->_rigidBodyCenterOffset);
 	}
@@ -151,12 +135,6 @@ namespace Engine
 		if (_aabb != nullptr)
 		{
 			delete _aabb;
-		}
-
-		if (_collider != nullptr)
-		{
-			_scene->removeCollider(_collider);
-			delete _collider;
 		}
 		
 		delete _model;

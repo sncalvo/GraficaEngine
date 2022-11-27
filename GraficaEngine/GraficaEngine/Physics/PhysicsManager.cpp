@@ -40,17 +40,6 @@ namespace Engine
 		if (_dynamicsWorld)
 		{
 			_dynamicsWorld->stepSimulation(deltaTime);
-
-			/*for (int i = _dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-			{
-				btCollisionObject* object = _dynamicsWorld->getCollisionObjectArray()[i];
-				btRigidBody* body = btRigidBody::upcast(object);
-				btTransform transform = object->getWorldTransform();
-				std::cout << "World position object " << i << " = (" << float(transform.getOrigin().getX())
-					<< ", " << float(transform.getOrigin().getY())
-					<< ", " << float(transform.getOrigin().getZ())
-					<< ")" << std::endl;
-			}*/
 		}
 	}
 

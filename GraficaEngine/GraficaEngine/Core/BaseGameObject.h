@@ -15,7 +15,6 @@
 namespace Engine
 {
 	class Scene;
-	class Collider;
 
 	class BaseGameObject
 	{
@@ -46,7 +45,6 @@ namespace Engine
 		void deleteChild(BaseGameObject *);
 		void setScene(Scene *);
 		Scene *getScene() const;
-		virtual Collider *getCollider() const;
 		virtual void draw(Shader *) const;
 		virtual std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers();
 		void addTag(std::string tag);

@@ -43,11 +43,6 @@ namespace Engine
 	{
 		gameObject->setScene(this);
 		_queuedGameObjects.push_back(gameObject);	
-
-		if (gameObject->getCollider() != nullptr)
-		{
-			addCollider(gameObject->getCollider());
-		}
 	}
 
 	void Scene::deleteGameObject(BaseGameObject *gameObject)
@@ -135,26 +130,6 @@ namespace Engine
 		}
 	}
 
-	void Scene::addCollider(Collider *collider)
-	{
-		_colliders.push_back(collider);
-	}
-
-	void Scene::removeCollider(Collider *collider)
-	{
-		if (collider == nullptr)
-		{
-			return;
-		}
-
-		_colliders.erase(
-			std::remove(
-				_colliders.begin(),
-				_colliders.end(),
-				collider),
-			_colliders.end());
-	}
-
 	void Scene::addRenderers(BaseGameObject* gameObject)
 	{
 		auto [meshRenderers, shadowRenderers, textRenderers] = gameObject->getRenderers();
@@ -225,25 +200,6 @@ namespace Engine
 		for (BaseGameObject* gameObject : _gameObjects)
 		{
 			gameObject->syncTransformWithRigidBody();
-		}
-
-		for (Collider *collider : _colliders)
-		{
-			collider->resetCollisions();
-		}
-
-		for (Collider *first : _colliders)
-		{
-			for (Collider *second : _colliders)
-			{
-				if (!Collider::intersect(first, second))
-				{
-					continue;
-				}
-
-				first->collide(second);
-				second->collide(first);
-			}
 		}
 	}
 

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Core\BaseGameObject.cpp" />
@@ -8,23 +8,15 @@
     <ClCompile Include="Core\PerspectiveCamera.cpp" />
     <ClCompile Include="Core\Settings.cpp" />
     <ClCompile Include="Scripts\JumpController.cpp" />
-    <ClCompile Include="Scripts\Boundary.cpp" />
-    <ClCompile Include="Physics\Collider.cpp" />
-    <ClCompile Include="Scripts\CoinController.cpp" />
     <ClCompile Include="Scripts\FirstPersonCameraController.cpp" />
     <ClCompile Include="Scripts\FlyingCameraController.cpp" />
     <ClCompile Include="Core\TextObject.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\GameLoop.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
-    <ClCompile Include="Scripts\Hazard.cpp" />
     <ClCompile Include="Scripts\HudController.cpp" />
-    <ClCompile Include="Scripts\Mover.cpp" />
-    <ClCompile Include="Scripts\ObstacleSpawner.cpp" />
     <ClCompile Include="Scripts\OffsetPlayer.cpp" />
     <ClCompile Include="Scripts\PlayerController.cpp" />
-    <ClCompile Include="Scripts\EndlessSpawner.cpp" />
-    <ClCompile Include="Scripts\StaticSpawner.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
     <ClCompile Include="Scripts\TimeController.cpp" />
@@ -43,22 +35,21 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Platform\Window.cpp" />
     <ClCompile Include="Scripts\HintController.cpp" />
-    <ClCompile Include="Scripts\RiverMover.cpp" />
-    <ClCompile Include="Scripts\Riser.cpp" />
     <ClCompile Include="Core\SceneManager.cpp" />
-    <ClCompile Include="Scripts\TreeSpawner.cpp" />
     <ClCompile Include="Renderer\Skybox.cpp" />
     <ClCompile Include="Scripts\HomeScreenController.cpp" />
     <ClCompile Include="Scripts\MoveDownOnStart.cpp" />
     <ClCompile Include="Utils\SmoothAcceleratedPosition.cpp" />
     <ClCompile Include="Scripts\GameKeysHomeController.cpp" />
     <ClCompile Include="Renderer\RenderPipeline.cpp" />
-    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\MeshRenderer.cpp" />
     <ClCompile Include="Renderer\TextRenderer.cpp" />
     <ClCompile Include="Renderer\ShadowRenderer.cpp" />
     <ClCompile Include="Utils\UUID.cpp" />
     <ClCompile Include="Renderer\ParticleSystem.cpp" />
+    <ClCompile Include="Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Physics\DebugDrawer.cpp" />
+    <ClCompile Include="Renderer\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -70,25 +61,16 @@
     <ClInclude Include="Core\Settings.h" />
     <ClInclude Include="Exceptions\NotSupposedToCopyException.h" />
     <ClInclude Include="Scripts\JumpController.h" />
-    <ClInclude Include="Scripts\Boundary.h" />
-    <ClInclude Include="Physics\Collider.h" />
-    <ClInclude Include="Scripts\CoinController.h" />
     <ClInclude Include="Scripts\FirstPersonCameraController.h" />
     <ClInclude Include="Scripts\FlyingCameraController.h" />
     <ClInclude Include="Core\TextObject.h" />
-    <ClInclude Include="Scripts\CameraController.h" />
     <ClInclude Include="Core\Behaviour.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\GameLoop.h" />
     <ClInclude Include="Core\Scene.h" />
-    <ClInclude Include="Scripts\Hazard.h" />
     <ClInclude Include="Scripts\HudController.h" />
-    <ClInclude Include="Scripts\Mover.h" />
-    <ClInclude Include="Scripts\ObstacleSpawner.h" />
     <ClInclude Include="Scripts\OffsetPlayer.h" />
     <ClInclude Include="Scripts\PlayerController.h" />
-    <ClInclude Include="Scripts\EndlessSpawner.h" />
-    <ClInclude Include="Scripts\StaticSpawner.h" />
     <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Scripts\TimeController.h" />
@@ -110,10 +92,7 @@
     <ClInclude Include="Scripts\HintController.h" />
     <ClInclude Include="Core\Colors.h" />
     <ClInclude Include="Scripts\JumpController.h" />
-    <ClInclude Include="Scripts\RiverMover.h" />
-    <ClInclude Include="Scripts\Riser.h" />
     <ClInclude Include="Core\SceneManager.h" />
-    <ClInclude Include="Scripts\TreeSpawner.h" />
     <ClInclude Include="Renderer\Skybox.h" />
     <ClInclude Include="Scripts\HomeScreenController.h" />
     <ClInclude Include="Scripts\MoveDownOnStart.h" />
@@ -127,6 +106,9 @@
     <ClInclude Include="Utils\UUID.h" />
     <ClInclude Include="Renderer\ParticleSystem.h" />
     <ClInclude Include="Renderer\Particle.h" />
+    <ClInclude Include="Physics\PhysicsManager.h" />
+    <ClInclude Include="Physics\DebugDrawer.h" />
+    <ClInclude Include="Renderer\ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\skybox.vs" />
@@ -138,6 +120,7 @@
     <None Include="Assets\Shaders\depthTest.gs" />
     <None Include="Assets\Shaders\hdrDraw.fs" />
     <None Include="Assets\Shaders\blur.fs" />
-    <None Include="ClassDiagram.cd" />
+    <None Include="Assets\Shaders\line.vs" />
+    <None Include="Assets\Shaders\line.fs" />
   </ItemGroup>
 </Project>

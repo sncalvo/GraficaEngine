@@ -19,15 +19,15 @@ ThirdPersonCameraController *ThirdPersonCameraController::clone() const
 
 void ThirdPersonCameraController::update()
 {
-    Engine::Transform &transform = gameObject->transform;
-    Engine::BaseGameObject *player = gameObject->getScene()->getGameObjectWithTag("player");
+    auto& transform = gameObject->transform;
+    auto* player = gameObject->getScene()->getGameObjectWithTag("player");
 
     if (player == nullptr) {
         return;
     }
 
-    Engine::Transform &playerTransform = player->transform;
-    Engine::Input &input = Engine::Input::getInstance();
+    auto& playerTransform = player->transform;
+    auto& input = Engine::Input::getInstance();
 
     float threshold = 0.1f;
 
@@ -51,4 +51,11 @@ void ThirdPersonCameraController::update()
     glm::vec3 cameraForward = transform.getForward();
     glm::vec3 lookDirection = glm::vec3(transform.getForward().x, 0.f, transform.getForward().z);
     playerTransform.lookAt(lookDirection);
+
+    auto quaternionLookAt = glm::quatLookAt(lookDirection, transform.getUp());
+
+    auto* rigidBody = ((Engine::GameObject*)player)->getRigidBody();
+    auto& rigidBodyTransform = rigidBody->getWorldTransform();
+    auto quaternion = btQuaternion(quaternionLookAt.x, quaternionLookAt.y, quaternionLookAt.z, quaternionLookAt.w);
+    rigidBodyTransform.setRotation(quaternion);
 }

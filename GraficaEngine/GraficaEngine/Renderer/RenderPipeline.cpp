@@ -302,6 +302,13 @@ namespace Engine {
 		}
 
 		scene->drawParticles();
+
+		if (settings.getShowColliders())
+		{
+			PhysicsManager& physicsManager = PhysicsManager::getInstance();
+			physicsManager.renderDebug();
+		}
+
 		scene->draw(_defaultShader);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

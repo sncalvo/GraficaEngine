@@ -4,6 +4,7 @@
 
 #include "../Renderer/Model.h"
 #include "../Renderer/Material.h"
+#include "../Physics/PhysicsManager.h"
 
 #include "BaseGameObject.h"
 #include "Scene.h"
@@ -16,19 +17,25 @@ namespace Engine
 	private:
 		Model *_model;
 		MaterialObject _material;
-		Collider *_collider;
 		Animator *_animator;
+		btRigidBody* _rigidBody;
+		glm::vec3 _rigidBodyCenterOffset;
+		Aabb* _aabb;
 	public:
 		GameObject(Model *model, MaterialObject material);
 		GameObject(Model *model, MaterialObject material, Animation *animation);
 		GameObject(const GameObject *);
 		GameObject *clone() const override;
 		~GameObject();
-		void setCollider(Collider *collider);
-		Collider *getCollider() const;
+		btRigidBody* getRigidBody() const;
+		void setRigidBody(btRigidBody*);
+		void syncTransformWithRigidBody() override;
 		void draw(Shader *shader) const;
 		Model *getModel() const;
 		MaterialObject &getMaterial();
+		void calculateAabb();
+		Aabb* getAabb() const;
+		void setRigidBodyCenterOffset(glm::vec3 offset);
 		std::tuple<std::vector<std::shared_ptr<MeshRenderer>>, std::vector<std::shared_ptr<ShadowRenderer>>, std::vector<std::shared_ptr<TextRenderer>>> getRenderers() override;
 	};
 }

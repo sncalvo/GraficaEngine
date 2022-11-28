@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	GameObject::GameObject(Model *model, MaterialObject material) : _model(model), _material(material), _collider(nullptr)
+	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material), _rigidBody(nullptr), _rigidBodyCenterOffset(glm::vec3(0.f))
 	{
 		for (auto renderer : model->getMeshRenderers())
 		{
@@ -27,15 +27,34 @@ namespace Engine
 		}
 	}
 
-	void GameObject::setCollider(Collider *collider)
+	void GameObject::setRigidBody(btRigidBody* rigidBody)
 	{
-		collider->setGameObject(this);
-		_collider = collider;
+		_rigidBody = rigidBody;
 	}
 
-	Collider *GameObject::getCollider() const
+	btRigidBody* GameObject::getRigidBody() const
 	{
-		return _collider;
+		return _rigidBody;
+	}
+
+	void GameObject::setRigidBodyCenterOffset(glm::vec3 offset)
+	{
+		_rigidBodyCenterOffset = offset;
+	}
+
+	void GameObject::syncTransformWithRigidBody()
+	{
+		if (_rigidBody == nullptr)
+		{
+			return;
+		}
+
+		btTransform rigidBodyTransform = _rigidBody->getWorldTransform();
+		transform.position = glm::vec3(
+			rigidBodyTransform.getOrigin().getX() + _rigidBodyCenterOffset.x,
+			rigidBodyTransform.getOrigin().getY() + _rigidBodyCenterOffset.y,
+			rigidBodyTransform.getOrigin().getZ() + _rigidBodyCenterOffset.z
+		);
 	}
 
 	GameObject::GameObject(const GameObject *otherGameObject):
@@ -58,11 +77,12 @@ namespace Engine
 				renderer->setAnimator(_animator);
 			}
 		}
-		Collider* otherCollider = otherGameObject->getCollider();
-		if (otherCollider != nullptr)
+		btRigidBody* otherRigidBody = otherGameObject->getRigidBody();
+		if (otherRigidBody != nullptr)
 		{
-			setCollider(new Collider(otherGameObject->getCollider()));
+			setRigidBody(otherRigidBody);
 		}
+		setRigidBodyCenterOffset(otherGameObject->_rigidBodyCenterOffset);
 	}
 
 	GameObject *GameObject::clone() const
@@ -96,15 +116,25 @@ namespace Engine
 		BaseGameObject::draw(shader);*/
 	}
 
+	void GameObject::calculateAabb()
+	{
+		auto mesh = _model->getMeshes()[0];
+		_aabb = new Aabb(mesh->getVertexPositions());
+	}
+
+	Aabb* GameObject::getAabb() const
+	{
+		return _aabb;
+	}
+
 	GameObject::~GameObject()
 	{
 
 		BaseGameObject::~BaseGameObject();
 
-		if (_collider != nullptr)
+		if (_aabb != nullptr)
 		{
-			_scene->removeCollider(_collider);
-			delete _collider;
+			delete _aabb;
 		}
 		
 		delete _model;

@@ -22,11 +22,13 @@
 #include "Core/Time.h"
 #include "Core/Behaviour.h"
 #include "Core/SceneManager.h"
-#include "Physics/Collider.h"
 #include "Core/Canvas.h"
 #include "Core/Colors.h"
 #include "Core/AnimationBuilder.h"
 #include "Core/Animator.h"
+#include "Core/Settings.h"
+
+#include "Physics/PhysicsManager.h"
 
 #include "Scripts/PlayerController.h"
 #include "Scripts/JumpController.h"
@@ -35,23 +37,12 @@
 #include "Scripts/OffsetPlayer.h"
 #include "Scripts/FirstPersonCameraController.h"
 #include "Scripts/ThirdPersonCameraController.h"
-#include "Scripts/Mover.h"
-#include "Scripts/Hazard.h"
-#include "Scripts/Boundary.h"
-#include "Scripts/EndlessSpawner.h"
-#include "Scripts/ObstacleSpawner.h"
-#include "Scripts/CoinController.h"
-#include "Scripts/StaticSpawner.h"
 #include "Scripts/TimeController.h"
 #include "Scripts/HudController.h"
 #include "Scripts/HintController.h"
-#include "Scripts/RiverMover.h"
-#include "Scripts/TreeSpawner.h"
 #include "Scripts/HomeScreenController.h"
 #include "Scripts/MoveDownOnStart.h"
 #include "Scripts/GameKeysHomeController.h"
-
-#include "Core/Settings.h"
 
 Engine::Scene *loadMainScene();
 void loadHUD(Engine::Scene *);
@@ -80,6 +71,8 @@ int main(int argc, char *argv[])
 	sceneManager.addScene("main", scene);
 	sceneManager.loadScene("main");
 
+	Engine::PhysicsManager& physicsManager = Engine::PhysicsManager::getInstance();
+
 	gameLoop.start();
 
 	return 0;
@@ -87,6 +80,8 @@ int main(int argc, char *argv[])
 
 Engine::Scene* loadMainScene()
 {
+	Engine::PhysicsManager& physicsManager = Engine::PhysicsManager::getInstance();
+
 	Engine::AnimationBuilder animationBuilder;
 	Engine::PerspectiveCamera *centeredFixedCamera = new Engine::PerspectiveCamera(
 		glm::vec3(1.f, 4.f, 3.f),
@@ -124,33 +119,72 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-    Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
-		vampireModel);
-	Engine::Animation* danceAnimation = animationBuilder.getAnimation();
-	Engine::GameObject* vampire = new Engine::GameObject(
-		vampireModel,
-		Engine::MaterialObject(),
-		danceAnimation);
-	vampire->setCollider(new Engine::Collider(glm::vec3(-0.6f, 0.f, -0.6f), glm::vec3(0.6f, 2.5f, 0.6f)));
-	vampire->addBehaviour(new PlayerController());
-	vampire->addBehaviour(new JumpController());
-	vampire->addTag("player");
-	scene->addGameObject(vampire);
+ //   Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	//animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
+	//	vampireModel);
+	//Engine::Animation* danceAnimation = animationBuilder.getAnimation();
+	//Engine::GameObject* vampire = new Engine::GameObject(
+	//	vampireModel,
+	//	Engine::MaterialObject(),
+	//	danceAnimation);
+	//vampire->addBehaviour(new JumpController());
+	//vampire->addTag("player");
+	//scene->addGameObject(vampire);
 
-    Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	Engine::GameObject* vampire2 = new Engine::GameObject(
-		vampireModel2,
-		Engine::MaterialObject(),
-		danceAnimation);
-	vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
-	scene->addGameObject(vampire2);
+ //   Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	//Engine::GameObject* vampire2 = new Engine::GameObject(
+	//	vampireModel2,
+	//	Engine::MaterialObject(),
+	//	danceAnimation);
+	//vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
+	//scene->addGameObject(vampire2);
 
 	Engine::GameObject* level = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/City.obj")),
 		Engine::MaterialObject());
-	level->setCollider(new Engine::Collider(glm::vec3(-100.f, 0.0f, -100.f), glm::vec3(100.f, 0.0f, 100.f)));
 	scene->addGameObject(level);
+
+	auto aabbs = level->getModel()->getAabbs();
+	auto* levelShape = new btCompoundShape();
+
+	for (const auto& aabb : aabbs)
+	{
+		auto halfExtents = aabb->getHalfExtents();
+		auto childShape = new btBoxShape(btVector3(halfExtents.x, halfExtents.y, halfExtents.z));
+		btTransform childTransform;
+		childTransform.setIdentity();
+		childTransform.setOrigin(btVector3(aabb->position.x, aabb->position.y, aabb->position.z));
+		levelShape->addChildShape(childTransform, childShape);
+	}
+
+	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0., level->transform.position, levelShape);
+	level->setRigidBody(levelRigidBody);
+
+	Engine::GameObject* duck = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/chicken.obj")),
+		Engine::MaterialObject()
+	);
+	duck->addBehaviour(new PlayerController());
+	duck->addBehaviour(new JumpController());
+	scene->addGameObject(duck);
+	duck->addTag("player");
+	duck->transform.position = glm::vec3(0.f, 10.f, -5.f);
+	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
+	duck->calculateAabb();
+	auto aabbBox = duck->getAabb()->getHalfExtents();
+	btBoxShape* duckShape = new btBoxShape(btVector3(
+		aabbBox.x,
+		aabbBox.y,
+		aabbBox.z
+	));
+	auto* duckRigidBody = physicsManager.createRigidBody(
+		10.0,
+		duck->transform.position,
+		duckShape
+	);
+	duckRigidBody->setAngularFactor(btVector3(0.f, 0.f, 0.f));
+	duck->setRigidBody(duckRigidBody);
+	duck->setRigidBodyCenterOffset(glm::vec3(0.f, -1.f, 0.f));
 
 	Engine::GameObject* buildings = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/Building.obj")),

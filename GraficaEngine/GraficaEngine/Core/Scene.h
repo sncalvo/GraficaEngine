@@ -9,9 +9,9 @@
 #include "Camera.h"
 #include "Light.h"
 #include "TextObject.h"
+#include "Time.h"
 
 #include "../Renderer/Skybox.h"
-#include "../Physics/Collider.h"
 
 #include "../Renderer/MeshRenderer.h"
 #include "../Renderer/ShadowRenderer.h"
@@ -29,7 +29,6 @@ namespace Engine
 		std::vector<BaseGameObject *> _gameObjects;
 		std::vector<BaseGameObject *> _queuedGameObjects;
 		std::set<BaseGameObject *> _gameObjectsToDelete;
-		std::vector<Collider *> _colliders;
 		std::vector<Light *> _lights;
 		Skybox *_skybox;
 		ParticleSystem *_ps;
@@ -42,8 +41,6 @@ namespace Engine
 		Scene(Camera *);
 		Scene(const Scene *);
 		void addGameObject(BaseGameObject *);
-		void addCollider(Collider *);
-		void removeCollider(Collider *);
 		void deleteGameObject(BaseGameObject *);
 		void flushQueuedGameObjects();
 		BaseGameObject *getGameObjectWithTag(std::string);

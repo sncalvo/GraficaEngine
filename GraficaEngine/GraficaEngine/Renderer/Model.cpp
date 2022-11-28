@@ -143,6 +143,15 @@ namespace Engine
         auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
         aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
+        std::vector<glm::vec3> vertexPositions;
+        for (const auto& vertex : vertices)
+        {
+            vertexPositions.push_back(vertex.position);
+        }
+        auto aabb = std::make_shared<Aabb>(vertexPositions);
+        aabb->position = center;
+        _aabbs.push_back(aabb);
+
         textures = _loadMaterialTextures(meshMaterial, aiTextureType_DIFFUSE, "texture_diffuse");
         Material material = _loadMaterial(meshMaterial);
         // textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -165,7 +174,7 @@ namespace Engine
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        glm::vec3 center;
+        glm::vec3 center = glm::vec3(0.f);
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
@@ -177,7 +186,7 @@ namespace Engine
             vector.y = mesh->mVertices[i].y;
             vector.z = mesh->mVertices[i].z;
             vertex.position = vector;
-            center = vector;
+            center += vector;
 
             if (mesh->HasNormals())
             {
@@ -207,6 +216,8 @@ namespace Engine
                 indices.push_back(face.mIndices[j]);
             }
         }
+
+        center /= mesh->mNumVertices;
 
         return { vertices, indices, center };
     }

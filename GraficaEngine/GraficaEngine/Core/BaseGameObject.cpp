@@ -64,10 +64,6 @@ namespace Engine
 	void BaseGameObject::addChild(BaseGameObject *child)
 	{
 		child->setScene(_scene);
-		if (child->getCollider() != nullptr)
-		{
-			_scene->addCollider(child->getCollider());
-		}
 		child->setParent(this);
 		_children.push_back(child);
 		child->start();
@@ -141,11 +137,6 @@ namespace Engine
 		_scene = scene;
 	}
 
-	Collider *BaseGameObject::getCollider() const
-	{
-		return nullptr;
-	}
-
 	Scene *BaseGameObject::getScene() const
 	{
 		return _scene;
@@ -205,4 +196,6 @@ namespace Engine
 
 		return { meshRenderers, shadowRenderers, textRenderers };
 	}
+
+	void BaseGameObject::syncTransformWithRigidBody() {}
 }

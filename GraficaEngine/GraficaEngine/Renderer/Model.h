@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "../Utils/DebugLog.h"
+#include "../Utils/Aabb.h"
 #include "Texture.h"
 #include "MeshRenderer.h"
 #include "ShadowRenderer.h"
@@ -23,6 +24,7 @@ namespace Engine
     {
     private:
         std::vector<std::shared_ptr<Mesh>> _meshes;
+        std::vector<std::shared_ptr<Aabb>> _aabbs;
         std::vector<std::shared_ptr<MeshRenderer>> _meshRenderers;
         std::vector<std::shared_ptr<ShadowRenderer>> _shadowRenderers;
 
@@ -63,6 +65,8 @@ namespace Engine
         std::vector<std::shared_ptr<ShadowRenderer>> getShadowRenderers() const {
             return _shadowRenderers;
         }
+
+        std::vector<std::shared_ptr<Aabb>> getAabbs() const { return _aabbs; };
 
         // Boney stuff (animations data)
         auto& GetBoneInfoMap() { return m_BoneInfoMap; }

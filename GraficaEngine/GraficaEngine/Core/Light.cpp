@@ -159,37 +159,37 @@ namespace Engine
 		{
 			DayTime::MORNING,
 			new Light(
-				glm::vec3(0.6f, 0.3f, 0.2f),
+				glm::vec3(0.1f, 0.075f, 0.05f),
 				glm::vec3(1.f, 0.7f, 0.2f),
-				glm::vec3(1.0f),
-				glm::vec3(1.f, 0.5f, 0.f)
+				glm::vec3(0.6f),
+				glm::normalize(glm::vec3(1.f, 0.5f, 0.f))
 			),
 		},
 		{
 			DayTime::MIDDAY,
 			new Light(
-				glm::vec3(0.3f, 0.6f, 0.6f),
+				glm::vec3(0.075f, 0.15f, 0.15f),
 				glm::vec3(0.7f, 0.8f, 0.8f),
-				glm::vec3(0.9f),
+				glm::vec3(0.7f),
 				glm::normalize(glm::vec3(0.2f, -0.9f, -0.1f))
 			),
 		},
 		{
 			DayTime::AFTERNOON,
 			new Light(
-				glm::vec3(0.7f, 0.4f, 0.2f),
+				glm::vec3(0.175f, 0.1f, 0.05f),
 				glm::vec3(1.f, 0.7f, 0.2f),
-				glm::vec3(1.5f),
-				glm::vec3(-1.f, 0.5f, 0.f)
+				glm::vec3(0.05f),
+				glm::normalize(glm::vec3(-1.f, 0.5f, 0.f))
 			),
 		},
 		{
 			DayTime::NIGHT,
 			new Light(
-				glm::vec3(0.f, 0.2f, 0.4f),
+				glm::vec3(0.f, 0.05f, 0.1f),
 				glm::vec3(0.1f, 0.4f, 0.8f),
-				glm::vec3(1.5f),
-				glm::vec3(1.f)
+				glm::vec3(0.01f),
+				glm::normalize(glm::vec3(1.f))
 			),
 		},
 	};

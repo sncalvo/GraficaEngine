@@ -119,25 +119,23 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
- //   Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	//animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
-	//	vampireModel);
-	//Engine::Animation* danceAnimation = animationBuilder.getAnimation();
-	//Engine::GameObject* vampire = new Engine::GameObject(
-	//	vampireModel,
-	//	Engine::MaterialObject(),
-	//	danceAnimation);
-	//vampire->addBehaviour(new JumpController());
-	//vampire->addTag("player");
-	//scene->addGameObject(vampire);
+    Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
+		vampireModel);
+	Engine::Animation* danceAnimation = animationBuilder.getAnimation();
+	Engine::GameObject* vampire = new Engine::GameObject(
+		vampireModel,
+		Engine::MaterialObject(),
+		danceAnimation);
+	scene->addGameObject(vampire);
 
- //   Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	//Engine::GameObject* vampire2 = new Engine::GameObject(
-	//	vampireModel2,
-	//	Engine::MaterialObject(),
-	//	danceAnimation);
-	//vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
-	//scene->addGameObject(vampire2);
+    Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	Engine::GameObject* vampire2 = new Engine::GameObject(
+		vampireModel2,
+		Engine::MaterialObject(),
+		danceAnimation);
+	vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
+	scene->addGameObject(vampire2);
 
 	Engine::GameObject* level = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/City.obj")),

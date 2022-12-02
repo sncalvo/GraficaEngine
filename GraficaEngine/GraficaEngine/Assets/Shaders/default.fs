@@ -153,12 +153,12 @@ void main()
 
     // specular
     vec3 viewDir = normalize(viewPos - FragPos);
-    vec3 reflectDir = reflect(-lightDir, norm);
+    vec3 reflectDir = normalize(reflect(-lightDir, norm));
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
     vec3 specular = light.specular * (spec * material.specular);
 
     vec3 diffuseSpecular = (1.0 - shadow) * (diffuse + specular);
-    vec3 result = (1.4 - shadow) * ambient + diffuseSpecular;
+    vec3 result = ambient + diffuseSpecular;
     // Calculate fog
     if (useFog)
     {

@@ -109,7 +109,7 @@ namespace Engine
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
-            DebugLog::error("ERROR::LOW::ASSIMP::" + std::string(import.GetErrorString()));
+            //DebugLog::error("ERROR::LOW::ASSIMP::" + std::string(import.GetErrorString()));
             return nullptr;
         }
 

@@ -296,7 +296,7 @@ namespace Engine {
 		}
 
         // Change to show other cameras frustum
-		auto frustumCamera = scene->getActiveCamera();
+		auto frustumCamera = scene->getCamera("thirdPerson");
 		for (auto& [key, value] : meshRenderers)
 		{
 			for (auto meshRenderer : value)

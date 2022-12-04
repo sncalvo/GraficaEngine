@@ -8,7 +8,7 @@
 
 #include "../Utils/DebugLog.h"
 
-PlayerController::PlayerController(): _speed(50.f), _canMove(true)
+PlayerController::PlayerController(): _speed(50.f), _canMove(false)
 {
 	_score = 0;
 }

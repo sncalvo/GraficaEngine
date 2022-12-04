@@ -1,4 +1,5 @@
 #include "OrthographicCamera.h"
+#include "Settings.h"
 
 namespace Engine
 {
@@ -32,5 +33,24 @@ namespace Engine
 	glm::mat4 OrthographicCamera::getProjectionMatrixFov(const float fov) const
 	{
 	  return getProjectionMatrix();
+	}
+
+	Frustum OrthographicCamera::getFrustum() {
+		Frustum frustum;
+		float near, far;
+		near = -100.f;
+		far = 100.f;
+		auto front = transform.getForward();
+		auto up = transform.getUp();
+		auto right = transform.getRight();
+
+		frustum.nearFace = Plane(transform.position + near * front, front);
+		frustum.farFace = Plane(transform.position + far * front, -front);
+		frustum.rightFace = Plane(transform.position + 8.f * right, -right);
+		frustum.leftFace = Plane(transform.position - 8.f * right, right);
+		frustum.topFace = Plane(transform.position + 6.f * up, -up);
+		frustum.bottomFace = Plane(transform.position - 6.f * up, up);
+
+		return frustum;
 	}
 }

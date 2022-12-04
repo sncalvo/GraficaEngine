@@ -2,7 +2,10 @@
 #include <SDL/SDL_opengl.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <vector>
+#include <string>
 #include <iostream>
+#include <map>
 
 #include "../Core/Settings.h"
 #include "Mesh.h"
@@ -19,6 +22,15 @@ namespace Engine
         center(center)
     {
         setupMesh();
+    }
+
+    Mesh::Mesh(
+        std::vector<Vertex> vertices,
+        std::vector<unsigned int> indices,
+        glm::vec3 center,
+        std::shared_ptr<Aabb> in_aabb
+    ): Mesh(vertices, indices, center) {
+        _aabb = in_aabb;
     }
 
     std::vector<glm::vec3> Mesh::getVertexPositions() const

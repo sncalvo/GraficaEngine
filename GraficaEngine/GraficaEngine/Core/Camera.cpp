@@ -148,4 +148,9 @@ namespace Engine
     {
         return glm::mat4(0.f);
     }
+
+    Frustum Camera::getFrustum() {
+        Frustum frustum;
+        return frustum;
+    }
 }

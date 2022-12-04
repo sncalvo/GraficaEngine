@@ -31,13 +31,13 @@ namespace Engine {
             return _shader;
         }
         std::shared_ptr<MeshRenderer> clone();
+        std::shared_ptr<Mesh> _mesh;
+        Transform* _transform;
     private:
         static std::shared_ptr<Shader> _shader;
-        std::shared_ptr<Mesh> _mesh;
         std::shared_ptr<Mesh> _meshLow;
         Material _material;
         std::vector<Texture*> _textures;
-        Transform* _transform;
         Animator* _animator;
 
         void _setMaterialValues(unsigned int depthMap);

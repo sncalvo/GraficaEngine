@@ -3,13 +3,14 @@
 constexpr float CAMERA_NEAR_DEFAULT = 0.1f;
 constexpr float CAMERA_FAR_DEFAULT = 500.f;
 constexpr float EXPOSURE_DEFAULT = 2.f;
-constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 1024;
+constexpr unsigned int SHADOW_RESOLUTION_DEFAULT = 2048;
 constexpr unsigned int DEFAULT_WIDTH = 1080;
 constexpr unsigned int DEFAULT_HEIGHT = 800;
 constexpr bool DEFAULT_FULLSCREEN = false;
 constexpr float FOG_MAX_DIST = 60.f;
 constexpr float FOG_MIN_DIST = 0.1f;
 constexpr glm::vec3 FOG_COLOR = glm::vec3(0.4f);
+constexpr float DEFAULT_BIAS_MODIFIER = 1.f;
 
 namespace Engine
 {
@@ -22,7 +23,7 @@ namespace Engine
 						   _cameraNear(CAMERA_NEAR_DEFAULT), _cameraFar(CAMERA_FAR_DEFAULT),
 						   _exposure(EXPOSURE_DEFAULT), _shadowResolution(SHADOW_RESOLUTION_DEFAULT),
 						   _windowWidth(DEFAULT_WIDTH), _windowHeight(DEFAULT_HEIGHT), _fullscreen(DEFAULT_FULLSCREEN),
-						   _fogMaxDist(FOG_MAX_DIST), _fogMinDist(FOG_MIN_DIST), _fogColor(FOG_COLOR)
+						   _fogMaxDist(FOG_MAX_DIST), _fogMinDist(FOG_MIN_DIST), _fogColor(FOG_COLOR), _biasModifier(DEFAULT_BIAS_MODIFIER)
 	{
 	}
 
@@ -204,5 +205,15 @@ namespace Engine
 	void Settings::setFog(bool fog)
 	{
 		_fog = fog;
+	}
+
+	float Settings::getBiasModifier() const
+	{
+		return _biasModifier;
+	}
+
+	void Settings::setBiasModifier(float bias)
+	{
+		_biasModifier = bias;
 	}
 }

@@ -48,6 +48,7 @@ uniform float fogMaxDist;
 uniform float fogMinDist;
 uniform vec3 fogColor;
 uniform bool useFog;
+uniform float biasModifier;
 
 int GetLayer(float depthValue)
 {
@@ -83,28 +84,27 @@ float ShadowCalculationV2(vec3 normal, vec3 lightDir)
         return 0.0;
     }
     float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
-    const float biasModifier = 0.5f;
     if (layer == cascadeCount)
     {
-        bias *= 1 / (farPlane * biasModifier);
+        bias *= 1 / sqrt(farPlane * biasModifier);
     }
     else
     {
-        bias *= 1 / (cascadePlaneDistances[layer] * biasModifier);
+        bias *= 1 / sqrt(cascadePlaneDistances[layer] * biasModifier);
     }
 
     // PCF
     float shadow = 0.0;
-    vec2 texelSize = 1.0 / vec2(textureSize(shadowMap, 0));
-    for(int x = -2; x <= 2; ++x)
+    vec2 texelSize = 4.0 / vec2(textureSize(shadowMap, 0));
+    for(int x = -1; x <= 1; ++x)
     {
-        for(int y = -2; y <= 2; ++y)
+        for(int y = -1; y <= 1; ++y)
         {
             float pcfDepth = texture(shadowMap, vec3(projCoords.xy + vec2(x, y) * texelSize, layer)).r;
             shadow += (currentDepth - bias) > pcfDepth ? 1.0 : 0.0;
         }
     }
-    shadow /= 25.0;
+    shadow /= 20.0;
 
     return shadow;
 }
@@ -177,11 +177,17 @@ void main()
     int layer = GetLayer(depthValue);
 
     if (debugLayers) {
-        if (layer < 1.f) {
+        if (layer < 1.0) {
             result.x += 0.2;
         } else if (layer < 2.0) {
             result.y += 0.2;
+        } else if (layer < 3.0) {
+            result.z += 0.2;
+        } else if (layer < 4.0) {
+            result.y += 0.2;
+            result.z += 0.2;
         } else {
+            result.x += 0.2;
             result.z += 0.2;
         }
     }

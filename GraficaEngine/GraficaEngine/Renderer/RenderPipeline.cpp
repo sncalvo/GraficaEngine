@@ -288,6 +288,8 @@ namespace Engine {
 		std::vector<float> shadowCascadeLevels = settings.getShadowCascadeLevels();
 		meshShader->setInt("cascadeCount", shadowCascadeLevels.size());
 		meshShader->setBool("debugLayers", settings.getDebugShadowMap());
+		meshShader->setFloat("biasModifier", settings.getBiasModifier());
+
 		for (size_t i = 0; i < shadowCascadeLevels.size(); ++i)
 		{
 			meshShader->setFloat("cascadePlaneDistances[" + std::to_string(i) + "]", shadowCascadeLevels[i]);
@@ -299,8 +301,8 @@ namespace Engine {
 		{
 			for (auto meshRenderer : value)
 			{
-				if(meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
-					meshRenderer->draw(depthMap, camera->transform.position);
+				if (meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
+					meshRenderer->draw(depthMap, frustumCamera->transform.position);
 				}
 			}
 		}

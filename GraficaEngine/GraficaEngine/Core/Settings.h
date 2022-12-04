@@ -35,6 +35,7 @@ namespace Engine
 		glm::vec3 _fogColor;
 		bool _bloom = true;
 		bool _fog = true;
+		float _biasModifier;
 
 	public:
 		static Settings &getInstance()
@@ -75,5 +76,7 @@ namespace Engine
 		void setBloom(bool);
 		bool getFog() const;
 		void setFog(bool);
+		float getBiasModifier() const;
+		void setBiasModifier(float);
 	};
 }

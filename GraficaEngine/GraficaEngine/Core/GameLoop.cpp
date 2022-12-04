@@ -95,6 +95,24 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleBiasModifier() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+		auto biasModifier = settings.getBiasModifier();
+
+		if (input.getKeyDown(KEY_LEFTBRACKET))
+		{
+			settings.setBiasModifier(biasModifier - 0.01f);
+			std::cout << "Bias mod set to " << biasModifier - 0.01f << std::endl;
+		}
+		else if (input.getKeyDown(KEY_RIGHTBRACKET))
+		{
+			settings.setBiasModifier(biasModifier + 0.01f);
+			std::cout << "Bias mod set to " << biasModifier + 0.01f << std::endl;
+		}
+	}
+
 	void GameLoop::_handleInterpolationToggle() const
 	{
 		Input &input = Input::getInstance();
@@ -210,6 +228,7 @@ namespace Engine
 			_handleShadowMapDebug();
 			_handleFogToggle();
 			_handleBloomToggle();
+			_handleBiasModifier();
 
 			if (sceneManager.getShouldRestart())
 			{

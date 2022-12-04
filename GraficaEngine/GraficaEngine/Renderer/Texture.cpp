@@ -40,7 +40,7 @@ namespace Engine
 			{
 				DebugLog::error("No path");
 			}
-			DebugLog::error("Failed to load texture " + std::string(path));
+			DebugLog::error("ERROR::Failed to load texture " + std::string(path));
 		}
 		// We might have to free the image later
 

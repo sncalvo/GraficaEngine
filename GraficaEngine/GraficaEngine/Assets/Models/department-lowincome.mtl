@@ -1,0 +1,432 @@
+# Blender 3.3.1 MTL File: 'department-lowincome.blend'
+# www.blender.org
+
+newmtl Building-StairsOutside
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Building-StairsOutside.jpg
+
+newmtl Cloth-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-blue.png
+map_d Assets/Models/Cloth-hanging-blue.png
+
+newmtl Cloth-hanging-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-gray.png
+map_d Assets/Models/Cloth-hanging-gray.png
+
+newmtl Cloth-hanging-lime
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-lime.png
+map_d Assets/Models/Cloth-hanging-lime.png
+
+newmtl Cloth-hanging-pink
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-pink.png
+map_d Assets/Models/Cloth-hanging-pink.png
+
+newmtl DoorMetalGraffiti-Mod-jpg
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Assets/Models/DoorMetalGraffiti-Mod-jpg.jpg
+
+newmtl Feed1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/shaw-75e-lnb_-_copy_-_copy.jpg
+
+newmtl Hoodie-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-blue.png
+map_d Assets/Models/Hoodie-hanging-blue.png
+
+newmtl Hoodie-hanging-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-gray.png
+map_d Assets/Models/Hoodie-hanging-gray.png
+
+newmtl Hoodie-hanging-green
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-green.png
+map_d Assets/Models/Hoodie-hanging-green.png
+
+newmtl Hoodie-hanging-red
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-red.png
+map_d Assets/Models/Hoodie-hanging-red.png
+
+newmtl Lightson
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Metalantenna-Black
+Ns 87.919159
+Ka 1.000000 1.000000 1.000000
+Kd 0.059857 0.059857 0.059857
+Ks 0.156977 0.156977 0.156977
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Metalantenna-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.874714 0.928449 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Pipes008_(2)
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Pipes008 (2).jpg
+
+newmtl Pipes008_(2).Windowlateral
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Pipes008 (2).jpg
+
+newmtl Pipes008_(2).gLASS
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Pipes008 (2).jpg
+
+newmtl Shirt-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt-hanging-blue.png
+map_d Assets/Models/Shirt-hanging-blue.png
+
+newmtl Shirt-hanging-bluewhite
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt-hanging-bluewhite.png
+map_d Assets/Models/Shirt-hanging-bluewhite.png
+
+newmtl Shirt-hanging-redwhite
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt-hanging-redwhite.png
+map_d Assets/Models/Shirt-hanging-redwhite.png
+
+newmtl Shirt2-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt2-hanging-blue.png
+map_d Assets/Models/Shirt2-hanging-blue.png
+
+newmtl Shirt2-hanging-green
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt2-hanging-green.png
+map_d Assets/Models/Shirt2-hanging-green.png
+
+newmtl TR_lowincomeClean.GlassTransparent
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl TechoDeLata01
+Ns 250.000000
+Ka 0.162791 0.162791 0.162791
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Assets/Models/TechoDeLata01.jpg
+
+newmtl Towe2l-hanging-red
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towe2l-hanging-red.png
+map_d Assets/Models/Towe2l-hanging-red.png
+
+newmtl Towel-hanging-green
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel-hanging-green.png
+map_d Assets/Models/Towel-hanging-green.png
+
+newmtl Towel-hanging-pinkpurple
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel-hanging-pinkpurple.png
+map_d Assets/Models/Towel-hanging-pinkpurple.png
+
+newmtl Towel2-hanging-yellow
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel2-hanging-yellow.png
+map_d Assets/Models/Towel2-hanging-yellow.png
+
+newmtl Towel3-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel3-hanging-blue.png
+map_d Assets/Models/Towel3-hanging-blue.png
+
+newmtl TowerResidential_lowincome
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome.jpg
+
+newmtl TowerResidential_lowincomeClean
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome-CLean.jpg
+
+newmtl TowerResidential_lowincomeClean.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome.jpg
+
+newmtl TowerResidential_lowincomeClean.Glass
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome-CLean.jpg
+
+newmtl TowerResidential_lowincome_-conmcrete
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome-conmcrete.jpg
+
+newmtl cableAntenna
+Ns 141.680359
+Ka 1.000000 1.000000 1.000000
+Kd 0.004820 0.004820 0.004820
+Ks 0.174157 0.174157 0.174157
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl cableBlanco
+Ns 152.185730
+Ka 1.000000 1.000000 1.000000
+Kd 0.695442 0.695442 0.695442
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl cable_Negro
+Ns 91.323517
+Ka 1.000000 1.000000 1.000000
+Kd 0.005601 0.005601 0.005601
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl jeans-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/jeans-hanging-blue.png
+map_d Assets/Models/jeans-hanging-blue.png
+
+newmtl jeans-hanging-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/jeans-hanging-gray.png
+map_d Assets/Models/jeans-hanging-gray.png
+
+newmtl metalbolt
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.668504 0.668504 0.668504
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl satelliteDish
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/antenna-MOd.jpg
+
+newmtl satelliteDish2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/tata-sky-antenna-500x500.jpg
+
+newmtl varanda_verdeantiguaMOD
+Ns 250.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Assets/Models/varanda-verdeantiguaMOD22.jpg

@@ -109,7 +109,7 @@ namespace Engine
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
-            DebugLog::error("ERROR::LOW::ASSIMP::" + std::string(import.GetErrorString()));
+            DebugLog::warning("WARNING::LOW::ASSIMP::" + std::string(import.GetErrorString()));
             return nullptr;
         }
 
@@ -124,8 +124,6 @@ namespace Engine
 
             aiMesh* mesh = scene->mMeshes[node->mMeshes[0]];
 
-            std::cout << "Processing Mesh " << mesh->mName.C_Str() << std::endl;
-
             auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
             auto newMesh = std::make_shared<Mesh>(vertices, indices, center);
 
@@ -137,8 +135,6 @@ namespace Engine
 
     std::shared_ptr<Mesh> Model::_processMesh(aiMesh* mesh, const aiScene* scene) {
         std::vector<Texture*> textures;
-        
-        std::cout << "Processing Mesh " << mesh->mName.C_Str() << std::endl;
         
         auto [vertices, indices, center] = _processMeshBuffers(mesh, scene);
         aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];

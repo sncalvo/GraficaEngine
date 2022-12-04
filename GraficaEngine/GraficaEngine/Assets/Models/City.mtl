@@ -1,10 +1,9 @@
-# Blender MTL File: 'City.blend'
-# Material Count: 68
+# Blender 3.3.1 MTL File: 'City2.blend'
+# www.blender.org
 
 newmtl Blinds_Roman_Hobbled_Blue
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.317647 0.321569 0.341176
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -13,9 +12,8 @@ illum 2
 map_Kd Assets/Models/Blinds_Roman_Hobbled_Blue.jpg
 
 newmtl Body
-Ns 18.000005
+Ns 0.100006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -24,9 +22,8 @@ illum 1
 map_Kd Assets/Models/CompactBlue.png
 
 newmtl Body.002
-Ns 18.000005
+Ns 0.100006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -35,9 +32,8 @@ illum 1
 map_Kd Assets/Models/HatchbackYellow.png
 
 newmtl Body.005
-Ns 18.000005
+Ns 0.100006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -46,9 +42,8 @@ illum 1
 map_Kd Assets/Models/Pickup_Glossiness.png
 
 newmtl Body.006
-Ns 18.000005
+Ns 0.100006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -57,9 +52,8 @@ illum 1
 map_Kd Assets/Models/SedanYellow.png
 
 newmtl Body.008
-Ns 18.000005
+Ns 0.100006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -68,9 +62,8 @@ illum 1
 map_Kd Assets/Models/SUVBlack.png
 
 newmtl Body.009
-Ns 18.000005
+Ns 0.100006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -78,8 +71,58 @@ d 1.000000
 illum 1
 map_Kd Assets/Models/WagonBlue.png
 
+newmtl Building-StairsOutside
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Building-StairsOutside.jpg
+
+newmtl Cloth-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-blue.png
+map_d Assets/Models/Cloth-hanging-blue.png
+
+newmtl Cloth-hanging-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-gray.png
+map_d Assets/Models/Cloth-hanging-gray.png
+
+newmtl Cloth-hanging-lime
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-lime.png
+map_d Assets/Models/Cloth-hanging-lime.png
+
+newmtl Cloth-hanging-pink
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Cloth-hanging-pink.png
+map_d Assets/Models/Cloth-hanging-pink.png
+
 newmtl Color_000
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -89,7 +132,7 @@ d 1.000000
 illum 2
 
 newmtl Color_001
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.886275 0.886275 0.886275
 Ks 0.500000 0.500000 0.500000
@@ -99,7 +142,7 @@ d 1.000000
 illum 2
 
 newmtl Color_002
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.776471 0.776471 0.776471
 Ks 0.500000 0.500000 0.500000
@@ -109,7 +152,7 @@ d 1.000000
 illum 2
 
 newmtl Color_003
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.666667 0.666667 0.666667
 Ks 0.500000 0.500000 0.500000
@@ -119,7 +162,7 @@ d 1.000000
 illum 2
 
 newmtl Color_007
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.227451 0.227451 0.227451
 Ks 0.500000 0.500000 0.500000
@@ -129,7 +172,7 @@ d 1.000000
 illum 2
 
 newmtl ConeBaseOrange
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.880000 0.082324 0.000000
 Ks 0.500000 0.500000 0.500000
@@ -139,7 +182,7 @@ d 1.000000
 illum 2
 
 newmtl ConeBodyOrange
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.880000 0.082324 0.000000
 Ks 0.500000 0.500000 0.500000
@@ -149,7 +192,7 @@ d 1.000000
 illum 2
 
 newmtl ConeWhiteStripes
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.768524 0.807231 0.839000
 Ks 0.500000 0.500000 0.500000
@@ -159,7 +202,7 @@ d 1.000000
 illum 2
 
 newmtl ConstructionSignBase
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.022174 0.026241 0.025187
 Ks 0.500000 0.500000 0.500000
@@ -169,7 +212,7 @@ d 1.000000
 illum 2
 
 newmtl ConstructionSignDecal
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.846873 0.039546 0.016807
 Ks 0.500000 0.500000 0.500000
@@ -179,7 +222,7 @@ d 1.000000
 illum 2
 
 newmtl ConstructionSignLegs
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.814847 0.144129 0.018500
 Ks 0.500000 0.500000 0.500000
@@ -189,7 +232,7 @@ d 1.000000
 illum 2
 
 newmtl ConstructionSignMetal
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.439657 0.351533 0.174647
 Ks 0.500000 0.500000 0.500000
@@ -198,8 +241,38 @@ Ni 1.450000
 d 1.000000
 illum 2
 
+newmtl DoorMetalGraffiti-Mod-jpg
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Assets/Models/DoorMetalGraffiti-Mod-jpg.jpg
+
+newmtl Feed1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/shaw-75e-lnb_-_copy_-_copy.jpg
+
+newmtl FrontCol
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
 newmtl FrontColor
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -209,7 +282,7 @@ d 1.000000
 illum 2
 
 newmtl Glass
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
 Kd 0.105882 0.105882 0.105882
 Ks 0.280000 0.280000 0.280000
@@ -219,7 +292,7 @@ d 0.600000
 illum 6
 
 newmtl Glass.002
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
 Kd 0.105882 0.105882 0.105882
 Ks 0.280000 0.280000 0.280000
@@ -229,7 +302,7 @@ d 0.600000
 illum 6
 
 newmtl Glass.005
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
 Kd 0.105882 0.105882 0.105882
 Ks 0.280000 0.280000 0.280000
@@ -239,7 +312,7 @@ d 0.600000
 illum 6
 
 newmtl Glass.006
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
 Kd 0.105882 0.105882 0.105882
 Ks 0.280000 0.280000 0.280000
@@ -249,7 +322,7 @@ d 0.600000
 illum 6
 
 newmtl Glass.008
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
 Kd 0.105882 0.105882 0.105882
 Ks 0.280000 0.280000 0.280000
@@ -259,7 +332,7 @@ d 0.600000
 illum 6
 
 newmtl Glass.009
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
 Kd 0.105882 0.105882 0.105882
 Ks 0.280000 0.280000 0.280000
@@ -268,10 +341,49 @@ Ni 1.450000
 d 0.600000
 illum 6
 
-newmtl Material.003
-Ns 225.000000
+newmtl Hoodie-hanging-blue
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-blue.png
+map_d Assets/Models/Hoodie-hanging-blue.png
+
+newmtl Hoodie-hanging-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-gray.png
+map_d Assets/Models/Hoodie-hanging-gray.png
+
+newmtl Hoodie-hanging-green
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-green.png
+map_d Assets/Models/Hoodie-hanging-green.png
+
+newmtl Hoodie-hanging-red
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Hoodie-hanging-red.png
+map_d Assets/Models/Hoodie-hanging-red.png
+
+newmtl Material.003
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -280,9 +392,8 @@ illum 2
 map_Kd Assets/Models/TexturesCom_FloorsRegular0301_1_seamless_S.jpg
 
 newmtl Material.004
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -290,18 +401,8 @@ d 1.000000
 illum 2
 map_Kd Assets/Models/lambert1_albedo.jpeg
 
-newmtl Material_#17
-Ns 179.999996
-Ka 1.000000 1.000000 1.000000
-Kd 0.000000 0.000000 0.000000
-Ks 0.000000 0.000000 0.000000
-Ke 5.000000 5.000000 5.000000
-Ni 1.450000
-d 1.000000
-illum 1
-
 newmtl MetalStuds
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.096500 0.094600 0.094600
 Ks 0.500000 0.500000 0.500000
@@ -310,18 +411,29 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl None
-Ns 500
-Ka 0.8 0.8 0.8
-Kd 0.8 0.8 0.8
-Ks 0.8 0.8 0.8
-d 1
-illum 2
+newmtl Metalantenna-Black
+Ns 87.919159
+Ka 1.000000 1.000000 1.000000
+Kd 0.059857 0.059857 0.059857
+Ks 0.156977 0.156977 0.156977
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl Metalantenna-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.874714 0.928449 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
 
 newmtl Optics
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -330,9 +442,8 @@ illum 3
 map_Kd Assets/Models/lights.jpg
 
 newmtl Optics.002
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -341,9 +452,8 @@ illum 3
 map_Kd Assets/Models/lights.jpg
 
 newmtl Optics.005
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -352,9 +462,8 @@ illum 3
 map_Kd Assets/Models/lights.jpg
 
 newmtl Optics.006
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -363,9 +472,8 @@ illum 3
 map_Kd Assets/Models/lights.jpg
 
 newmtl Optics.008
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -374,9 +482,8 @@ illum 3
 map_Kd Assets/Models/lights.jpg
 
 newmtl Optics.009
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -384,8 +491,38 @@ d 1.000000
 illum 3
 map_Kd Assets/Models/lights.jpg
 
+newmtl Pipes008_(2)
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Pipes008_(2).Windowlateral
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Pipes008_(2).gLASS
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
 newmtl ReflectorBlack
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.013000 0.012000 0.011800
 Ks 0.500000 0.500000 0.500000
@@ -395,7 +532,7 @@ d 1.000000
 illum 2
 
 newmtl ReflectorOrange
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.863157 0.174647 0.040915
 Ks 0.500000 0.500000 0.500000
@@ -405,7 +542,7 @@ d 1.000000
 illum 2
 
 newmtl ReflectorShell
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.752942 0.539480 0.034340
 Ks 0.500000 0.500000 0.500000
@@ -415,7 +552,7 @@ d 1.000000
 illum 2
 
 newmtl RoadClosedSign
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.879622 0.879622 0.879622
 Ks 0.500000 0.500000 0.500000
@@ -425,9 +562,8 @@ d 1.000000
 illum 2
 
 newmtl Road_2_Lane_Curve
-Ns 9.000004
+Ns 10.000005
 Ka 1.000000 1.000000 1.000000
-Kd 0.588200 0.588200 0.588200
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
@@ -436,9 +572,8 @@ illum 1
 map_Kd Assets/Models/Road-2-Lane-Corner-jpg.jpg
 
 newmtl Road_2_Lane_Driveway.001
-Ns 9.000004
+Ns 10.000005
 Ka 1.000000 1.000000 1.000000
-Kd 0.588200 0.588200 0.588200
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
@@ -447,9 +582,8 @@ illum 1
 map_Kd Assets/Models/Road-2-Lane-Driveway-jpg.jpg
 
 newmtl Road_2_Lane_Straight
-Ns 9.000004
+Ns 10.000005
 Ka 1.000000 1.000000 1.000000
-Kd 0.588200 0.588200 0.588200
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
@@ -458,9 +592,8 @@ illum 1
 map_Kd Assets/Models/Road-2-Lane-Straight-jpg.jpg
 
 newmtl Road_2_Lane_T.001
-Ns 9.000004
+Ns 10.000005
 Ka 1.000000 1.000000 1.000000
-Kd 0.588200 0.588200 0.588200
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
@@ -469,9 +602,8 @@ illum 1
 map_Kd Assets/Models/Road-2-Lane-T-jpg.jpg
 
 newmtl Road_2_Lane_X
-Ns 9.000004
+Ns 10.000005
 Ka 1.000000 1.000000 1.000000
-Kd 0.588200 0.588200 0.588200
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
@@ -479,8 +611,68 @@ d 1.000000
 illum 1
 map_Kd Assets/Models/Road-2-Lane-X-jpg.jpg
 
+newmtl Roof2
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Image_3.jpg
+
+newmtl Shirt-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt-hanging-blue.png
+map_d Assets/Models/Shirt-hanging-blue.png
+
+newmtl Shirt-hanging-bluewhite
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt-hanging-bluewhite.png
+map_d Assets/Models/Shirt-hanging-bluewhite.png
+
+newmtl Shirt-hanging-redwhite
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt-hanging-redwhite.png
+map_d Assets/Models/Shirt-hanging-redwhite.png
+
+newmtl Shirt2-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt2-hanging-blue.png
+map_d Assets/Models/Shirt2-hanging-blue.png
+
+newmtl Shirt2-hanging-green
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Shirt2-hanging-green.png
+map_d Assets/Models/Shirt2-hanging-green.png
+
 newmtl SignLegs
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.760525 0.760525 0.760525
 Ks 0.500000 0.500000 0.500000
@@ -490,7 +682,7 @@ d 1.000000
 illum 2
 
 newmtl SignStripedBoards
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.871367 0.171441 0.033105
 Ks 0.500000 0.500000 0.500000
@@ -499,23 +691,152 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl Stainless_Steel
-Ns 323.999994
+newmtl Snow
+Ns 10.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Kd 0.800656 0.800656 0.800656
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Bump Assets/Models/Stainless Steel normal.jpg
+
+newmtl Stainless_Steel
+Ns 0.300000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
 map_Kd Assets/Models/Stainless Steel.jpg
 map_Ns Assets/Models/Stainless Steel roughness.jpg
+map_refl Assets/Models/Stainless Steel metalness.jpg
+map_Bump -bm 1.000000 Assets/Models/Stainless Steel normal.jpg
+
+newmtl TR_lowincomeClean.GlassTransparent
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl TechoDeLata01
+Ns 250.000000
+Ka 0.162791 0.162791 0.162791
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Assets/Models/TechoDeLata01.jpg
+
+newmtl Towe2l-hanging-red
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towe2l-hanging-red.png
+map_d Assets/Models/Towe2l-hanging-red.png
+
+newmtl Towel-hanging-green
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel-hanging-green.png
+map_d Assets/Models/Towel-hanging-green.png
+
+newmtl Towel-hanging-pinkpurple
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel-hanging-pinkpurple.png
+map_d Assets/Models/Towel-hanging-pinkpurple.png
+
+newmtl Towel2-hanging-yellow
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel2-hanging-yellow.png
+map_d Assets/Models/Towel2-hanging-yellow.png
+
+newmtl Towel3-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/Towel3-hanging-blue.png
+map_d Assets/Models/Towel3-hanging-blue.png
+
+newmtl TowerResidential_lowincome
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome.jpg
+
+newmtl TowerResidential_lowincomeClean
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome-CLean.jpg
+
+newmtl TowerResidential_lowincomeClean.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome.jpg
+
+newmtl TowerResidential_lowincomeClean.Glass
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome-CLean.jpg
+
+newmtl TowerResidential_lowincome_-conmcrete
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/TowerResidential-lowincome-conmcrete.jpg
 
 newmtl Wheek
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.740000 0.740000 0.740000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -524,9 +845,8 @@ illum 3
 map_Kd Assets/Models/wheel_D_Diffuse.png
 
 newmtl Wheel
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.740000 0.740000 0.740000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -535,9 +855,8 @@ illum 3
 map_Kd Assets/Models/wheel_1_Diffuse.png
 
 newmtl Wheel.004
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.740000 0.740000 0.740000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -546,9 +865,8 @@ illum 3
 map_Kd Assets/Models/wheel_C_Glossiness.png
 
 newmtl Wheel.005
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.740000 0.740000 0.740000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -557,9 +875,8 @@ illum 3
 map_Kd Assets/Models/wheel_1_Diffuse.png
 
 newmtl Wheel.007
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.740000 0.740000 0.740000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -568,9 +885,8 @@ illum 3
 map_Kd Assets/Models/wheel_1_Diffuse.png
 
 newmtl Wheel.008
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.740000 0.740000 0.740000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -579,57 +895,82 @@ illum 3
 map_Kd Assets/Models/wheel_1_Diffuse.png
 
 newmtl Wood
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
 Ks 0.280000 0.280000 0.280000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Bump Assets/Models/Wood normal.jpg
 map_Kd Assets/Models/Wood.jpg
-map_Ns Assets/Models/Wood roughness.jpg
+map_Bump -bm 1.000000 Wood Assets/Models/normal.jpg
 
 newmtl b_hotr04_W2W7_t2_l1
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588235 0.588235 0.588235
-Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 1
-map_Bump Assets/Models/AIT01W2W7_n.png
 map_Kd Assets/Models/AIT01W2W7_d.png
-map_Ks Assets/Models/AIT01W2W7_s.png
+map_Ks AIT01W2W7_s.png
+map_Bump -bm 0.300000 Assets/Models/AIT01W2W7_n.png
 
-newmtl fence_plate_po-2
-Ns 225.000000
+newmtl cableAntenna
+Ns 141.680359
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Kd 0.004820 0.004820 0.004820
+Ks 0.174157 0.174157 0.174157
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl cableBlanco
+Ns 152.185730
+Ka 1.000000 1.000000 1.000000
+Kd 0.695442 0.695442 0.695442
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Bump Assets/Models/Image_2.png
-map_Kd Assets/Models/Image_0.png
 
-newmtl glass
-Ns 179.999996
+newmtl cable_Negro
+Ns 91.323517
 Ka 1.000000 1.000000 1.000000
-Kd 0.035294 0.035294 0.035294
-Ks 1.000000 1.000000 1.000000
+Kd 0.005601 0.005601 0.005601
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
-d 0.164659
-illum 9
+d 1.000000
+illum 2
+
+newmtl fence_plate_po-2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Image_0.png
+map_Bump -bm 1.000000 Assets/Models/Image_2.png
+
+newmtl glass
+Ns 200.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.035294 0.035294 0.035294
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
 
 newmtl ground
-Ns 107.463470
+Ns 200.0
 Ka 0.381159 0.381159 0.381159
-Kd 0.800000 0.800000 0.800000
+Kd 0.375749 0.254959 0.183393
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -637,19 +978,38 @@ d 1.000000
 illum 3
 
 newmtl hotel_glas
-Ns 746.545294
+Ns 829.494690
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Kd 0.042027 0.042027 0.042027
 Ks 0.500000 0.500000 0.500000
-Ke 0.430000 0.430000 0.430000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+
+newmtl jeans-hanging-blue
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
 Ni 1.450000
-d 0.337841
-illum 6
+illum 2
+map_Kd Assets/Models/jeans-hanging-blue.png
+map_d Assets/Models/jeans-hanging-blue.png
+
+newmtl jeans-hanging-gray
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd Assets/Models/jeans-hanging-gray.png
+map_d Assets/Models/jeans-hanging-gray.png
 
 newmtl lambert1
-Ns 225.000000
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.500000 0.500000 0.500000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -657,8 +1017,48 @@ d 1.000000
 illum 2
 map_Kd Assets/Models/lambert1_albedo.jpeg
 
+newmtl material
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Image_0.jpg
+
+newmtl material_1.001
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Image_1.jpg
+
+newmtl material_2.001
+Ns 159.999985
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/Image_2.jpg
+
+newmtl metalbolt
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.668504 0.668504 0.668504
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+
 newmtl rams
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.500000 0.500000 0.500000
 Ks 1.000000 1.000000 1.000000
@@ -667,10 +1067,29 @@ Ni 1.450000
 d 1.000000
 illum 2
 
-newmtl snowy-grass
-Ns 225.000000
+newmtl satelliteDish
+Ns 250.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/antenna-MOd.jpg
+
+newmtl satelliteDish2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Assets/Models/tata-sky-antenna-500x500.jpg
+
+newmtl snowy-grass
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -679,9 +1098,8 @@ illum 2
 map_Kd Assets/Models/snowy_grass.jpg
 
 newmtl trash_can_mat
-Ns 287.999996
+Ns 319.999939
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -689,10 +1107,19 @@ d 1.000000
 illum 3
 map_Kd Assets/Models/AM_trash_can.tga.png
 
+newmtl varanda_verdeantiguaMOD
+Ns 250.000000
+Ka 0.200000 0.200000 0.200000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd Assets/Models/varanda-verdeantiguaMOD22.jpg
+
 newmtl w2
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.500000 0.500000 0.500000
 Ks 1.000000 1.000000 1.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -701,9 +1128,8 @@ illum 2
 map_Kd Assets/Models/077.jpeg
 
 newmtl walls_[BLD_OFFICE_05]
-Ns 18.000005
+Ns 20.000006
 Ka 1.000000 1.000000 1.000000
-Kd 0.588000 0.588000 0.588000
 Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
@@ -712,7 +1138,7 @@ illum 1
 map_Kd Assets/Models/INT_LIGHT2.jpg
 
 newmtl walls_exterior
-Ns 179.999996
+Ns 200.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.054902 0.054902 0.054902
 Ks 1.000000 1.000000 1.000000

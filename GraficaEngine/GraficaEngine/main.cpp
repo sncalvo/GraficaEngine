@@ -144,6 +144,11 @@ Engine::Scene* loadMainScene()
 		Engine::MaterialObject());
 	scene->addGameObject(level);
 
+	Engine::GameObject* snow = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/snow.obj")),
+		Engine::MaterialObject());
+	scene->addGameObject(snow);
+
 	auto aabbs = level->getModel()->getAabbs();
 	auto* levelShape = new btCompoundShape();
 
@@ -185,18 +190,6 @@ Engine::Scene* loadMainScene()
 	duckRigidBody->setAngularFactor(btVector3(0.f, 0.f, 0.f));
 	duck->setRigidBody(duckRigidBody);
 	duck->setRigidBodyCenterOffset(glm::vec3(0.f, -1.f, 0.f));
-
-	Engine::GameObject* buildings = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/Building.obj")),
-		Engine::MaterialObject());
-	scene->addGameObject(buildings);
-
-	Engine::GameObject* lowIncomeBuilding = new Engine::GameObject(
-		new Engine::Model(_strdup("Assets/Models/department-lowincome.obj")),
-		Engine::MaterialObject());
-	lowIncomeBuilding->transform.scale = glm::vec3(2.f);
-	lowIncomeBuilding->transform.position = glm::vec3(5.f, 0.f, 5.f);
-	scene->addGameObject(lowIncomeBuilding);
 
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();

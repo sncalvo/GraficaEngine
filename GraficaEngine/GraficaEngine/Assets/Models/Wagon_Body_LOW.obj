@@ -1,6 +1,6 @@
 # Blender v3.3.1 OBJ File: ''
 # www.blender.org
-mtllib Wagon_Body_Mesh.046_LOW.mtl
+mtllib Wagon_Body_LOW.mtl
 o Wagon_Body_Mesh.046
 v 8.054975 0.343390 -34.246479
 v 8.340712 0.937535 -34.310356

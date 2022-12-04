@@ -296,13 +296,13 @@ namespace Engine {
 		}
 
         // Change to show other cameras frustum
-		auto frustumCamera = scene->getCamera("thirdPerson");
+		auto frustumCamera = scene->getActiveCamera();
 		for (auto& [key, value] : meshRenderers)
 		{
 			for (auto meshRenderer : value)
 			{
-				if(meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
-					meshRenderer->draw(depthMap, camera->transform.position);
+				if (meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
+					meshRenderer->draw(depthMap, frustumCamera->transform.position);
 				}
 			}
 		}

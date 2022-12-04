@@ -9,6 +9,8 @@
 
 #include "BaseGameObject.h"
 #include "../Renderer/Shader.h"
+#include "../Utils/Frustum.h"
+#include "../Utils/Plane.h"
 
 namespace Engine
 {
@@ -39,6 +41,7 @@ namespace Engine
         virtual glm::mat4 getProjectionMatrix() const;
         virtual glm::mat4 getProjectionMatrixFor(const float near, const float far) const;
         virtual glm::mat4 getProjectionMatrixFov(const float fov) const;
+        virtual Frustum getFrustum();
         std::vector<glm::vec4> getFrustumCornersWorldSpace(const float near, const float far) const;
         void apply(Shader &shader) const;
         void processKeyboard(Camera_Movement direction, float deltaTime);

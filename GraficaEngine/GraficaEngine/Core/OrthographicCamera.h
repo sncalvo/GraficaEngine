@@ -18,5 +18,6 @@ namespace Engine
 		virtual glm::mat4 getProjectionMatrix() const;
 		virtual glm::mat4 getProjectionMatrixFor(const float near, const float far) const;
 		virtual glm::mat4 getProjectionMatrixFov(const float fov) const;
+        virtual Frustum getFrustum();
 	};
 }

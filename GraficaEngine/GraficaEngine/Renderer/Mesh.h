@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+#include "../Utils/Aabb.h"
 
 #include "Texture.h"
 #define MAX_BONE_INFLUENCE 4
@@ -45,8 +46,10 @@ namespace Engine
 
 	public:
 		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> _indices, glm::vec3 center);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, glm::vec3 center, std::shared_ptr<Aabb> aabb);
 		void draw() const;
 		std::vector<glm::vec3> getVertexPositions() const;
+		std::shared_ptr<Aabb> _aabb;
 
 		glm::vec3 center;
 	};

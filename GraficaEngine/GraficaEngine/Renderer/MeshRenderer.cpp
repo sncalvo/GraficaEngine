@@ -40,7 +40,6 @@ namespace Engine {
             for (int i = 0; i < transforms.size(); ++i)
                 shader->setMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
 
-
         } else {
             shader->setBool("isBony", false);
         }

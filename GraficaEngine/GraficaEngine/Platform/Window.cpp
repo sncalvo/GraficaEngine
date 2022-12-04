@@ -38,14 +38,9 @@ namespace Engine
 		SDL_ShowCursor(SDL_DISABLE);
 		glewInit();
 
-		// During init, enable debug output
-		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageCallback(MessageCallback, 0);
-
 		bool fullscreen = Settings::getInstance().getFullscreen();
 
-		if (fullscreen)
-		{
+		if (fullscreen) {
 			SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN);
 			SDL_RestoreWindow(_window);
 		}

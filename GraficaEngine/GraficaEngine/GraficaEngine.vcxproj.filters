@@ -50,6 +50,8 @@
     <ClCompile Include="Physics\PhysicsManager.cpp" />
     <ClCompile Include="Physics\DebugDrawer.cpp" />
     <ClCompile Include="Renderer\ResourceManager.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Utils\Aabb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\BaseGameObject.h" />
@@ -109,6 +111,10 @@
     <ClInclude Include="Physics\PhysicsManager.h" />
     <ClInclude Include="Physics\DebugDrawer.h" />
     <ClInclude Include="Renderer\ResourceManager.h" />
+    <ClInclude Include="Scripts\RiverMover.h" />
+    <ClInclude Include="Utils\Aabb.h" />
+    <ClInclude Include="Utils\Plane.h" />
+    <ClInclude Include="Utils\Frustum.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\skybox.vs" />

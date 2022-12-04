@@ -191,6 +191,13 @@ Engine::Scene* loadMainScene()
 		Engine::MaterialObject());
 	scene->addGameObject(buildings);
 
+	Engine::GameObject* lowIncomeBuilding = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/department-lowincome.obj")),
+		Engine::MaterialObject());
+	lowIncomeBuilding->transform.scale = glm::vec3(2.f);
+	lowIncomeBuilding->transform.position = glm::vec3(5.f, 0.f, 5.f);
+	scene->addGameObject(lowIncomeBuilding);
+
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();
 

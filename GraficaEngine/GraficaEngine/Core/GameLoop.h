@@ -41,6 +41,7 @@ namespace Engine
 		void _handleShadowMapDebug() const;
 		void _handleFogToggle() const;
 		void _handleBloomToggle() const;
+		void _handleBiasModifier() const;
 
 	public:
 		static GameLoop getInstance()

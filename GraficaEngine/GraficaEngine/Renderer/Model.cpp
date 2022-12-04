@@ -161,7 +161,7 @@ namespace Engine
         // Check if LOW version exists and load it
         auto meshLow = _processLOW(mesh->mName.C_Str());
 
-        auto newMesh = std::make_shared<Mesh>(vertices, indices, center);
+        auto newMesh = std::make_shared<Mesh>(vertices, indices, center, aabb);
         auto meshRenderer = std::make_shared<MeshRenderer>(newMesh, meshLow, material, textures);
         auto shadowRenderer = std::make_shared<ShadowRenderer>(newMesh, meshLow);
 

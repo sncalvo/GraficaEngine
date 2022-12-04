@@ -293,11 +293,15 @@ namespace Engine {
 			meshShader->setFloat("cascadePlaneDistances[" + std::to_string(i) + "]", shadowCascadeLevels[i]);
 		}
 
+        // Change to show other cameras frustum
+		auto frustumCamera = scene->getActiveCamera();
 		for (auto& [key, value] : meshRenderers)
 		{
 			for (auto meshRenderer : value)
 			{
-				meshRenderer->draw(depthMap, scene->getActiveCamera()->transform.position);
+				if(meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
+					meshRenderer->draw(depthMap, camera->transform.position);
+				}
 			}
 		}
 

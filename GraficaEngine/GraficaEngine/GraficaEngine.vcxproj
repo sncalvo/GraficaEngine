@@ -262,6 +262,8 @@
     <ClInclude Include="Core\Time.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Platform\Window.h" />
+    <ClInclude Include="Utils\Frustum.h" />
+    <ClInclude Include="Utils\Plane.h" />
     <ClInclude Include="Utils\SmoothAcceleratedPosition.h" />
     <ClInclude Include="Utils\UUID.h" />
     <ClInclude Include="Utils\Aabb.h" />

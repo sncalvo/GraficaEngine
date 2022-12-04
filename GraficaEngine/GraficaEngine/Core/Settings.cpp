@@ -197,6 +197,36 @@ namespace Engine
 		_bloom = bloom;
 	}
 
+	bool Settings::getSnow() const
+	{
+		return _snow;
+	}
+
+	void Settings::setSnow(bool snow)
+	{
+		_snow = snow;
+	}
+
+	bool Settings::getFrustumCulling() const
+	{
+		return _frustum_culling;
+	}
+
+	void Settings::setFrustumCulling(bool frustum_culling)
+	{
+		_frustum_culling = frustum_culling;
+	}
+
+	int Settings::getFrustumCullingCamera() const
+	{
+		return _frustum_culling_camera;
+	}
+
+	void Settings::setFrustumCullingCamera(int frustum_culling_camera)
+	{
+		_frustum_culling_camera = frustum_culling_camera;
+	}
+
 	bool Settings::getFog() const
 	{
 		return _fog;

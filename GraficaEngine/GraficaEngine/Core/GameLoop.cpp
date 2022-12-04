@@ -165,6 +165,43 @@ namespace Engine
 		}
 	}
 
+	void GameLoop::_handleSnowToggle() const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_I))
+		{
+			bool snow = settings.getSnow();
+			settings.setSnow(!snow);
+
+			std::cout << "Toggled snow " << !snow << std::endl;
+		}
+	}
+
+	void GameLoop::_handleFrustumCulling(Scene *scene) const
+	{
+		Input& input = Input::getInstance();
+		Settings& settings = Settings::getInstance();
+
+		if (input.getKeyDown(KEY_F))
+		{
+			bool frustum_culling = settings.getFrustumCulling();
+			settings.setFrustumCulling(!frustum_culling);
+
+			std::cout << "Toggled frustum culling " << !frustum_culling << std::endl;
+		}
+
+		if (input.getKeyDown(KEY_N))
+		{
+			int frustum_culling_camera = settings.getFrustumCullingCamera();
+			int new_camera = (frustum_culling_camera + 1) % (scene->getCameraNames().size() + 1);
+			settings.setFrustumCullingCamera(new_camera);
+
+			std::cout << "Changed frustum culling camera" << new_camera << std::endl;
+		}
+	}
+
 	void GameLoop::start()
 	{
 		Input &input = Input::getInstance();
@@ -229,6 +266,8 @@ namespace Engine
 			_handleFogToggle();
 			_handleBloomToggle();
 			_handleBiasModifier();
+			_handleSnowToggle();
+			_handleFrustumCulling(activeScene);
 
 			if (sceneManager.getShouldRestart())
 			{

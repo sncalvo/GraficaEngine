@@ -42,6 +42,8 @@ namespace Engine
 		void _handleFogToggle() const;
 		void _handleBloomToggle() const;
 		void _handleBiasModifier() const;
+		void _handleSnowToggle() const;
+		void _handleFrustumCulling(Scene *scene) const;
 
 	public:
 		static GameLoop getInstance()

@@ -295,19 +295,32 @@ namespace Engine {
 			meshShader->setFloat("cascadePlaneDistances[" + std::to_string(i) + "]", shadowCascadeLevels[i]);
 		}
 
-        // Change to show other cameras frustum
-		auto frustumCamera = scene->getActiveCamera();
+		bool frustum_culling = Settings::getInstance().getFrustumCulling();
+		int frustum_culling_camera = Settings::getInstance().getFrustumCullingCamera();
+
+		Camera *frustumCamera;
+        if (frustum_culling_camera == scene->getCameraNames().size()) {
+			frustumCamera = scene->getActiveCamera();
+		} else {
+			std::string frustumCameraName = scene->getCameraNames()[frustum_culling_camera];
+			// Change to show other cameras frustum
+			frustumCamera = scene->getCamera(frustumCameraName);
+		}
+
 		for (auto& [key, value] : meshRenderers)
 		{
 			for (auto meshRenderer : value)
 			{
-				if (meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
-					meshRenderer->draw(depthMap, frustumCamera->transform.position);
+				if(!frustum_culling || meshRenderer->_mesh->_aabb->isOnFrustum(frustumCamera->getFrustum(), *(meshRenderer->_transform))) {
+					meshRenderer->draw(depthMap, camera->transform.position);
 				}
 			}
 		}
 
-		scene->drawParticles();
+		bool show_snow = Settings::getInstance().getSnow();
+		if (show_snow) {
+			scene->drawParticles();
+		}
 
 		if (settings.getShowColliders())
 		{

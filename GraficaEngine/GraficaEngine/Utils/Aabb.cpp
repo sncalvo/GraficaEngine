@@ -47,6 +47,9 @@ namespace Engine
 	bool Aabb::isOnFrustum(const Frustum& camFrustum, const Transform& transform) const {
         glm::vec3 center = calculateMiddlePoint();
         glm::vec3 extents = getHalfExtents();
+        extents.x *= transform.scale.x;
+        extents.y *= transform.scale.y;
+        extents.z *= transform.scale.z;
 		//Get global scale thanks to our transform
         glm::vec4 tt = transform.getTransformedModel() * glm::vec4(center, 1.f);
 		glm::vec3 globalCenter = glm::vec3(tt);

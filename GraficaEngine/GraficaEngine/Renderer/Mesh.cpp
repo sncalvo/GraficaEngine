@@ -33,6 +33,16 @@ namespace Engine
         _aabb = in_aabb;
     }
 
+    Mesh::Mesh(
+        std::vector<Vertex> vertices,
+        std::vector<unsigned int> indices,
+        glm::vec3 center,
+        std::shared_ptr<Aabb> in_aabb,
+        std::string name
+    ) : Mesh(vertices, indices, center, in_aabb) {
+        _name = name;
+    }
+
     std::vector<glm::vec3> Mesh::getVertexPositions() const
     {
         std::vector<glm::vec3> result;

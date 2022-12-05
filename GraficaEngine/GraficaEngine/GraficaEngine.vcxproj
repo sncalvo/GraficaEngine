@@ -184,6 +184,7 @@
     <ClCompile Include="Scripts\HudController.cpp" />
     <ClCompile Include="Scripts\OffsetPlayer.cpp" />
     <ClCompile Include="Scripts\PlayerController.cpp" />
+    <ClCompile Include="Scripts\ShootBalls.cpp" />
     <ClCompile Include="Scripts\SwapCameras.cpp" />
     <ClCompile Include="Scripts\ThirdPersonCameraController.cpp" />
     <ClCompile Include="Scripts\TimeController.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Scripts\HudController.h" />
     <ClInclude Include="Scripts\OffsetPlayer.h" />
     <ClInclude Include="Scripts\PlayerController.h" />
+    <ClInclude Include="Scripts\ShootBalls.h" />
     <ClInclude Include="Scripts\SwapCameras.h" />
     <ClInclude Include="Scripts\ThirdPersonCameraController.h" />
     <ClInclude Include="Scripts\TimeController.h" />

@@ -49,11 +49,10 @@ namespace Engine
         glm::vec3 extents = getHalfExtents();
 		//Get global scale thanks to our transform
         glm::vec4 tt = transform.getTransformedModel() * glm::vec4(center, 1.f);
-		tt = tt / tt.w;
-		glm::vec3 globalCenter = glm::vec3(tt.x,tt.y,tt.z);
+		glm::vec3 globalCenter = glm::vec3(tt);
 
 		// Scaled orientation
-		const glm::vec3 right = transform.getRight() * extents.x;
+/* 		const glm::vec3 right = transform.getRight() * extents.x;
 		const glm::vec3 up = transform.getUp() * extents.y;
 		const glm::vec3 forward = transform.getForward() * extents.z;
 
@@ -69,7 +68,7 @@ namespace Engine
 			std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, up)) +
 			std::abs(glm::dot(glm::vec3{ 0.f, 0.f, 1.f }, forward));
 
-		extents = glm::vec3(newIi, newIj, newIk);
+		extents = glm::vec3(newIi, newIj, newIk); */
 
 		return (isOnOrForwardPlane(camFrustum.leftFace, globalCenter, extents) &&
                 isOnOrForwardPlane(camFrustum.rightFace, globalCenter, extents) &&

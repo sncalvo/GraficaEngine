@@ -29,12 +29,12 @@ void SwapCameras::update()
 		_currentIndex = (_currentIndex + 1) % scene->getCameraNames().size();
 
 		std::string newCameraName = scene->getCameraNames()[_currentIndex];
-		if (newCameraName == "default" || newCameraName == "centeredFixed")
+		if (newCameraName == "thirdPerson" || newCameraName == "centeredFixed")
 		{
 			player->transform.lookAt(glm::vec3(0.f, 0.f, -1.f));
 		}
 
-		if (newCameraName == "flying")
+		if (newCameraName == "default")
 		{
 			playerController->setCanMove(false);
 		}

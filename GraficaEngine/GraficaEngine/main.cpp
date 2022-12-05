@@ -43,6 +43,7 @@
 #include "Scripts/HomeScreenController.h"
 #include "Scripts/MoveDownOnStart.h"
 #include "Scripts/GameKeysHomeController.h"
+#include "Scripts/ShootBalls.h"
 
 Engine::Scene *loadMainScene();
 void loadHUD(Engine::Scene *);
@@ -119,7 +120,7 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
-    Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+      Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
 	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
 		vampireModel);
 	Engine::Animation* danceAnimation = animationBuilder.getAnimation();
@@ -178,7 +179,8 @@ Engine::Scene* loadMainScene()
 		levelShape->addChildShape(childTransform, childShape);
 	}
 
-	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0., level->transform.position, levelShape);
+	//btBoxShape* levelShape = new btBoxShape(btVector3(btScalar(25.), btScalar(1.), btScalar(25.)));
+	btRigidBody* levelRigidBody = physicsManager.createRigidBody(0.f, level->transform.position, levelShape);
 	level->setRigidBody(levelRigidBody);
 
 	Engine::GameObject* duck = new Engine::GameObject(
@@ -186,10 +188,9 @@ Engine::Scene* loadMainScene()
 		Engine::MaterialObject()
 	);
 	duck->addBehaviour(new PlayerController());
-	duck->addBehaviour(new JumpController());
 	scene->addGameObject(duck);
 	duck->addTag("player");
-	duck->transform.position = glm::vec3(0.f, 10.f, -5.f);
+	duck->transform.position = glm::vec3(0.f, 20.f, -5.f);
 	duck->transform.lookAt(glm::vec3(0.0f, 0.f, -1.f));
 	duck->calculateAabb();
 	auto aabbBox = duck->getAabb()->getHalfExtents();
@@ -199,13 +200,27 @@ Engine::Scene* loadMainScene()
 		aabbBox.z
 	));
 	auto* duckRigidBody = physicsManager.createRigidBody(
-		10.0,
+		10.f,
 		duck->transform.position,
 		duckShape
 	);
 	duckRigidBody->setAngularFactor(btVector3(0.f, 0.f, 0.f));
 	duck->setRigidBody(duckRigidBody);
 	duck->setRigidBodyCenterOffset(glm::vec3(0.f, -1.f, 0.f));
+	
+	auto* ballPrefab = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/sphere.obj")),
+		Engine::MaterialObject()
+	);
+	ballPrefab->transform.scale = glm::vec3(0.5f);
+	auto* ballShape = new btSphereShape(btScalar(0.5f));
+	auto* ballRigidBody = physicsManager.createRigidBody(
+		10.f,
+		ballPrefab->transform.position,
+		ballShape
+	);
+	ballPrefab->setRigidBody(ballRigidBody);
+	duck->addBehaviour(new ShootBalls(ballPrefab));
 
 	unsigned int width, height;
 	std::tie(width, height) = Engine::Settings::getInstance().getWindowSize();

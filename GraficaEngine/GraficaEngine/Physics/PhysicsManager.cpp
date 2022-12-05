@@ -62,7 +62,11 @@ namespace Engine
 			position.z
 		));
 		btVector3 localInertia(0, 0, 0);
-		shape->calculateLocalInertia(mass, localInertia);
+		auto isDynamic = (mass != 0.f);
+		if (isDynamic)
+		{
+			shape->calculateLocalInertia(mass, localInertia);
+		}
 		auto* rigidBody = new btRigidBody(mass, 0, shape, localInertia);
 		rigidBody->setWorldTransform(rigidBodyTransform);
 		_collisionShapes.push_back(shape);

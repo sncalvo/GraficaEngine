@@ -2,7 +2,7 @@
 
 namespace Engine
 {
-	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material), _rigidBody(nullptr), _rigidBodyCenterOffset(glm::vec3(0.f))
+	GameObject::GameObject(Model* model, MaterialObject material) : _model(model), _material(material), _rigidBody(nullptr), _rigidBodyCenterOffset(glm::vec3(0.f)), _aabb(nullptr), _animator(nullptr)
 	{
 		for (auto renderer : model->getMeshRenderers())
 		{

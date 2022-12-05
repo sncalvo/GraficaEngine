@@ -34,6 +34,9 @@ namespace Engine
 		float _fogMinDist;
 		glm::vec3 _fogColor;
 		bool _bloom = true;
+		bool _snow = true;
+		bool _frustum_culling = true;
+		int _frustum_culling_camera = 5;
 		bool _fog = true;
 		float _biasModifier;
 
@@ -74,6 +77,12 @@ namespace Engine
 		void setFogColor(glm::vec3 color);
 		bool getBloom() const;
 		void setBloom(bool);
+		bool getSnow() const;
+		void setSnow(bool);
+		bool getFrustumCulling() const;
+		void setFrustumCulling(bool);
+		int getFrustumCullingCamera() const;
+		void setFrustumCullingCamera(int);
 		bool getFog() const;
 		void setFog(bool);
 		float getBiasModifier() const;

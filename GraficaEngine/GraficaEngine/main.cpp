@@ -119,25 +119,41 @@ Engine::Scene* loadMainScene()
 	cameraManager->addBehaviour(new SwapCameras());
 	scene->addGameObject(cameraManager);
 
- //   Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	//animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
-	//	vampireModel);
-	//Engine::Animation* danceAnimation = animationBuilder.getAnimation();
-	//Engine::GameObject* vampire = new Engine::GameObject(
-	//	vampireModel,
-	//	Engine::MaterialObject(),
-	//	danceAnimation);
-	//vampire->addBehaviour(new JumpController());
-	//vampire->addTag("player");
-	//scene->addGameObject(vampire);
+    Engine::Model* vampireModel = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
+	animationBuilder = Engine::AnimationBuilder(_strdup("Assets/Models/dancing_vampire.dae"),
+		vampireModel);
+	Engine::Animation* danceAnimation = animationBuilder.getAnimation();
+	Engine::GameObject* vampire = new Engine::GameObject(
+		vampireModel,
+		Engine::MaterialObject(),
+		danceAnimation);
+	scene->addGameObject(vampire);
+	vampire->transform.position = glm::vec3(15.f, 0.f, -15.f);
 
- //   Engine::Model* vampireModel2 = new Engine::Model(_strdup("Assets/Models/dancing_vampire.dae"));
-	//Engine::GameObject* vampire2 = new Engine::GameObject(
-	//	vampireModel2,
-	//	Engine::MaterialObject(),
-	//	danceAnimation);
-	//vampire2->transform.scale = glm::vec3(3.5f, 3.5f, 3.5f);
-	//scene->addGameObject(vampire2);
+	Engine::GameObject* hat = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/ww2-headwear.obj")),
+		Engine::MaterialObject());
+	scene->addGameObject(hat);
+	hat->transform.scale = glm::vec3(0.3f);
+	hat->transform.position = glm::vec3(15.f, 0.1f, -13.f);
+
+	Engine::GameObject* coin;
+	for(int i = -1; i <= 1 ;i+=2) {
+		for(int j = -1; j <= 1 ;j+=2) {
+			coin = new Engine::GameObject(
+				new Engine::Model(_strdup("Assets/Models/coin.obj")),
+				Engine::MaterialObject());
+			scene->addGameObject(coin);
+			coin->transform.scale = glm::vec3(0.02f);
+			coin->transform.position = glm::vec3(15.f + i * 0.05, 0.2f, -13.f + j * 0.05);
+		}
+	}
+	coin = new Engine::GameObject(
+		new Engine::Model(_strdup("Assets/Models/coin.obj")),
+		Engine::MaterialObject());
+	scene->addGameObject(coin);
+	coin->transform.scale = glm::vec3(0.02f);
+	coin->transform.position = glm::vec3(15.f, 0.2f, -13.f);
 
 	Engine::GameObject* level = new Engine::GameObject(
 		new Engine::Model(_strdup("Assets/Models/City.obj")),

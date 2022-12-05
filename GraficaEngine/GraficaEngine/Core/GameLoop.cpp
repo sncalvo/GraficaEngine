@@ -214,7 +214,6 @@ namespace Engine
 
 		float frameCounterUpdateThreshold = 0.f;
 		unsigned int counter = 0;
-		float deltaTimeAcc = 0.f;
 
         glm::vec3 camera_position = activeScene->getActiveCamera()->transform.position;
         Engine::ParticleSystem *ps = new Engine::ParticleSystem(camera_position);
@@ -277,12 +276,7 @@ namespace Engine
 			}
 
 			activeScene->physicsUpdate();
-			if (counter % 2 == 0) {
-				activeScene->animationsUpdate(deltaTimeAcc);
-				deltaTimeAcc = 0.f;
-			} else {
-				deltaTimeAcc += Time::getDeltaTime();
-			}
+			activeScene->animationsUpdate(Time::getDeltaTime());
 			activeScene->update();
 			activeScene->particleSystemUpdate(Time::getDeltaTime());
 			activeScene->flushQueuedGameObjects();
